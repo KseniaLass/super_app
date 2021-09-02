@@ -1,6 +1,5 @@
 <template>
-    <div>Home</div>
-    
+    <div>Калькулятор</div>
 </template>
 
 <script>

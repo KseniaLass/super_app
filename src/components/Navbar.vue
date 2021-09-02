@@ -5,9 +5,12 @@
                 SUPERAPP
             </div>
             <div class="header__nav">
-                <ul>
-                    <li v-for="(nav, i) in navigationItems" :key="nav.i">
-                        {{nav}}
+                <ul class="header__navItemsList">
+                    <li class="header__navItem">
+                        <router-link to="/">Главная</router-link>
+                        <router-link to="/Calculate">Калькулятор</router-link>
+                        <router-link to="/login">Пункт 3</router-link>
+                        <router-link to="">Пункт 101</router-link>
                     </li>
                 </ul>
             </div>
@@ -19,12 +22,7 @@
     export default {
         data(){
             return{
-                navigationItems: [
-                    "Главная",
-                    "Калькулятор",
-                    "Пункт 3",
-                    "Пункт 101"
-                ]
+
             }
         }
     }
@@ -40,7 +38,7 @@
     }
     .header__wrapper{
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
     }
     .header__logo{
         align-self: center;
@@ -48,5 +46,15 @@
         font-family: Arial, Helvetica, sans-serif;
         letter-spacing: 6px;
         font-size: 29px;
+    }
+    .header__nav{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .header__navItemsList{
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
