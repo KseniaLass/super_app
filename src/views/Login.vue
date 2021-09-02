@@ -1,11 +1,11 @@
 <template>
-    <header class="header">
+    <!-- <header class="header">
         <div class="header__wrapper container">
             <div class="header__logo">
                 SUPERAPP
             </div>
         </div>
-    </header>
+    </header> -->
     <section class="content container">
         <div class="content__text">
             <div class="text-title">
@@ -27,7 +27,7 @@
                 <input type="text" id="login" class="input">
                 <label for="password" class="input-label">Введите Ваш пароль*</label>
                 <input type="text" id="password" class="input">
-                <button class="btn">ВОЙТИ</button>
+                <router-link to="/" class="btn">ВОЙТИ</router-link>
             </form>
         </div>
     </section>
@@ -41,15 +41,10 @@
 
 <style scoped>
 
-    .container{
-        max-width: 1200px;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
     .content{
         margin: 0 auto;
     }
-    .header{
+    /* .header{
         height: 100px;
         display: flex;
         justify-content: center;
@@ -66,15 +61,15 @@
         font-family: Arial, Helvetica, sans-serif;
         letter-spacing: 6px;
         font-size: 29px;
-    }
+    } */
     .content{
         margin-top: 50px;
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
-    .content__text{
+    /* .content__text{
 
-    }
+    } */
     .text-title{
         color: #BFBFBF;
         font-family: Arial, Helvetica, sans-serif;
@@ -130,6 +125,7 @@
         box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.67) inset;
     }
     .btn{
+        text-decoration: none;
         align-self: flex-start;
         margin-top: 30px;
         border: 0;
@@ -144,6 +140,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        color: #1E1F1C;
     }
     .btn:hover{
         background-color: #f8e003;
