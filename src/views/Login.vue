@@ -1,11 +1,4 @@
 <template>
-    <!-- <header class="header">
-        <div class="header__wrapper container">
-            <div class="header__logo">
-                SUPERAPP
-            </div>
-        </div>
-    </header> -->
     <section class="content container">
         <div class="content__text">
             <div class="text-title">
@@ -27,7 +20,7 @@
                 <input type="text" id="login" class="input">
                 <label for="password" class="input-label">Введите Ваш пароль*</label>
                 <input type="text" id="password" class="input">
-                <router-link to="/" class="btn">ВОЙТИ</router-link>
+                <router-link to="/" class="btn" @click.prevent="logIn">ВОЙТИ</router-link>
             </form>
         </div>
     </section>
@@ -35,7 +28,11 @@
 
 <script>
     export default {
-        
+        methods: {
+            logIn(){
+                this.$store.state.logIn = true
+            }
+        }
     }
 </script>
 

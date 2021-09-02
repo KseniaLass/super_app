@@ -4,7 +4,7 @@
             <div class="header__logo">
                 SUPERAPP
             </div>
-            <div class="header__nav">
+            <div class="header__nav" v-if="$store.state.logIn == true">
                 <ul class="header__navItemsList">
                     <li class="header__navItem">
                         <router-link to="/">Главная</router-link>
