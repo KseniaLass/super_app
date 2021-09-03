@@ -25,7 +25,6 @@
         background-color: #1E1F1C;
         margin: 0;
         padding: 0;
-        /* color: bisque; */
     }
     .container{
         max-width: 1200px;

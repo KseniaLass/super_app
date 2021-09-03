@@ -7,8 +7,10 @@
             <div class="text-subtitle">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore dolores iste odio a enim quisquam ipsa nesciunt sint numquam. Consequatur, magnam suscipit illo tempore provident placeat porro pariatur, repellat voluptate aut saepe et quis, accusamus error odio? Voluptate, dolorem voluptatum sint placeat ducimus pariatur illum, voluptatem, tenetur sequi quod iusto!<br>
                 <br>
-                Login: admin<br>
-                Password: admin
+                <div class="login-info">
+                    Login: admin<br>
+                    Password: admin
+                </div>
             </div>
         </div>
         <div class="content__form-wrapper">
@@ -20,7 +22,7 @@
                 <input type="text" id="login" class="input">
                 <label for="password" class="input-label">Введите Ваш пароль*</label>
                 <input type="text" id="password" class="input">
-                <router-link to="/" class="btn" @click.prevent="logIn">ВОЙТИ</router-link>
+                <router-link to="/home" class="btn" @click.prevent="logIn">ВОЙТИ</router-link>
             </form>
         </div>
     </section>
@@ -41,32 +43,13 @@
     .content{
         margin: 0 auto;
     }
-    /* .header{
-        height: 100px;
-        display: flex;
-        justify-content: center;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-    .header__wrapper{
-        display: flex;
-        justify-content: center;
-    }
-    .header__logo{
-        align-self: center;
-        color: #d6a812;
-        font-family: Arial, Helvetica, sans-serif;
-        letter-spacing: 6px;
-        font-size: 29px;
-    } */
+
     .content{
         margin-top: 50px;
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
-    /* .content__text{
 
-    } */
     .text-title{
         color: #BFBFBF;
         font-family: Arial, Helvetica, sans-serif;
@@ -83,6 +66,9 @@
         font-size: 18px;
         line-height: 22px;
         padding-right: 50px;
+    }
+    .login-info{
+        color: #d6a812;
     }
     .content__form-wrapper{
         padding-left: 70px;

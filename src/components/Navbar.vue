@@ -7,10 +7,13 @@
             <div class="header__nav" v-if="$store.state.logIn == true">
                 <ul class="header__navItemsList">
                     <li class="header__navItem">
-                        <router-link to="/">Главная</router-link>
-                        <router-link to="/Calculate">Калькулятор</router-link>
-                        <router-link to="/login">Пункт 3</router-link>
-                        <router-link to="">Пункт 101</router-link>
+                        <router-link class="navItem" to="/home">Главная</router-link>
+                    </li>
+                    <li class="header__navItem">
+                        <router-link class="navItem" to="/Calculate">Калькулятор</router-link>
+                    </li>
+                    <li class="header__navItem">
+                        <router-link class="navItem" to="/" @click="logOut">Выйти</router-link>
                     </li>
                 </ul>
             </div>
@@ -23,6 +26,11 @@
         data(){
             return{
 
+            }
+        },
+        methods: {
+            logOut(){
+                this.$store.state.logIn = false
             }
         }
     }
@@ -37,8 +45,9 @@
         padding-right: 10px;
     }
     .header__wrapper{
+        width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
     }
     .header__logo{
         align-self: center;
@@ -56,5 +65,20 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    .header__navItem{
+        list-style-type: none;
+    }
+    .navItem{
+        text-decoration: none;
+        color: #BFBFBF;
+        margin-left: 30px;
+        font-family: Arial, Helvetica, sans-serif; 
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+    .active{
+        transition: 0.5s;
+        color: #d6a812;
     }
 </style>
