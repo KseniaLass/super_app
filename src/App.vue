@@ -27,6 +27,7 @@
         padding: 0;
     }
     .container{
+        margin: 0 auto;
         max-width: 1200px;
         padding-left: 10px;
         padding-right: 10px;
