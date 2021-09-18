@@ -19,9 +19,9 @@
                     Авторизация
                 </div>
                 <label for="login" class="input-label">Введите Ваш логин*</label>
-                <input type="text" id="login" class="input">
+                <input v-model="loginInput" type="text" id="login" class="input">
                 <label for="password" class="input-label">Введите Ваш пароль*</label>
-                <input type="text" id="password" class="input">
+                <input v-model="passwordInput" type="text" id="password" class="input">
                 <router-link to="/home" class="btn" @click.prevent="logIn">ВОЙТИ</router-link>
             </form>
         </div>
@@ -30,9 +30,18 @@
 
 <script>
     export default {
+        data(){
+            return{
+                loginInput: '',
+                passwordInput: ''
+            }
+        },
         methods: {
             logIn(){
-                this.$store.state.logIn = true
+                if(this.loginInput == "admin" && this.passwordInput == "admin"){
+                    this.$store.state.logInTrue = true
+                }
+                
             }
         }
     }

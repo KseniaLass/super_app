@@ -4,7 +4,7 @@
             <div class="header__logo">
                 SUPERAPP
             </div>
-            <div class="header__nav" v-if="$store.state.logIn == true">
+            <div class="header__nav" v-if="$store.state.logInTrue == true">
                 <ul class="header__navItemsList">
                     <li class="header__navItem">
                         <router-link class="navItem" to="/home">Главная</router-link>
@@ -30,7 +30,7 @@
         },
         methods: {
             logOut(){
-                this.$store.state.logIn = false
+                this.$store.state.logInTrue = false
             }
         }
     }
