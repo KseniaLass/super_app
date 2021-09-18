@@ -21,8 +21,8 @@
                 <label for="login" class="input-label">Введите Ваш логин*</label>
                 <input v-model="loginInput" type="text" id="login" class="input">
                 <label for="password" class="input-label">Введите Ваш пароль*</label>
-                <input v-model="passwordInput" type="text" id="password" class="input">
-                <router-link to="/home" class="btn" @click.prevent="logIn">ВОЙТИ</router-link>
+                <input v-model="passwordInput" type="password" id="password" class="input">
+                <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
             </form>
         </div>
     </section>
@@ -38,10 +38,13 @@
         },
         methods: {
             logIn(){
-                if(this.loginInput == "admin" && this.passwordInput == "admin"){
+                if(this.loginInput == this.$store.state.loginUser && this.passwordInput == this.$store.state.passwordUser){
                     this.$store.state.logInTrue = true
+                    localStorage.logInTrue = this.$store.state.logInTrue
+                    this.$router.push('/home')
+                }else{
+                    alert('Логин или пароль не верны')
                 }
-                
             }
         }
     }

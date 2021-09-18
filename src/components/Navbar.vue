@@ -4,10 +4,16 @@
             <div class="header__logo">
                 SUPERAPP
             </div>
-            <div class="header__nav" v-if="$store.state.logInTrue == true">
+            <div class="header__nav" v-if="$store.state.logInTrue">
                 <ul class="header__navItemsList">
                     <li class="header__navItem">
                         <router-link class="navItem" to="/home">Главная</router-link>
+                    </li>
+                    <li class="header__navItem">
+                        <router-link class="navItem" to="/todo">ToDo</router-link>
+                    </li>                    
+                    <li class="header__navItem">
+                        <router-link class="navItem" to="/css-animate">CSS Анимация</router-link>
                     </li>
                     <li class="header__navItem">
                         <router-link class="navItem" to="/Calculate">Калькулятор</router-link>
@@ -25,13 +31,17 @@
     export default {
         data(){
             return{
-
+                
             }
         },
         methods: {
             logOut(){
                 this.$store.state.logInTrue = false
+                localStorage.logInTrue = this.$store.state.logInTrue
             }
+        },
+        beforeMount(){
+            this.$store.state.logInTrue = localStorage.logInTrue
         }
     }
 </script>
