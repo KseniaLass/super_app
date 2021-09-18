@@ -22,7 +22,12 @@
                 <input v-model="loginInput" type="text" id="login" class="input">
                 <label for="password" class="input-label">Введите Ваш пароль*</label>
                 <input v-model="passwordInput" type="password" id="password" class="input">
-                <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
+                <div class="btns">
+                    <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
+                    <button class="btn" @click.prevent="registration">РЕГИСТРАЦИЯ</button>
+                </div>
+                <!-- <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
+                <button class="btn" @click.prevent="logIn">РЕГИСТРАЦИЯ</button> -->
             </form>
         </div>
     </section>
@@ -38,13 +43,15 @@
         },
         methods: {
             logIn(){
-                if(this.loginInput == this.$store.state.loginUser && this.passwordInput == this.$store.state.passwordUser){
+                if(this.loginInput == this.$store.state.user.loginUser && this.passwordInput == this.$store.state.user.passwordUser){
                     this.$store.state.logInTrue = true
-                    localStorage.logInTrue = this.$store.state.logInTrue
                     this.$router.push('/home')
                 }else{
                     alert('Логин или пароль не верны')
                 }
+            },
+            registration(){
+                alert('Регистрация')
             }
         }
     }
@@ -119,9 +126,12 @@
         font-size: 18px;
         box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.67) inset;
     }
+    .btns{
+        display: flex;
+        align-self: flex-start;
+    }
     .btn{
         text-decoration: none;
-        align-self: flex-start;
         margin-top: 30px;
         border: 0;
         border-radius: 8px;
@@ -136,6 +146,7 @@
         justify-content: center;
         align-items: center;
         color: #1E1F1C;
+        margin-right: 30px;
     }
     .btn:hover{
         background-color: #f8e003;

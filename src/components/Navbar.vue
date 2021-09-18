@@ -19,8 +19,11 @@
                         <router-link class="navItem" to="/Calculate">Калькулятор</router-link>
                     </li>
                     <li class="header__navItem">
-                        <router-link class="navItem" to="/" @click="logOut">Выйти</router-link>
+                        <router-link class="navItem btn" to="/" @click="logOut">Выйти</router-link>
                     </li>
+                    <div class="header__navItem">
+                        <div class="navItem user">{{user}}</div>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -31,17 +34,16 @@
     export default {
         data(){
             return{
-                
+                user: this.$store.state.user.name
             }
         },
         methods: {
             logOut(){
                 this.$store.state.logInTrue = false
-                localStorage.logInTrue = this.$store.state.logInTrue
             }
         },
         beforeMount(){
-            this.$store.state.logInTrue = localStorage.logInTrue
+
         }
     }
 </script>
@@ -90,5 +92,21 @@
     .active{
         transition: 0.5s;
         color: #d6a812;
+    }
+
+    .btn{
+        text-decoration: none;
+        padding: 5px 9px 5px 9px;
+        border: 0;
+        border-radius: 8px;
+        background-color: #d6a812;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #1E1F1C;
+    }
+    .user{
+        font-size: 14px;
+        border-bottom: 1px solid rgb(192, 192, 192);
     }
 </style>
