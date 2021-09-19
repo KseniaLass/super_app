@@ -4,10 +4,10 @@
             <div class="header__logo">
                 SUPERAPP
             </div>
-            <div class="header__nav" v-if="$store.state.logInTrue">
+            <div class="header__nav" v-if="$store.state.superApp.logInTrue">
                 <ul class="header__navItemsList">
                     <li class="header__navItem">
-                        <router-link class="navItem" to="/home">Главная</router-link>
+                        <router-link class="navItem" to="/">Главная</router-link>
                     </li>
                     <li class="header__navItem">
                         <router-link class="navItem" to="/todo">ToDo</router-link>
@@ -16,10 +16,10 @@
                         <router-link class="navItem" to="/css-animate">CSS Анимация</router-link>
                     </li>
                     <li class="header__navItem">
-                        <router-link class="navItem" to="/Calculate">Калькулятор</router-link>
+                        <router-link class="navItem" to="/calculate">Калькулятор</router-link>
                     </li>
                     <li class="header__navItem">
-                        <router-link class="navItem btn" to="/" @click="logOut">Выйти</router-link>
+                        <router-link class="navItem btn" to="/login" @click="logOut">Выйти</router-link>
                     </li>
                     <div class="header__navItem">
                         <div class="navItem user">{{user}}</div>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+
     export default {
         data(){
             return{
@@ -39,11 +40,18 @@
         },
         methods: {
             logOut(){
-                this.$store.state.logInTrue = false
+                this.$store.state.superApp.logInTrue = false
+                localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
             }
         },
         beforeMount(){
+            const logInTrue = localStorage.getItem('superApp')
+            this.$store.state.superApp = JSON.parse(logInTrue)
+            if(this.$store.state.superApp.logInTrue){
 
+            }else{
+                this.$router.push('/login')  
+            }
         }
     }
 </script>

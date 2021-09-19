@@ -8,10 +8,10 @@ import Calculate from '../views/Calculate'
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes: [
-        {path: '/home', component: Home},
+        {path: '/', component: Home},
         {path: '/todo', component: ToDo},
         {path: '/css-animate', component: CssAnimate},
-        {path: '/', component: Login},
+        {path: '/login', component: Login},
         {path: '/calculate', component: Calculate}
     ],
     linkActiveClass: 'active',

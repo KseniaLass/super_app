@@ -18,16 +18,14 @@
                 <div class="form-title">
                     Авторизация
                 </div>
-                <label for="login" class="input-label">Введите Ваш логин*</label>
-                <input v-model="loginInput" type="text" id="login" class="input">
-                <label for="password" class="input-label">Введите Ваш пароль*</label>
-                <input v-model="passwordInput" type="password" id="password" class="input">
+                <label for="login" class="input-label">Логин*</label>
+                <input v-model="loginInput" type="text" id="login" class="input" placeholder="Введите Ваш логин">
+                <label for="password" class="input-label">Пароль*</label>
+                <input v-model="passwordInput" type="password" id="password" class="input" placeholder="Введите Ваш пароль">
                 <div class="btns">
                     <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
                     <button class="btn" @click.prevent="registration">РЕГИСТРАЦИЯ</button>
                 </div>
-                <!-- <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
-                <button class="btn" @click.prevent="logIn">РЕГИСТРАЦИЯ</button> -->
             </form>
         </div>
     </section>
@@ -44,8 +42,9 @@
         methods: {
             logIn(){
                 if(this.loginInput == this.$store.state.user.loginUser && this.passwordInput == this.$store.state.user.passwordUser){
-                    this.$store.state.logInTrue = true
-                    this.$router.push('/home')
+                    this.$store.state.superApp.logInTrue = true
+                    localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
+                    this.$router.push('/')
                 }else{
                     alert('Логин или пароль не верны')
                 }
@@ -124,7 +123,7 @@
         height: 30px;
         font-family: Arial, Helvetica, sans-serif; 
         font-size: 18px;
-        box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.67) inset;
+        box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.67) inset;  
     }
     .btns{
         display: flex;
