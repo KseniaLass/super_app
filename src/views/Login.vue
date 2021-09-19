@@ -24,7 +24,7 @@
                 <input v-model="passwordInput" type="password" id="password" class="input" placeholder="Введите Ваш пароль">
                 <div class="btns">
                     <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
-                    <button class="btn" @click.prevent="registration">РЕГИСТРАЦИЯ</button>
+                    <button class="btn" @click.prevent="goToRegistration">РЕГИСТРАЦИЯ</button>
                 </div>
             </form>
         </div>
@@ -49,8 +49,8 @@
                     alert('Логин или пароль не верны')
                 }
             },
-            registration(){
-                alert('Регистрация')
+            goToRegistration(){
+                this.$router.push('/registration')
             }
         }
     }
