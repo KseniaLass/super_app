@@ -1,22 +1,27 @@
 <template>
     <div class="content__form-wrapper">
-        <form class="content__form">
+        <form class="content__form" @submit.prevent="setNewUser" v-if="!registrationDone">
             <div class="form-title">
                 Регистрация
             </div>
             <label for="email" class="input-label">Логин*</label>
-            <input v-model="newUser.email" type="email" id="email" class="input" placeholder="Укажите Ваш Email">
+            <input v-model="user.email" type="email" id="email" class="input" placeholder="Укажите Ваш Email">
             <label for="name" class="input-label">Имя*</label>
-            <input v-model="newUser.name" type="text" id="name" class="input" placeholder="Укажите Ваше имя">
+            <input v-model="user.name" type="text" id="name" class="input" placeholder="Укажите Ваше имя">
             <label for="password" class="input-label">Пароль*</label>
-            <input v-model="newUser.password" type="password" id="password" class="input" placeholder="Введите Ваш пароль">
+            <input v-model="user.password" type="password" id="password" class="input" placeholder="Введите Ваш пароль">
             <label for="passwordСonfirm" class="input-label">Подтверждение пароля*</label>
-            <input v-model="newUser.passwordСonfirm" type="password" id="passwordСonfirm" class="input" placeholder="Введите пароль ещё раз">
+            <input v-model="user.passwordСonfirm" type="password" id="passwordСonfirm" class="input" placeholder="Введите пароль ещё раз">
             <div class="btns">
-                <button class="btn" @click.prevent="qqq">ОТПРАВИТЬ</button>
+                <button class="btn">ОТПРАВИТЬ</button>
                 <button class="btn" @click.prevent="goToLogin">ОТМЕНА</button>
             </div>
         </form>
+        <div class="response" v-else>
+            <h1>Регистрация успешно выполнена. Перейти на страницу авторизации.</h1>
+            <button class="btn" @click.prevent="goToLogin">ПЕРЕЙТИ</button>
+
+        </div>
     </div>
 </template>
 
@@ -24,12 +29,13 @@
     export default {
         data(){
             return{
-                newUser: {
+                user: {
                     email: '',
                     name: '',
                     password: '',
                     passwordСonfirm: ''
-                }
+                },
+                registrationDone: false
 
             }
         },
@@ -37,8 +43,32 @@
             goToLogin(){
                 this.$router.push('/login')
             },
-            qqq(){
-                console.log(this.newUser)
+            async setNewUser(){
+                if(this.user.password === this.user.passwordСonfirm){
+                    const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: this.user.email,
+                            name: this.user.name,
+                            password: this.user.password
+                        })
+                    })
+                    await response.json()
+                    this.user.email = ''
+                    this.user.name = ''
+                    this.user.password = ''
+                    if(response){
+                        this.registrationDone = true
+                    }
+                }else{
+                    alert('Пароли не совпадают')
+                    this.user.passwordСonfirm = ''
+                }
+
+
             }
         }
     }
@@ -69,14 +99,12 @@
         margin-top: 30px;
         color: #BFBFBF;
         font-family: Arial, Helvetica, sans-serif;
-        /* align-self: flex-start; */
     }
     .input{
         margin-top: 7px;
         padding: 10px;
         border: 0;
         border-radius: 8px;
-        /* align-self: flex-start; */
         width: 400px;
         height: 30px;
         font-family: Arial, Helvetica, sans-serif; 
@@ -85,7 +113,6 @@
     }
     .btns{
         display: flex;
-        /* align-self: flex-start; */
     }
     .btn{
         text-decoration: none;
