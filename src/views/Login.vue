@@ -18,9 +18,9 @@
                 <div class="form-title">
                     Авторизация
                 </div>
-                <label for="login" class="input-label">Логин*</label>
+                <label for="login" class="input-label">{{loginInputLabel}}</label>
                 <input v-model="loginInput" type="text" id="login" class="input" placeholder="Введите Ваш логин">
-                <label for="password" class="input-label">Пароль*</label>
+                <label for="password" class="input-label">{{passwordInputLabel}}</label>
                 <input v-model="passwordInput" type="password" id="password" class="input" placeholder="Введите Ваш пароль">
                 <div class="btns">
                     <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
@@ -36,7 +36,9 @@
         data(){
             return{
                 loginInput: '',
-                passwordInput: ''
+                loginInputLabel: 'Логин*',
+                passwordInput: '',
+                passwordInputLabel: 'Пароль*'
             }
         },
         methods: {
@@ -46,7 +48,13 @@
                     localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
                     this.$router.push('/')
                 }else{
-                    alert('Логин или пароль не верны')
+                    // alert('Логин или пароль не верны')
+                    if(this.loginInput != this.$store.state.user.loginUser){
+                        this.loginInputLabel = 'Пользователь с таким именем не зарегистрирован'
+                    }else if(this.passwordInput == this.$store.state.user.passwordUser){
+                        this.passwordInputLabel = 'Пароль не верный'
+                    }
+                    
                 }
             },
             goToRegistration(){
