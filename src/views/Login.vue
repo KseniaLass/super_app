@@ -61,7 +61,7 @@ import axios from 'axios'
 
 
 
-            
+            // В процессе
             async getArreyUsers(){
                 const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
                 const arreyUsers = Object.keys(data).map(key => {
