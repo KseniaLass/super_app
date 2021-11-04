@@ -6,9 +6,9 @@ export default createStore({
             logInTrue: false,
         },
         user: {
-            name: 'Болдинов Е.В.',
-            loginUser: 'admin',
-            passwordUser: 'admin'
+            name: '',
+            email: '',
+            password: ''
         },
         arreyUsers: []
     },

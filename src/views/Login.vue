@@ -7,10 +7,6 @@
             <div class="text-subtitle">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore dolores iste odio a enim quisquam ipsa nesciunt sint numquam. Consequatur, magnam suscipit illo tempore provident placeat porro pariatur, repellat voluptate aut saepe et quis, accusamus error odio? Voluptate, dolorem voluptatum sint placeat ducimus pariatur illum, voluptatem, tenetur sequi quod iusto!<br>
                 <br>
-                <div class="login-info">
-                    Login: admin<br>
-                    Password: admin
-                </div>
             </div>
         </div>
         <div class="content__form-wrapper">
@@ -19,11 +15,11 @@
                     Авторизация
                 </div>
                 <label for="login" class="input-label">{{loginInputLabel}}</label>
-                <input v-model="loginInput" type="text" id="login" class="input" placeholder="Введите Ваш логин">
+                <input v-model="loginInput" type="text" id="login" class="input" placeholder="Введите Ваш Email">
                 <label for="password" class="input-label">{{passwordInputLabel}}</label>
                 <input v-model="passwordInput" type="password" id="password" class="input" placeholder="Введите Ваш пароль">
                 <div class="btns">
-                    <button class="btn" @click.prevent="getArreyUsers">ВОЙТИ</button>
+                    <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
                     <button class="btn" @click.prevent="goToRegistration">РЕГИСТРАЦИЯ</button>
                 </div>
             </form>
@@ -43,26 +39,8 @@ import axios from 'axios'
             }
         },
         methods: {
-            logIn(){
-                if(this.loginInput == this.$store.state.user.loginUser && this.passwordInput == this.$store.state.user.passwordUser){
-                    this.$store.state.superApp.logInTrue = true
-                    localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
-                    this.$router.push('/')
-                }else{
-                    // alert('Логин или пароль не верны')
-                    if(this.loginInput != this.$store.state.user.loginUser){
-                        this.loginInputLabel = 'Пользователь с таким именем не зарегистрирован'
-                    }else if(this.passwordInput == this.$store.state.user.passwordUser){
-                        this.passwordInputLabel = 'Пароль не верный'
-                    }
-                    
-                }
-            },
-
-
-
-            // В процессе
-            async getArreyUsers(){
+            async logIn(){
+                // Запрос на сервер и получение массива с пользователями
                 const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
                 const arreyUsers = Object.keys(data).map(key => {
                     return {
@@ -70,13 +48,20 @@ import axios from 'axios'
                         ...data[key]
                     }
                 })
-                console.log(arreyUsers[1].name)
+                // Поиск пользователя в массиве с логином из инпута
+                try {
+                    this.$store.state.user = arreyUsers.find(user => user.email === this.loginInput)
+                    if(this.passwordInput == this.$store.state.user.password){
+                        this.$store.state.superApp.logInTrue = true
+                        localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
+                        this.$router.push('/')
+                    }else{
+                        this.passwordInputLabel = 'Пароль не верный'
+                    }
+                } catch (err) {
+                    this.loginInputLabel = 'Пользователь с таким логином не зарегистрирован'
+                }
             },
-
-
-
-
-
             goToRegistration(){
                 this.$router.push('/registration')
             }
