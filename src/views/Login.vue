@@ -23,7 +23,7 @@
                 <label for="password" class="input-label">{{passwordInputLabel}}</label>
                 <input v-model="passwordInput" type="password" id="password" class="input" placeholder="Введите Ваш пароль">
                 <div class="btns">
-                    <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
+                    <button class="btn" @click.prevent="getArreyUsers">ВОЙТИ</button>
                     <button class="btn" @click.prevent="goToRegistration">РЕГИСТРАЦИЯ</button>
                 </div>
             </form>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import axios from 'axios'
     export default {
         data(){
             return{
@@ -57,6 +58,25 @@
                     
                 }
             },
+
+
+
+            
+            async getArreyUsers(){
+                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
+                const arreyUsers = Object.keys(data).map(key => {
+                    return {
+                        id: key,
+                        ...data[key]
+                    }
+                })
+                console.log(arreyUsers[1].name)
+            },
+
+
+
+
+
             goToRegistration(){
                 this.$router.push('/registration')
             }

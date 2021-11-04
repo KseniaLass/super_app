@@ -9,7 +9,8 @@ export default createStore({
             name: 'Болдинов Е.В.',
             loginUser: 'admin',
             passwordUser: 'admin'
-        }
+        },
+        arreyUsers: []
     },
     mutations: {
     },
