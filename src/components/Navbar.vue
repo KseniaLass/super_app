@@ -44,19 +44,22 @@
                 localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
             }
         },
+        // При загрузке страницы
         beforeMount(){
-
+            // Получаем данные из localstorage
             const logInTrue = localStorage.getItem('superApp')
+            // если в localstorage пусто создаем запись (первый запуск приложения)
             if(!logInTrue){
                 const superApp = {
                     logInTrue: false,
                     name: ''
                 }
                 localStorage.setItem('superApp', JSON.stringify(superApp))
+            // если есть, то получаем данные   
             }else{
                 this.$store.state.superApp = JSON.parse(logInTrue)
                 if(this.$store.state.superApp.logInTrue){
-
+                    // Ничего не делаем
                 }else{
                     this.$router.push('/login')  
                 }

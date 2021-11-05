@@ -67,8 +67,6 @@
                     alert('Пароли не совпадают')
                     this.user.passwordСonfirm = ''
                 }
-
-
             }
         }
     }
