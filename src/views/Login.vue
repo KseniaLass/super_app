@@ -14,10 +14,10 @@
                 <div class="form-title">
                     Авторизация
                 </div>
-                <label for="login" class="input-label">{{loginInputLabel}}</label>
-                <input v-model="loginInput" type="text" id="login" class="input" placeholder="Введите Ваш Email">
-                <label for="password" class="input-label">{{passwordInputLabel}}</label>
-                <input v-model="passwordInput" type="password" id="password" class="input" placeholder="Введите Ваш пароль">
+                <label for="login" class="input-label" :class="{label_error: errors.login == true}">{{loginInputLabel}}</label>
+                <input v-model="loginInput" type="text" id="login" class="input" :class="{input_error: errors.login == true}" placeholder="Введите Ваш Email">
+                <label for="password" class="input-label" :class="{label_error: errors.password == true}">{{passwordInputLabel}}</label>
+                <input v-model="passwordInput" type="password" id="password" class="input" :class="{input_error: errors.password == true}" placeholder="Введите Ваш пароль">
                 <div class="btns">
                     <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
                     <button class="btn" @click.prevent="goToRegistration">РЕГИСТРАЦИЯ</button>
@@ -35,7 +35,11 @@ import axios from 'axios'
                 loginInput: '',
                 loginInputLabel: 'Логин*',
                 passwordInput: '',
-                passwordInputLabel: 'Пароль*'
+                passwordInputLabel: 'Пароль*',
+                errors: {
+                    login: false,
+                    password: false
+                }
             }
         },
         methods: {
@@ -48,18 +52,38 @@ import axios from 'axios'
                         ...data[key]
                     }
                 })
-                // Поиск пользователя в массиве с логином из инпута
                 try {
+                    // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
                     this.$store.state.user = arreyUsers.find(user => user.email === this.loginInput)
-                    if(this.passwordInput == this.$store.state.user.password){
+                    // При успешном поиске
+                    this.errors.login = false
+                    this.loginInputLabel = 'Логин*'
+                    // Проверка корректного пароля
+                    if(this.passwordInput === this.$store.state.user.password){
+                        // Обозначение во vuex, что авторизация произведена
                         this.$store.state.superApp.logInTrue = true
+                        this.$store.state.superApp.name = this.$store.state.user.name
+                        // Обозначение в localstorage, что авторизация произведена
                         localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
+                        // Переход на главную страницу
                         this.$router.push('/')
                     }else{
-                        this.passwordInputLabel = 'Пароль не верный'
-                    }
+                        this.passwordInputLabel = 'Пароль неверный*'
+                        this.errors.password = true
+                    }       
+                    if(this.passwordInput.length === 0){
+                        this.errors.password = true
+                        this.passwordInputLabel = 'Поле не может быть пустым*'
+                    }                            
                 } catch (err) {
-                    this.loginInputLabel = 'Пользователь с таким логином не зарегистрирован'
+                    if(this.loginInput.length === 0){
+                        this.errors.login = true
+                        this.loginInputLabel = 'Поле не может быть пустым*'
+                    }else{
+                        // Если на сервере отсутствует пользователь
+                        this.loginInputLabel = 'Пользователь не найден. Зарегистрируйтесь*'
+                        this.errors.login = true
+                    }
                 }
             },
             goToRegistration(){
@@ -68,6 +92,7 @@ import axios from 'axios'
         }
     }
 </script>
+
 
 <style scoped>
 
@@ -137,6 +162,12 @@ import axios from 'axios'
         font-family: Arial, Helvetica, sans-serif; 
         font-size: 18px;
         box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.67) inset;  
+    }
+    .label_error{
+        color: red;
+    }
+    .input_error{
+        border: 2px solid red;
     }
     .btns{
         display: flex;

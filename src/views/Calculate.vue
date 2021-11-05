@@ -55,9 +55,6 @@
         box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.5) inset;
         font-size: 30px;
     }
-    .grid{
-
-    }
     .num-grid{
         /* margin-top: 20px;
         width: 100%;
@@ -78,10 +75,10 @@
     /* .num-item:last-child{
         grid-column: 1 / span 2;
     } */
-    .num-item{
-        /* grid-area: num; */
+    /* .num-item{
+        grid-area: num;
     }
     .op-item{
-        /* grid-area: op; */
-    }
+        grid-area: op;
+    } */
 </style>

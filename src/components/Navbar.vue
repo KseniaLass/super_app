@@ -22,7 +22,7 @@
                         <router-link class="navItem btn" to="/login" @click="logOut">Выйти</router-link>
                     </li>
                     <div class="header__navItem">
-                        <div class="navItem user">{{user}}</div>
+                        <div class="navItem user">{{this.$store.state.superApp.name}}</div>
                     </div>
                 </ul>
             </div>
@@ -45,13 +45,23 @@
             }
         },
         beforeMount(){
-            const logInTrue = localStorage.getItem('superApp')
-            this.$store.state.superApp = JSON.parse(logInTrue)
-            if(this.$store.state.superApp.logInTrue){
 
+            const logInTrue = localStorage.getItem('superApp')
+            if(!logInTrue){
+                const superApp = {
+                    logInTrue: false,
+                    name: ''
+                }
+                localStorage.setItem('superApp', JSON.stringify(superApp))
             }else{
-                this.$router.push('/login')  
+                this.$store.state.superApp = JSON.parse(logInTrue)
+                if(this.$store.state.superApp.logInTrue){
+
+                }else{
+                    this.$router.push('/login')  
+                }
             }
+
         }
     }
 </script>
