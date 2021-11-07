@@ -4,13 +4,13 @@
             <div class="form-title">
                 Регистрация
             </div>
-            <label for="email" class="input-label">Логин*</label>
+            <label for="email" class="input-label">{{user.emailLabel}}</label>
             <input v-model="user.email" type="email" id="email" class="input" placeholder="Укажите Ваш Email">
-            <label for="name" class="input-label">Имя*</label>
+            <label for="name" class="input-label">{{user.nameLabel}}</label>
             <input v-model="user.name" type="text" id="name" class="input" placeholder="Укажите Ваше имя">
-            <label for="password" class="input-label">Пароль*</label>
+            <label for="password" class="input-label">{{user.passwordLabel}}</label>
             <input v-model="user.password" type="password" id="password" class="input" placeholder="Введите Ваш пароль">
-            <label for="passwordСonfirm" class="input-label">Подтверждение пароля*</label>
+            <label for="passwordСonfirm" class="input-label">{{user.passwordСonfirmLabel}}</label>
             <input v-model="user.passwordСonfirm" type="password" id="passwordСonfirm" class="input" placeholder="Введите пароль ещё раз">
             <div class="btns">
                 <button class="btn">ОТПРАВИТЬ</button>
@@ -31,9 +31,13 @@
             return{
                 user: {
                     email: '',
+                    emailLabel: 'Логин*',
                     name: '',
+                    nameLabel: 'Имя*',
                     password: '',
-                    passwordСonfirm: ''
+                    passwordLabel: 'Пароль*',
+                    passwordСonfirm: '',
+                    passwordСonfirmLabel: 'Подтверждение пароля*'
                 },
                 registrationDone: false
 
