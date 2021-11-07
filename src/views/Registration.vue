@@ -26,6 +26,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         data(){
             return{
@@ -39,6 +40,12 @@
                     passwordСonfirm: '',
                     passwordСonfirmLabel: 'Подтверждение пароля*'
                 },
+                errors: {
+                    email: false,
+                    name: false,
+                    password: false,
+                    passwordСonfirm: false
+                },
                 registrationDone: false
 
             }
@@ -48,29 +55,63 @@
                 this.$router.push('/login')
             },
             async setNewUser(){
-                if(this.user.password === this.user.passwordСonfirm){
-                    const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            email: this.user.email,
-                            name: this.user.name,
-                            password: this.user.password
-                        })
-                    })
-                    await response.json()
-                    this.user.email = ''
-                    this.user.name = ''
-                    this.user.password = ''
-                    if(response){
-                        this.registrationDone = true
+                // Запрос на сервер и получение массива с пользователями
+                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
+                const arreyUsers = Object.keys(data).map(key => {
+                    return {
+                        id: key,
+                        ...data[key]
                     }
+                })
+
+
+                if(arreyUsers.find(user => user.email === this.user.email)){
+                    this.errors.email = true
+                    this.user.emailLabel = 'Пользователь с таким именем уже существует'
                 }else{
-                    alert('Пароли не совпадают')
-                    this.user.passwordСonfirm = ''
+                    console.log('Email свободный')
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // if(this.user.password === this.user.passwordСonfirm){
+                //     const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
+                //         method: 'POST',
+                //         headers: {
+                //             'Content-Type': 'application/json'
+                //         },
+                //         body: JSON.stringify({
+                //             email: this.user.email,
+                //             name: this.user.name,
+                //             password: this.user.password
+                //         })
+                //     })
+                //     await response.json()
+                //     this.user.email = ''
+                //     this.user.name = ''
+                //     this.user.password = ''
+                //     if(response){
+                //         this.registrationDone = true
+                //     }
+                // }else{
+                //     alert('Пароли не совпадают')
+                //     this.user.passwordСonfirm = ''
+                // }
             }
         }
     }

@@ -15,7 +15,7 @@
                     Авторизация
                 </div>
                 <label for="login" class="input-label" :class="{label_error: errors.login == true}">{{loginInputLabel}}</label>
-                <input v-model="loginInput" type="text" id="login" class="input" :class="{input_error: errors.login == true}" placeholder="Введите Ваш Email">
+                <input v-model="loginInput" type="email" id="login" class="input" :class="{input_error: errors.login == true}" placeholder="Введите Ваш Email">
                 <label for="password" class="input-label" :class="{label_error: errors.password == true}">{{passwordInputLabel}}</label>
                 <input v-model="passwordInput" type="password" id="password" class="input" :class="{input_error: errors.password == true}" placeholder="Введите Ваш пароль">
                 <div class="btns">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+    import axios from 'axios'
     export default {
         data(){
             return{
