@@ -1,17 +1,72 @@
 <template>
     <div class="content__form-wrapper">
-        <form class="content__form" @submit.prevent="setNewUser" v-if="!registrationDone">
+        <form class="content__form" 
+            @submit.prevent="setNewUser" 
+            v-if="!registrationDone"
+            >
             <div class="form-title">
                 Регистрация
             </div>
-            <label for="email" class="input-label" :class="{label_error: errors.email == true}">{{user.emailLabel}}</label>
-            <input v-model="user.email" type="email" id="email" class="input" :class="{input_error: errors.email == true}" placeholder="Укажите Ваш Email">
-            <label for="name" class="input-label" :class="{label_error: errors.name == true}">{{user.nameLabel}}</label>
-            <input v-model="user.name" type="text" id="name" class="input" :class="{input_error: errors.name == true}" placeholder="Укажите Ваше имя">
-            <label for="password" class="input-label" :class="{label_error: errors.password == true}">{{user.passwordLabel}}</label>
-            <input v-model="user.password" type="password" id="password" class="input" :class="{input_error: errors.password == true}" placeholder="Введите Ваш пароль">
-            <label for="passwordСonfirm" class="input-label" :class="{label_error: errors.passwordСonfirm == true}">{{user.passwordСonfirmLabel}}</label>
-            <input v-model="user.passwordСonfirm" type="password" id="passwordСonfirm" class="input" :class="{input_error: errors.passwordСonfirm == true}" placeholder="Введите пароль ещё раз">
+            <!-- ============Email ========================== -->
+            <label 
+                for="email" 
+                class="input-label" 
+                :class="{label_error: errors.email}"
+                >{{emailLabel}}
+            </label>
+            <input 
+                v-model="email" 
+                type="email" 
+                id="email" 
+                class="input" 
+                placeholder="Укажите Ваш Email"
+                :class="{input_error: errors.email}"
+            >
+            <!-- ============= Имя ======================-->
+            <label 
+                for="name" 
+                class="input-label" 
+                :class="{label_error: errors.name}"
+                >{{nameLabel}}
+            </label>
+            <input 
+                v-model="name" 
+                type="text" 
+                id="name" 
+                class="input" 
+                placeholder="Укажите Ваше имя"
+                :class="{input_error: errors.name}"
+            >
+            <!-- ===============Password ======================= -->
+            <label 
+                for="password" 
+                class="input-label" 
+                :class="{label_error: errors.password}"
+                >{{passwordLabel}}
+            </label>
+            <input 
+                v-model="password" 
+                type="password" 
+                id="password" 
+                class="input" 
+                placeholder="Введите Ваш пароль"
+                :class="{input_error: errors.password}"
+            >
+            <!-- ============== PassswordConfirm ================= -->
+            <label 
+                for="passwordСonfirm" 
+                class="input-label" 
+                :class="{label_error: errors.passwordСonfirm}"
+                >{{passwordСonfirmLabel}}
+            </label>
+            <input 
+                v-model="passwordСonfirm" 
+                type="password" 
+                id="passwordСonfirm" 
+                class="input" 
+                placeholder="Введите пароль ещё раз"
+                :class="{input_error: errors.passwordСonfirm}"
+            >
             <div class="btns">
                 <button class="btn">ОТПРАВИТЬ</button>
                 <button class="btn" @click.prevent="goToLogin">ОТМЕНА</button>
@@ -27,27 +82,25 @@
 
 <script>
     import axios from 'axios'
+
     export default {
         data(){
             return{
-                user: {
-                    email: '',
-                    emailLabel: 'Логин*',
-                    name: '',
-                    nameLabel: 'Имя*',
-                    password: '',
-                    passwordLabel: 'Пароль*',
-                    passwordСonfirm: '',
-                    passwordСonfirmLabel: 'Подтверждение пароля*'
-                },
+                email: '',
+                emailLabel: 'Логин*',
+                name: '',
+                nameLabel: 'Имя*',
+                password: '',
+                passwordLabel: 'Пароль*',
+                passwordСonfirm: '',
+                passwordСonfirmLabel: 'Подтверждение пароля*',
+                registrationDone: false,
                 errors: {
-                    email: false,
-                    name: false,
-                    password: false,
-                    passwordСonfirm: false
-                },
-                registrationDone: false
-
+                    email: null,
+                    name: null,
+                    password: null,
+                    passwordСonfirm: null
+                }
             }
         },
         methods: {
@@ -55,7 +108,7 @@
                 this.$router.push('/login')
             },
             async setNewUser(){
-                // Запрос на сервер и получение массива с пользователями
+                // Загружаем список пользователей с сервера
                 const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
                 const arreyUsers = Object.keys(data).map(key => {
                     return {
@@ -64,81 +117,108 @@
                     }
                 })
 
-
-                if(arreyUsers.find(user => user.email === this.user.email)){
-                    this.errors.email = true
-                    this.user.emailLabel = 'Пользователь с таким именем уже существует'
+                // ================= Валидация EMAIL =====================
+                // Проверка введено ли что нибудь в поле email
+                if(this.email.length === 0){  
+                    // Записываем ошибку     
+                    this.errors.email = true  
+                    // Выводим в лейбле сообщение об ошибке
+                    this.emailLabel = 'Поле не может быть пустым*'
                 }else{
-                    
-                    if(this.user.password === this.user.passwordСonfirm){
-                        const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                email: this.user.email,
-                                name: this.user.name,
-                                password: this.user.password
-                            })
-                        })
-                        await response.json()
-                        this.user.email = ''
-                        this.user.name = ''
-                        this.user.password = ''
-                        if(response){
-                            this.registrationDone = true
-                        }
-                    }else{
-                        this.errors.passwordСonfirm = true
-                        this.user.passwordСonfirmLabel = 'Пароли не совпадают'
-                        this.user.passwordСonfirm = ''
+                    // Отменяем ошибку     
+                    this.errors.email = null  
+                    // Возвращаем лейбл в исходное состояние
+                    this.emailLabel = 'Логин*'
+                    // Проверка есть ли данный пользователь на сервере
+                    if(arreyUsers.find(user => user.email === this.email)){   
+                        // Записываем ошибку     
+                        this.errors.email = true            
+                        // Выводим в лейбле сообщение об ошибке
+                        this.emailLabel = 'Пользователь с таким именем уже существует*'
+                        // Очищаем поле email
+                        this.email = ''
                     }
-
-
-
                 }
 
+                // ================= Валидация NAME =====================
+                // Проверка введено ли что нибудь в поле name
+                if(this.name.length === 0){
+                    // Записываем ошибку     
+                    this.errors.name = true  
+                    // Выводим в лейбле сообщение об ошибке
+                    this.nameLabel = 'Поле не может быть пустым*'
+                }else{
+                    // Отменяем ошибку     
+                    this.errors.name = null  
+                    // Возвращаем лейбл в исходное состояние
+                    this.nameLabel = 'Имя*'
+                }
 
+                // ================= Валидация PASSWORD =====================
+                // Проверка введено ли что нибудь в поле password
+                if(this.password.length === 0){
+                    // Записываем ошибку     
+                    this.errors.password = true  
+                    // Выводим в лейбле сообщение об ошибке
+                    this.passwordLabel = 'Поле не может быть пустым*'
+                }else{
+                    // Отменяем ошибку     
+                    this.errors.password = null  
+                    // Возвращаем лейбл в исходное состояние
+                    this.passwordLabel = 'Пароль*'
+                }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                // if(this.user.password === this.user.passwordСonfirm){
-                //     const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
-                //         method: 'POST',
-                //         headers: {
-                //             'Content-Type': 'application/json'
-                //         },
-                //         body: JSON.stringify({
-                //             email: this.user.email,
-                //             name: this.user.name,
-                //             password: this.user.password
-                //         })
-                //     })
-                //     await response.json()
-                //     this.user.email = ''
-                //     this.user.name = ''
-                //     this.user.password = ''
-                //     if(response){
-                //         this.registrationDone = true
-                //     }
-                // }else{
-                //     alert('Пароли не совпадают')
-                //     this.user.passwordСonfirm = ''
-                // }
+                // ================= Валидация PASSWORDCONFIRM =====================
+                // Проверка введено ли что нибудь в поле passwordConfirm
+                if(this.passwordСonfirm.length === 0){
+                    // Записываем ошибку     
+                    this.errors.passwordСonfirm = true  
+                    // Выводим в лейбле сообщение об ошибке
+                    this.passwordСonfirmLabel = 'Поле не может быть пустым*'
+                }else{
+                    // Проверка подтверждения пароля. Пароль должен совпадать
+                    if(this.password !== this.passwordСonfirm){
+                        // Записываем ошибку     
+                        this.errors.passwordСonfirm = true  
+                        // Выводим в лейбле сообщение об ошибке
+                        this.passwordСonfirmLabel = 'Пароли не совпадают'
+                        // Очищаем поле passwordСonfirm
+                        this.passwordСonfirm = ''
+                    }
+                    else{
+                        // Отменяем ошибку     
+                        this.errors.passwordСonfirm = null  
+                        // Возвращаем лейбл в исходное состояние
+                        this.passwordСonfirmLabel = 'Пароли совпадают*'
+                    }
+                }
+        
+                // В случае валидности, отправляем данные из формы
+                if(this.errors.email === null && this.errors.name === null && this.errors.password === null && this.errors.passwordСonfirm === null){
+                    const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: this.email,
+                            name: this.name,
+                            password: this.password
+                        })
+                    })
+                    // Получаем ответ
+                    await response.json()
+                    // Очищаем поля
+                    this.email = ''
+                    this.name = ''
+                    this.password = ''
+                    this.passwordConfirm = ''
+                    // Если ответ получен
+                    if(response){
+                        // Говорим приложению, что регистрация прошла успешна
+                        this.registrationDone = true
+                    }   
+                }
             }
         }
     }
