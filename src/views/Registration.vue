@@ -103,10 +103,12 @@
                 }
             }
         },
+
         methods: {
             goToLogin(){
                 this.$router.push('/login')
             },
+
             async setNewUser(){
                 // Загружаем список пользователей с сервера
                 const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
@@ -136,7 +138,7 @@
                         // Выводим в лейбле сообщение об ошибке
                         this.emailLabel = 'Пользователь с таким именем уже существует*'
                         // Очищаем поле email
-                        this.email = ''
+                        // this.email = ''
                     }
                 }
 
@@ -182,8 +184,6 @@
                         this.errors.passwordСonfirm = true  
                         // Выводим в лейбле сообщение об ошибке
                         this.passwordСonfirmLabel = 'Пароли не совпадают'
-                        // Очищаем поле passwordСonfirm
-                        this.passwordСonfirm = ''
                     }
                     else{
                         // Отменяем ошибку     
@@ -194,7 +194,10 @@
                 }
         
                 // В случае валидности, отправляем данные из формы
-                if(this.errors.email === null && this.errors.name === null && this.errors.password === null && this.errors.passwordСonfirm === null){
+                if( this.errors.email === null && 
+                    this.errors.name === null && 
+                    this.errors.password === null && 
+                    this.errors.passwordСonfirm === null){
                     const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
                         method: 'POST',
                         headers: {
@@ -219,6 +222,32 @@
                         this.registrationDone = true
                     }   
                 }
+            }
+        },
+        watch:{
+            email(){
+                // Отменяем ошибку     
+                this.errors.email = null  
+                // Возвращаем лейбл в исходное состояние
+                this.emailLabel = 'Логин*'
+            },
+            name(){
+                // Отменяем ошибку     
+                this.errors.name = null  
+                // Возвращаем лейбл в исходное состояние
+                this.nameLabel = 'Имя*'
+            },
+            password(){
+                // Отменяем ошибку     
+                this.errors.password = null  
+                // Возвращаем лейбл в исходное состояние
+                this.passwordLabel = 'Пароль*'                
+            },
+            passwordСonfirm(){
+                // Отменяем ошибку     
+                this.errors.passwordСonfirm = null  
+                // Возвращаем лейбл в исходное состояние
+                this.passwordСonfirmLabel = 'Подтверждение пароля*'
             }
         }
     }
