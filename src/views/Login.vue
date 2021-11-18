@@ -37,8 +37,8 @@
                 passwordInput: '',
                 passwordInputLabel: 'Пароль*',
                 errors: {
-                    login: false,
-                    password: false
+                    login: null,
+                    password: null
                 }
             }
         },
@@ -52,14 +52,48 @@
                         ...data[key]
                     }
                 })
-                try {
-                    // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
-                    this.$store.state.user = arreyUsers.find(user => user.email === this.loginInput)
-                    // При успешном поиске
-                    this.errors.login = false
+                // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
+                this.$store.state.user = arreyUsers.find(user => user.email === this.loginInput)
+
+                // ================= Валидация EMAIL =====================
+                // Проверка введено ли что нибудь в поле email
+                if(this.loginInput.length === 0){  
+                    // Записываем ошибку     
+                    this.errors.login = true  
+                    // Выводим в лейбле сообщение об ошибке
+                    this.loginInputLabel = 'Поле не может быть пустым*'
+                }else{
+                    // Отменяем ошибку     
+                    this.errors.login = null  
+                    // Возвращаем лейбл в исходное состояние
                     this.loginInputLabel = 'Логин*'
-                    // Проверка корректного пароля
-                    if(this.passwordInput === this.$store.state.user.password){
+                    // Проверка есть ли данный пользователь на сервере
+                    if(this.$store.state.user === undefined){   
+                        // Записываем ошибку     
+                        this.errors.login = true            
+                        // Выводим в лейбле сообщение об ошибке
+                        this.loginInputLabel = 'Пользователь не найден. Зарегистрируйтесь*'
+                    }
+                }
+
+                // ================= Валидация PASSWORD =====================
+                // Проверка введено ли что нибудь в поле password
+                if(this.passwordInput.length === 0){
+                    // Записываем ошибку     
+                    this.errors.password = true  
+                    // Выводим в лейбле сообщение об ошибке
+                    this.passwordInputLabel = 'Поле не может быть пустым*'
+                }else{
+                    // Отменяем ошибку     
+                    this.errors.password = null  
+                    // Возвращаем лейбл в исходное состояние
+                    this.passwordLabel = 'Пароль*'
+                    if(this.$store.state.user.password !== this.passwordInput){
+                        // Записываем ошибку     
+                        this.errors.password = true  
+                        // Выводим в лейбле сообщение об ошибке
+                        this.passwordInputLabel = 'Пароль неверный*'
+                    }else{
                         // Обозначение во vuex, что авторизация произведена
                         this.$store.state.superApp.logInTrue = true
                         this.$store.state.superApp.name = this.$store.state.user.name
@@ -67,27 +101,27 @@
                         localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
                         // Переход на главную страницу
                         this.$router.push('/')
-                    }else{
-                        this.passwordInputLabel = 'Пароль неверный*'
-                        this.errors.password = true
-                    }       
-                    if(this.passwordInput.length === 0){
-                        this.errors.password = true
-                        this.passwordInputLabel = 'Поле не может быть пустым*'
-                    }                            
-                } catch (err) {
-                    if(this.loginInput.length === 0){
-                        this.errors.login = true
-                        this.loginInputLabel = 'Поле не может быть пустым*'
-                    }else{
-                        // Если на сервере отсутствует пользователь
-                        this.loginInputLabel = 'Пользователь не найден. Зарегистрируйтесь*'
-                        this.errors.login = true
                     }
                 }
+
+
             },
             goToRegistration(){
                 this.$router.push('/registration')
+            }
+        },
+        watch: {
+            loginInput(){
+                // Отменяем ошибку     
+                this.errors.login = null  
+                // Возвращаем лейбл в исходное состояние
+                this.loginInputLabel = 'Логин*'
+            },
+            passwordInput(){
+                // Отменяем ошибку     
+                this.errors.password = null  
+                // Возвращаем лейбл в исходное состояние
+                this.passwordInputLabel = 'Пароль*'
             }
         }
     }
