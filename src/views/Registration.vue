@@ -1,8 +1,9 @@
 <template>
     <div class="content__form-wrapper">
+        <Loading v-if="loading === true" />
         <form class="content__form" 
             @submit.prevent="setNewUser" 
-            v-if="!registrationDone"
+            v-else-if="!registrationDone"
             >
             <div class="form-title">
                 Регистрация
@@ -75,15 +76,18 @@
         <div class="response" v-else>
             <h1>Регистрация успешно выполнена. Перейти на страницу авторизации.</h1>
             <button class="btn" @click.prevent="goToLogin">ПЕРЕЙТИ</button>
-
         </div>
     </div>
 </template>
 
 <script>
     import axios from 'axios'
+    import Loading from './Loading.vue'
 
     export default {
+        components: {
+            Loading
+        },
         data(){
             return{
                 email: '',
@@ -100,7 +104,8 @@
                     name: null,
                     password: null,
                     passwordСonfirm: null
-                }
+                },
+                loading: false
             }
         },
 
@@ -110,6 +115,7 @@
             },
 
             async setNewUser(){
+                this.loading = true
                 // Загружаем список пользователей с сервера
                 const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
                 const arreyUsers = Object.keys(data).map(key => {
@@ -118,6 +124,7 @@
                         ...data[key]
                     }
                 })
+                this.loading = false
 
                 // ================= Валидация EMAIL =====================
                 // Проверка введено ли что нибудь в поле email
@@ -198,6 +205,7 @@
                     this.errors.name === null && 
                     this.errors.password === null && 
                     this.errors.passwordСonfirm === null){
+                    this.loading = true
                     const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
                         method: 'POST',
                         headers: {
@@ -218,6 +226,8 @@
                     this.passwordConfirm = ''
                     // Если ответ получен
                     if(response){
+                        this.loading = false
+
                         // Говорим приложению, что регистрация прошла успешна
                         this.registrationDone = true
                     }   
@@ -318,7 +328,12 @@
         margin-right: 30px;
     }
     .btn:hover{
+        transition: 0.2s;
         background-color: #f8e003;
+        transform: scale(1.1);
+    }
+    .btn:active{
+        transform: scale(1);
     }
 </style>>
 

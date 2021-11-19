@@ -69,7 +69,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .header{
         height: 100px;
         display: flex;
@@ -116,6 +116,7 @@
     }
 
     .btn{
+        font-family: Arial, Helvetica, sans-serif; 
         text-decoration: none;
         padding: 5px 9px 5px 9px;
         border: 0;
@@ -125,6 +126,15 @@
         justify-content: center;
         align-items: center;
         color: #1E1F1C;
+        transition: 0.1s;
+    }
+    .btn:hover{
+        transition: 0.2s;
+        background-color: #f8e003;
+        transform: scale(1.1);
+    }
+    .btn:active{
+        transform: scale(1);
     }
     .user{
         font-size: 14px;

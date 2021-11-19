@@ -10,10 +10,8 @@
             </div>
         </div>
         <div class="content__form-wrapper">
-            <div class="loader" v-if="loading === true">
-                <img src="../assets/gifs/wait-load.gif" alt="gif">
-                <p>Загрузка...</p>
-            </div>
+            <!-- Компонент лоадера -->
+            <Loading v-if="loading === true" />
             <form class="content__form" @submit.prevent="logIn" v-else>
                 <div class="form-title">
                     Авторизация
@@ -33,7 +31,11 @@
 
 <script>
     import axios from 'axios'
+    import Loading from './Loading.vue'
     export default {
+        components: {
+            Loading
+        },
         data(){
             return{
                 loginInput: '',
@@ -60,7 +62,7 @@
                 })
                 // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
                 this.$store.state.user = arreyUsers.find(user => user.email === this.loginInput)
-                console.log(this.$store.state.user)
+                // console.log(this.$store.state.user)
                 this.loading = false
                 // ================= Валидация EMAIL =====================
                 // Проверка введено ли что нибудь в поле email
@@ -136,20 +138,6 @@
 
 
 <style scoped>
-    .loader{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-    }
-    .loader img {
-        width: 500px;
-    }
-    .loader p {
-        color: #BFBFBF;
-        position: absolute;
-        margin: 0 auto;
-    }
     .content{
         margin: 0 auto;
     }
@@ -244,8 +232,14 @@
         align-items: center;
         color: #1E1F1C;
         margin-right: 30px;
+        transition: 0.1s;
     }
     .btn:hover{
+        transition: 0.2s;
         background-color: #f8e003;
+        transform: scale(1.1);
+    }
+    .btn:active{
+        transform: scale(1);
     }
 </style>
