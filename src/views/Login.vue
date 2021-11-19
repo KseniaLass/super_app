@@ -10,7 +10,11 @@
             </div>
         </div>
         <div class="content__form-wrapper">
-            <form class="content__form">
+            <div class="loader" v-if="loading === true">
+                <img src="../assets/gifs/wait-load.gif" alt="gif">
+                <p>Загрузка...</p>
+            </div>
+            <form class="content__form" @submit.prevent="logIn" v-else>
                 <div class="form-title">
                     Авторизация
                 </div>
@@ -19,7 +23,7 @@
                 <label for="password" class="input-label" :class="{label_error: errors.password == true}">{{passwordInputLabel}}</label>
                 <input v-model="passwordInput" type="password" id="password" class="input" :class="{input_error: errors.password == true}" placeholder="Введите Ваш пароль">
                 <div class="btns">
-                    <button class="btn" @click.prevent="logIn">ВОЙТИ</button>
+                    <button class="btn">ВОЙТИ</button>
                     <button class="btn" @click.prevent="goToRegistration">РЕГИСТРАЦИЯ</button>
                 </div>
             </form>
@@ -39,11 +43,13 @@
                 errors: {
                     login: null,
                     password: null
-                }
+                },
+                loading: false
             }
         },
         methods: {
             async logIn(){
+                this.loading = true
                 // Запрос на сервер и получение массива с пользователями
                 const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
                 const arreyUsers = Object.keys(data).map(key => {
@@ -54,7 +60,8 @@
                 })
                 // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
                 this.$store.state.user = arreyUsers.find(user => user.email === this.loginInput)
-
+                console.log(this.$store.state.user)
+                this.loading = false
                 // ================= Валидация EMAIL =====================
                 // Проверка введено ли что нибудь в поле email
                 if(this.loginInput.length === 0){  
@@ -129,7 +136,20 @@
 
 
 <style scoped>
-
+    .loader{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    .loader img {
+        width: 500px;
+    }
+    .loader p {
+        color: #BFBFBF;
+        position: absolute;
+        margin: 0 auto;
+    }
     .content{
         margin: 0 auto;
     }
