@@ -8,7 +8,7 @@
                 </div>
                 <div class="op-grid">
                     <button @click="input(op.name)" class="op-item" v-for="op of operations" :key="op">{{op.value}}</button>
-                    <button @click="reset()" class="op-item">C</button>
+                    <button @click="reset()" class="op-item remove">C</button>
                     <button @click="calculate()" class="op-item">=</button>
                 </div>
             </div>
@@ -21,7 +21,7 @@
         data(){
             return{
                 result: '',
-                numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.'],
+                numbers: [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, '.'],
                 operations: [
                     {name: '+', value: '+'},
                     {name: '-', value: '-'},
@@ -53,12 +53,12 @@
     }
     .calc__body{
         margin-top: 20px;
-        width: 700px;
-        height: 460px;
+        width: 600px;
+        height: 500px;
         background-color: rgb(49, 49, 49);
         box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
         border-radius: 10px;
-        padding: 20px;
+        /* padding: 20px; */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -70,7 +70,7 @@
         padding-right: 20px;
         color: #D7D7D7;
         width: 80%;
-        font-size: 60px;
+        font-size: 100px;
     }
     input::placeholder {
         color:#D7D7D7;
@@ -103,7 +103,8 @@
     .num-item:nth-last-child(2){
         grid-column-start: 1;
         grid-column-end: 3;
-        width: 85%;
+        /* width: 85%; */
+        width: 90%;
         border-radius: 35px;
     }
     .num-item:hover{
@@ -122,7 +123,7 @@
         justify-self: center;
         border: none;
         border-radius: 25px;
-        background-color: #EC9F3A;
+        background-color: #ffa024;
         color: rgb(49, 49, 49);
         height: 70px;
         width: 120px;
@@ -130,11 +131,22 @@
         margin-bottom: 15px;
         transition: 0.2s;
     }
+    .remove{
+        background-color: #eb5d0b;
+        color: #D7D7D7;
+    }
+
     .op-item:hover{
         background-color: #f7b660;
         transition: 0.2s;
     }
     .op-item:active{
         background-color: #f8d2a1;
+    }
+    .remove:hover{
+        background-color: #e76f2a;
+    }
+    .remove:active{
+        background-color: #e68046;
     }
 </style>

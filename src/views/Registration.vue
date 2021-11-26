@@ -214,7 +214,8 @@
                         body: JSON.stringify({
                             email: this.email,
                             name: this.name,
-                            password: this.password
+                            password: this.password,
+                            toDo: []
                         })
                     })
                     // Получаем ответ
