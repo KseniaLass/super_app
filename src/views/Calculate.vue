@@ -2,13 +2,15 @@
     <div class="content container">
         <div class="calc__body">
             <input type="text" v-model="result" placeholder="0" class="display" disabled>
+            <!-- <div class="display">{{display}}</div> -->
             <div class="grid">
                 <div class="num-grid">
-                    <button @click="input(num)" class="num-item" v-for="num of numbers" :key="num">{{num}}</button>
+                    <button @click="inputNum(num)" class="num-item" v-for="num of numbers" :key="num">{{num}}</button>
                 </div>
                 <div class="op-grid">
-                    <button @click="input(op.name)" class="op-item" v-for="op of operations" :key="op">{{op.value}}</button>
-                    <button @click="reset()" class="op-item remove">C</button>
+                    <button @click="reset()" class="op-item op-top">C</button>
+                    <button @click="percent()" class="op-item op-top">%</button>
+                    <button @click="getOp(op.name)" class="op-item" v-for="op of operations" :key="op" v-html="op.value"></button>
                     <button @click="calculate()" class="op-item">=</button>
                 </div>
             </div>
@@ -23,24 +25,54 @@
                 result: '',
                 numbers: [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, '.'],
                 operations: [
-                    {name: '+', value: '+'},
-                    {name: '-', value: '-'},
-                    {name: '*', value: 'X'},
-                    {name: '/', value: '/'},
-                    {name: '(', value: '('},
-                    {name: ')', value: ')'}
-                ]
+                    {name: '-', value: '&minus;'},
+                    {name: '*', value: '&times;'},
+                    {name: '/', value: '&divide;'},
+                    {name: '+', value: '+'}
+                ],
+                numA: '',
+                numB: '',
+                operationValue: ''
             }
         },
         methods: {
-            input(item){
-                this.result += item
+            inputNum(item){
+                if(this.numB === '' && this.operationValue === ''){
+                    this.numA += item
+                    this.result = this.numA
+                }else{
+                    this.numB += item
+                    this.result = this.numB
+                }
+            },
+            getOp(item){
+                this.operationValue = item
+                this.result = this.operationValue
             },
             calculate(){
-                this.result = eval(this.result)
+                if(this.operationValue === '+'){
+                    this.result = (+this.numA) + (+this.numB)
+                }
+                if(this.operationValue === '-'){
+                    this.result = (+this.numA) - (+this.numB)
+                }
+                if(this.operationValue === '*'){
+                    this.result = (+this.numA) * (+this.numB)
+                }
+                if(this.operationValue === '/'){
+                    this.result = (+this.numA) / (+this.numB)
+                }
+                this.numA = this.result
+                this.numB = ''
             },
             reset(){
                 this.result = ''
+                this.numA = ''
+                this.numB = ''
+                this.operationValue = ''
+            },
+            percent(item){
+                // this.result = item / 100 * eval(this.result)
             }
         }
     }
@@ -53,12 +85,11 @@
     }
     .calc__body{
         margin-top: 20px;
-        width: 600px;
+        width: 500px;
         height: 500px;
         background-color: rgb(49, 49, 49);
-        box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
+        box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.603);
         border-radius: 10px;
-        /* padding: 20px; */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -69,16 +100,16 @@
         text-align: end;
         padding-right: 20px;
         color: #D7D7D7;
-        width: 80%;
-        font-size: 100px;
+        width: 90%;
+        font-size: 90px;
+        margin-top: 20px;
     }
     input::placeholder {
         color:#D7D7D7;
     }
     .grid{
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        justify-content: space-between;
+        grid-template-columns: 3fr 2fr;
         align-items: center;
         height: 100%;
         width: 90%;
@@ -103,7 +134,6 @@
     .num-item:nth-last-child(2){
         grid-column-start: 1;
         grid-column-end: 3;
-        /* width: 85%; */
         width: 90%;
         border-radius: 35px;
     }
@@ -118,20 +148,27 @@
     .op-grid{
         display: grid;
         grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
     }
     .op-item{
         justify-self: center;
         border: none;
-        border-radius: 25px;
+        border-radius: 50%;
         background-color: #ffa024;
         color: rgb(49, 49, 49);
         height: 70px;
-        width: 120px;
+        width: 70px;
         font-size: 30px;
         margin-bottom: 15px;
         transition: 0.2s;
     }
-    .remove{
+    .op-item:nth-last-child(2){
+        grid-row-start: 3;
+        grid-row-end: 5;
+        height: 90%;
+        border-radius: 35px;
+    }
+    .op-top{
         background-color: #eb5d0b;
         color: #D7D7D7;
     }
@@ -143,10 +180,10 @@
     .op-item:active{
         background-color: #f8d2a1;
     }
-    .remove:hover{
+    .op-top:hover{
         background-color: #e76f2a;
     }
-    .remove:active{
+    .op-top:active{
         background-color: #e68046;
     }
 </style>
