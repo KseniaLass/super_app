@@ -35,9 +35,13 @@
             }
         },
         methods: {
+            
             inputNum(item){
+                // Если в переменной "В" пусто и не нажат какой нибудь знак
                 if(this.numB === '' && this.operationValue === ''){
+                    // Записываем в переменную "А" нажатую кнопку (цыфру)
                     this.numA += item
+                    // Выводим значение на дисплей
                     this.result = this.numA
                     this.result = this.result.toString().replace(/^0+/, '0');
                 }else{
