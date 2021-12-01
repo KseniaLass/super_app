@@ -2,7 +2,6 @@
     <div class="content container">
         <div class="calc__body">
             <input type="text" v-model="result" placeholder="0" class="display" disabled>
-            <!-- <div class="display">{{display}}</div> -->
             <div class="grid">
                 <div class="num-grid">
                     <button @click="inputNum(num)" class="num-item" v-for="num of numbers" :key="num">{{num}}</button>
@@ -40,14 +39,15 @@
                 if(this.numB === '' && this.operationValue === ''){
                     this.numA += item
                     this.result = this.numA
+                    this.result = this.result.toString().replace(/^0+/, '0');
                 }else{
                     this.numB += item
                     this.result = this.numB
+                    this.result = this.result.toString().replace(/^0+/, '0');
                 }
             },
             getOp(item){
                 this.operationValue = item
-                this.result = this.operationValue
             },
             calculate(){
                 if(this.operationValue === '+'){
@@ -71,13 +71,16 @@
                 this.numB = ''
                 this.operationValue = ''
             },
-            percent(item){
-                // this.result = item / 100 * eval(this.result)
+            percent(){
+                this.result = (+this.numB) * (+this.numA) / 100
+                this.numA = this.result
+                this.numB = ''
+                this.operationValue = ''
             }
         }
     }
 </script>
-
+ 
 <style scoped>
     .content{
         display: flex;
