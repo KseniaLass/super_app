@@ -35,7 +35,7 @@
             }
         },
         methods: {
-            
+            // Функция получения цифр калькулятора
             inputNum(item){
                 // Если в переменной "В" пусто и не нажат какой либо знак
                 if(this.numB === '' && this.operationValue === ''){
@@ -43,17 +43,25 @@
                     this.numA += item
                     // Выводим значение на дисплей
                     this.result = this.numA
+                    // Убираем лишние нули перед запятой (если есть)
                     this.result = this.result.toString().replace(/^0+/, '0');
-                }else{
+                }else{ // Иначе
+                    // Записываем в переменную "B" нажатую кнопку (цыфру)
                     this.numB += item
+                    // Выводим значение на дисплей
                     this.result = this.numB
+                    // Убираем лишние нули перед запятой (если есть)
                     this.result = this.result.toString().replace(/^0+/, '0');
                 }
             },
+            // Функция получения операторов калькулятора
             getOp(item){
+                // Получаем оператор и записываем в переменную
                 this.operationValue = item
             },
+            // Функция вычисления
             calculate(){
+                // Тут коментарии особо не нужны
                 if(this.operationValue === '+'){
                     this.result = (+this.numA) + (+this.numB)
                 }
@@ -66,10 +74,14 @@
                 if(this.operationValue === '/'){
                     this.result = (+this.numA) / (+this.numB)
                 }
+                // Записываем результат в переменную "А"
                 this.numA = this.result
+                // Очищаем переменную "В"
                 this.numB = ''
             },
+            // Фуннкция очистки
             reset(){
+                // Очищаем все переменные
                 this.result = ''
                 this.numA = ''
                 this.numB = ''
