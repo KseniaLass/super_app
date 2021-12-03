@@ -96,7 +96,7 @@
         height: 500px;
         background-color: rgb(49, 49, 49);
         box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.603);
-        border-radius: 10px;
+        border-radius: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
