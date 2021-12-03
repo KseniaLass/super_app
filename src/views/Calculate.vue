@@ -41,17 +41,32 @@
                 if(this.numB === '' && this.operationValue === ''){
                     // Записываем в переменную "А" нажатую кнопку (цыфру)
                     this.numA += item
-                    // Выводим значение на дисплей
-                    this.result = this.numA
-                    // Убираем лишние нули перед запятой (если есть)
-                    this.result = this.result.toString().replace(/^0+/, '0');
+                    // Проверка есть ли запятая (точка) после первого символа
+                    if(this.numA[1] === '.'){
+                        // Выводим значение на дисплей
+                        this.result = this.numA
+                        // Убираем лишние нули перед запятой (если есть)
+                        this.result = this.result.toString().replace(/^0+/, '0');
+                    }else{ // Если запятой (точки) нет
+                        // Выводим значение на дисплей
+                        this.result = this.numA
+                        // Убираем нули перед числом (если есть)
+                        this.result = this.result.toString().replace(/^0+/, '');
+                    }
                 }else{ // Иначе
                     // Записываем в переменную "B" нажатую кнопку (цыфру)
                     this.numB += item
-                    // Выводим значение на дисплей
-                    this.result = this.numB
-                    // Убираем лишние нули перед запятой (если есть)
-                    this.result = this.result.toString().replace(/^0+/, '0');
+                    if(this.numB[1] === '.'){
+                        // Выводим значение на дисплей
+                        this.result = this.numB
+                        // Убираем лишние нули перед запятой (если есть)
+                        this.result = this.result.toString().replace(/^0+/, '0');
+                    }else{ // Если запятой (точки) нет
+                        // Выводим значение на дисплей
+                        this.result = this.numB
+                        // Убираем лишние нули перед запятой (если есть)
+                        this.result = this.result.toString().replace(/^0+/, '');
+                    }
                 }
             },
             // Функция получения операторов калькулятора
