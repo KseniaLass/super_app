@@ -177,7 +177,7 @@
     }
     .num-item:active{
         background-color: #9b9b99;
-
+        transform: scale(0.95);
     }
     .op-grid{
         display: grid;
@@ -213,11 +213,13 @@
     }
     .op-item:active{
         background-color: #f8d2a1;
+        transform: scale(0.95);
     }
     .op-top:hover{
         background-color: #e76f2a;
     }
     .op-top:active{
         background-color: #e68046;
+        transform: scale(0.95);
     }
 </style>
