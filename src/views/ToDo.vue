@@ -1,18 +1,16 @@
 <template>
-    <div class="container new">
-        <div class="form">
-            <!-- <input type="text" class="input">
-            <button class="btn">Добавить</button> -->
-        </div>
-    </div>
-
+   <div class="tasks-wrapper">
+       <div class="tasks-new"></div>
+       <div class="tasks-line"></div>
+       <div class="tasks-done"></div>
+   </div>
 </template>
 
 <script>
     export default {
         data() {
             return { 
-
+                
             }
         }
     }
@@ -22,22 +20,15 @@
     *{
         font-family: Arial, Helvetica, sans-serif;
     }
-    .container{
-        margin-top: 10px;
-        width: 100%; 
-        height: 80vh;
-        box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.603);
-        border-radius: 20px;
-    }
-    .form{
+    .tasks-wrapper{
+        /* background-color: burlywood; */
         width: 100%;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1px 1fr;
     }
-    .input{
-        width: 400px;
-        height: 40px;
-        font-size: 24px;
-    }
-    .btn{
-
+    .tasks-line{
+        background-color: blanchedalmond;
+        border: none;
     }
 </style>

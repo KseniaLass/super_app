@@ -266,15 +266,19 @@
 
 <style scoped>
     .content__form-wrapper{
-        padding-left: 70px;
-        padding-right: 70px;
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        justify-content: center;
+        align-items: center;
     }
     .content__form{
+        margin-top: 70px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        /* box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603); */
+        box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
         border-radius: 10px;
         padding: 20px;
     }

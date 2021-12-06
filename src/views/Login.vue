@@ -143,9 +143,17 @@
     }
 
     .content{
+        position: absolute;
+        width: 100%;
+        left: 0;
+        right: 0;   
+        bottom: 0;
+        top: 0;
         margin-top: 50px;
         display: grid;
         grid-template-columns: 1fr 1fr;
+        justify-content: center;
+        align-items: center;
     }
 
     .text-title{
