@@ -1,9 +1,19 @@
 <template>
-   <div class="tasks-wrapper">
-       <div class="tasks-new"></div>
-       <div class="tasks-line"></div>
-       <div class="tasks-done"></div>
-   </div>
+    <div class="tasks-wrapper container">
+        <div class="tasks-sidebar-wrapper">
+            <div class="tasks-sidebar">
+                <ul class="tasks-nav">
+                    <li class="tasks-nav-item">Новые</li>
+                    <li class="tasks-nav-item">В работе</li>
+                    <li class="tasks-nav-item">Завершенные</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="tasks-list">
+            jfjfjfjfjfjfjfjf
+        </div>
+    </div>
 </template>
 
 <script>
@@ -21,14 +31,22 @@
         font-family: Arial, Helvetica, sans-serif;
     }
     .tasks-wrapper{
-        /* background-color: burlywood; */
         width: 100%;
-        height: 100vh;
+        height: 1000px;
         display: grid;
-        grid-template-columns: 1fr 1px 1fr;
+        grid-template-columns: 2fr 6fr;
     }
-    .tasks-line{
-        background-color: blanchedalmond;
-        border: none;
+    .tasks-sidebar-wrapper{
+        background-color: rgba(105, 105, 105, 0.541);
+        position: relative;
     }
+    .tasks-sidebar{
+        position: fixed;
+        top: 100px;
+    }
+    .tasks-list{
+        background-color: rgb(182, 118, 22);
+        margin-top: 100px;
+    }
+
 </style>
