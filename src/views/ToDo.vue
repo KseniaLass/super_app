@@ -13,16 +13,26 @@
                 </ul>
             </div>
         </div>
-        
         <div class="tasks-list">
-            <div class="task-item">
-                <div class="task-item-id">{{taskId}}</div>
-                <div class="task-item-title">{{taskName}}</div>
-                <div class="task-item-date">{{createDate}}</div>
-                <button class="task-item-edit">&#9998;</button>
-                <button class="task-item-delete">&otimes;</button>
+            <div class="task-item-wrapper" v-if="tasks.length">
+                <div class="task-item" v-for="task of tasks" :key="task">
+                    <input 
+                        class="task-item-check_box" 
+                        type="checkbox" 
+                        v-model="checkbox" 
+                        :checked="task.checkbox"
+                    >
+                    <div class="task-item-title">{{task.taskName}}</div>
+                    <div class="task-item-date">{{task.createDate}}</div>
+                    <button class="task-item-edit">&#9998;</button>
+                    <button class="task-item-delete">&otimes;</button>
+                </div>
+            </div>
+            <div class="task-item-if-null" v-else>
+                Список задач пуст. Догбавьте новую задачу!
             </div>
         </div>
+        
     </div>
 </template>
 
@@ -32,37 +42,40 @@
             return { 
                 tasksNav: [
                     {
-                        name: 'new',
-                        value: 'Новые задачи'
+                        name: 'activeTasks',
+                        value: 'Активные задачи'
                     },
                     {
-                        name: 'inJob',
-                        value: 'Задачи в работе'
-                    },
-                    {
-                        name: 'done',
+                        name: 'doneTasks',
                         value: 'Завершенные'
                     }
                 ],
                 tasks: [
                     {
-                        taskId: 1,
+                        checkbox: true,
                         taskName: 'Помыть посуду',
                         taskDesсription: 'Прекрасно. Опросите водителей. Может, они что видели. Затем свяжитесь с таксомоторной компанией, перешлите им описание беглецов. А я позвоню в Интерпол.',
                         createDate: '07.12.2021'
                     },
                     {
-                        taskId: 2,
-                        taskName: 'Помыть посуду',
+                        checkbox: false,
+                        taskName: 'Вынести мусор',
                         taskDesсription: 'Прекрасно. Опросите водителей. Может, они что видели. Затем свяжитесь с таксомоторной компанией, перешлите им описание беглецов. А я позвоню в Интерпол.',
-                        createDate: '07.12.2021'
+                        createDate: '08.12.2021'
                     },
+                    {
+                        checkbox: true,
+                        taskName: 'Покормить кошку',
+                        taskDesсription: 'Прекрасно. Опросите водителей. Может, они что видели. Затем свяжитесь с таксомоторной компанией, перешлите им описание беглецов. А я позвоню в Интерпол.',
+                        createDate: '09.12.2021'
+                    }
                 ]
             }
         },
         methods: {
             goFilter(item){
                 alert(item)
+                // alert(this.tasks.length)
             }
         }
     }
@@ -108,7 +121,11 @@
         margin-top: 130px;
         color: blanchedalmond;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    .task-item-wrapper{
+        width: 90%;
     }
     .task-item{
         padding-left: 20px;
@@ -117,19 +134,17 @@
         padding-bottom: 10px;
         background-color: #1E1F1C;
         box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.603);
-        border-radius: 10px;
-        width: 80%;
+        border-radius: 8px;
         display: grid;
         grid-template-columns: 1fr 6fr 2fr 1fr 1fr;
         justify-content: center;
         align-items: center;
+        margin-bottom: 20px;
     }
-    .task-item-id, 
     .task-item-title,
     .task-item-date{
         font-size: 20px;
         letter-spacing: 2px;
-
     }
     .task-item-edit,
     .task-item-delete{
@@ -150,7 +165,7 @@
         color: rgb(59, 235, 103);
     }
     .task-item-delete{
-        font-size: 38px;
+        font-size: 39px;
         color: red;
     }
     .task-item-edit:hover,
