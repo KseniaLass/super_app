@@ -5,10 +5,10 @@
                 <ul class="tasks-nav">
                     <li 
                         class="tasks-nav-item" 
-                        v-for="task of tasksNav" 
-                        :key="task"
-                        @click="goFilter(task.name)"
-                        >{{task.value}}
+                        v-for="taskNav of tasksNav" 
+                        :key="taskNav"
+                        @click="tasksFilter(taskNav.name)"
+                        >{{taskNav.value}}
                     </li>
                 </ul>
             </div>
@@ -16,20 +16,20 @@
         <div class="tasks-list">
             <div class="task-item-wrapper" v-if="tasks.length">
                 <div class="task-item" v-for="task of tasks" :key="task">
-                    <input 
+                    <input
                         class="task-item-check_box" 
                         type="checkbox" 
-                        v-model="checkbox" 
+                        v-model="task.checkbox" 
                         :checked="task.checkbox"
                     >
-                    <div class="task-item-title">{{task.taskName}}</div>
-                    <div class="task-item-date">{{task.createDate}}</div>
+                    <div class="task-item-title" :class="{task_done: task.checkbox}">{{task.taskName}}</div>
+                    <div class="task-item-date" :class="{task_done: task.checkbox}">{{task.createDate}}</div>
                     <button class="task-item-edit">&#9998;</button>
-                    <button class="task-item-delete">&otimes;</button>
+                    <button class="task-item-delete" @click="deleteTask(task)">&otimes;</button>
                 </div>
             </div>
             <div class="task-item-if-null" v-else>
-                Список задач пуст. Догбавьте новую задачу!
+                Список задач пуст. Добавьте новую задачу!
             </div>
         </div>
         
@@ -40,7 +40,28 @@
     export default {
         data() {
             return { 
+                toDo:[
+                    {
+                        checkbox: true,
+                        taskName: 'Помыть посуду',
+                        createDate: '07.12.2021'
+                    },
+                    {
+                        checkbox: false,
+                        taskName: 'Вынести мусор',
+                        createDate: '08.12.2021'
+                    },
+                    {
+                        checkbox: true,
+                        taskName: 'Покормить кошку',
+                        createDate: '09.12.2021'
+                    }
+                ],
                 tasksNav: [
+                    {
+                        name: 'allTasks',
+                        value: 'Все задачи'
+                    },
                     {
                         name: 'activeTasks',
                         value: 'Активные задачи'
@@ -50,33 +71,36 @@
                         value: 'Завершенные'
                     }
                 ],
-                tasks: [
-                    {
-                        checkbox: true,
-                        taskName: 'Помыть посуду',
-                        taskDesсription: 'Прекрасно. Опросите водителей. Может, они что видели. Затем свяжитесь с таксомоторной компанией, перешлите им описание беглецов. А я позвоню в Интерпол.',
-                        createDate: '07.12.2021'
-                    },
-                    {
-                        checkbox: false,
-                        taskName: 'Вынести мусор',
-                        taskDesсription: 'Прекрасно. Опросите водителей. Может, они что видели. Затем свяжитесь с таксомоторной компанией, перешлите им описание беглецов. А я позвоню в Интерпол.',
-                        createDate: '08.12.2021'
-                    },
-                    {
-                        checkbox: true,
-                        taskName: 'Покормить кошку',
-                        taskDesсription: 'Прекрасно. Опросите водителей. Может, они что видели. Затем свяжитесь с таксомоторной компанией, перешлите им описание беглецов. А я позвоню в Интерпол.',
-                        createDate: '09.12.2021'
-                    }
-                ]
+                tasks: []
             }
         },
         methods: {
             goFilter(item){
                 alert(item)
                 // alert(this.tasks.length)
-            }
+            },
+            deleteTask(task){
+                this.tasks = this.tasks.filter(item => item !== task)
+            },
+            tasksFilter(nav){
+                this.tasks = this.toDo
+                if(nav === 'allTasks'){
+                    // this.tasks.filter(item => item.checkbox !== true)
+                    // alert(nav)
+                }
+                if(nav === 'activeTasks'){
+                    this.tasks = this.tasks.filter(item => item.checkbox !== true)
+                    // alert(nav)
+                }
+                if(nav === 'doneTasks'){
+                    this.tasks = this.tasks.filter(item => item.checkbox !== false)
+                    // alert(nav)
+                }
+            },
+
+        },
+        beforeMount(){
+            this.tasks = this.toDo
         }
     }
 </script>
@@ -145,6 +169,10 @@
     .task-item-date{
         font-size: 20px;
         letter-spacing: 2px;
+    }
+    .task_done{
+        text-decoration: line-through;
+        color: rgba(170, 170, 170, 0.459);
     }
     .task-item-edit,
     .task-item-delete{
