@@ -5,9 +5,10 @@
                 <ul class="tasks-nav">
                     <li 
                         class="tasks-nav-item" 
+                        :class="{tasks_nav_item_active: taskNav.isActive}"
                         v-for="taskNav of tasksNav" 
                         :key="taskNav"
-                        @click="tasksFilter(taskNav.name)"
+                        @click="tasksFilter(taskNav)"
                         >{{taskNav.value}}
                     </li>
                 </ul>
@@ -15,7 +16,7 @@
         </div>
         <div class="tasks-list">
             <div class="task-item-wrapper" v-if="tasks.length">
-                <div class="task-item" v-for="task of tasks" :key="task">
+                <div class="task-item" v-for="task of tasks" :key="task" >
                     <input
                         class="task-item-check_box" 
                         type="checkbox" 
@@ -29,7 +30,23 @@
                 </div>
             </div>
             <div class="task-item-if-null" v-else>
-                Список задач пуст. Добавьте новую задачу!
+                <div v-if="!tasks.length">
+                    Список задач пуст. Добавьте новую задачу!
+                </div>
+
+
+
+                <!-- В процессе!!!!!!! -->
+
+
+
+
+                <div v-else-if="tasks.checkbox === false">
+                    Нет активных задач.
+                </div>
+                <!-- <div>
+                    Нет завершенных задач.
+                </div> -->
             </div>
         </div>
         
@@ -60,15 +77,18 @@
                 tasksNav: [
                     {
                         name: 'allTasks',
-                        value: 'Все задачи'
+                        value: 'Все задачи',
+                        isActive: ''
                     },
                     {
                         name: 'activeTasks',
-                        value: 'Активные задачи'
+                        value: 'Активные задачи',
+                        isActive: ''
                     },
                     {
                         name: 'doneTasks',
-                        value: 'Завершенные'
+                        value: 'Завершенные',
+                        isActive: ''
                     }
                 ],
                 tasks: []
@@ -84,17 +104,16 @@
             },
             tasksFilter(nav){
                 this.tasks = this.toDo
-                if(nav === 'allTasks'){
-                    // this.tasks.filter(item => item.checkbox !== true)
-                    // alert(nav)
+                if(nav.name === 'allTasks'){
+                    nav.isActive = true
                 }
-                if(nav === 'activeTasks'){
+                if(nav.name === 'activeTasks'){
                     this.tasks = this.tasks.filter(item => item.checkbox !== true)
-                    // alert(nav)
+                    nav.isActive = true
                 }
-                if(nav === 'doneTasks'){
+                if(nav.name === 'doneTasks'){
                     this.tasks = this.tasks.filter(item => item.checkbox !== false)
-                    // alert(nav)
+                    nav.isActive = true
                 }
             },
 
@@ -138,9 +157,9 @@
         color: #d6a812;
         transition: 0.2s;
     }
-    /* .tasks-nav-item-active{
-
-    } */
+    .tasks_nav_item_active{
+        color: #d6a812;
+    }
     .tasks-list{
         margin-top: 130px;
         color: blanchedalmond;

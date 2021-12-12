@@ -9,7 +9,8 @@ export default createStore({
         user: {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            toDo: []
         },
         arreyUsers: []
     },

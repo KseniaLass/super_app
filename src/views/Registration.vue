@@ -228,7 +228,6 @@
                     // Если ответ получен
                     if(response){
                         this.loading = false
-
                         // Говорим приложению, что регистрация прошла успешна
                         this.registrationDone = true
                     }   
