@@ -40,7 +40,6 @@
 
 
 
-
                 <div v-else-if="tasks.checkbox === false">
                     Нет активных задач.
                 </div>
