@@ -5,7 +5,6 @@
                 <ul class="tasks-nav">
                     <li 
                         class="tasks-nav-item" 
-                        :class="{tasks_nav_item_active: taskNav.isActive}"
                         v-for="taskNav of tasksNav" 
                         :key="taskNav"
                         @click="tasksFilter(taskNav)"
@@ -30,7 +29,7 @@
                 </div>
             </div>
             <div class="task-item-if-null" v-else>
-                <div v-if="!tasks.length">
+                <div v-if="isAllTasksZero">
                     Список задач пуст. Добавьте новую задачу!
                 </div>
 
@@ -40,12 +39,12 @@
 
 
 
-                <div v-else-if="tasks.checkbox === false">
+                <div v-else-if="isActiveTasksZero">
                     Нет активных задач.
                 </div>
-                <!-- <div>
+                <div v-else-if="isDoneTasksZero">
                     Нет завершенных задач.
-                </div> -->
+                </div>
             </div>
         </div>
         
@@ -90,7 +89,10 @@
                         isActive: ''
                     }
                 ],
-                tasks: []
+                tasks: [],
+                isAllTasksZero: null,
+                isActiveTasksZero: null,
+                isDoneTasksZero: null
             }
         },
         methods: {
@@ -108,14 +110,23 @@
                 }
                 if(nav.name === 'activeTasks'){
                     this.tasks = this.tasks.filter(item => item.checkbox !== true)
-                    nav.isActive = true
+                    // alert(this.tasks.length)
+                    if(this.tasks.length === 0){
+                        this.isActiveTasksZero = true
+                    }else{
+                        this.isActiveTasksZero = false
+                    }
                 }
                 if(nav.name === 'doneTasks'){
                     this.tasks = this.tasks.filter(item => item.checkbox !== false)
-                    nav.isActive = true
+                    if(this.tasks.length === 0){
+                        this.isDoneTasksZero = true
+                    }else{
+                        this.isDoneTasksZero = false
+                    }
                 }
-            },
-
+                // if(this.tasks[checkbox])
+            }
         },
         beforeMount(){
             this.tasks = this.toDo
