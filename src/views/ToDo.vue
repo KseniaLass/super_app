@@ -8,7 +8,9 @@
                         v-for="taskNav of tasksNav" 
                         :key="taskNav"
                         @click="tasksFilter(taskNav)"
+                        :class="[taskNav.isActive ? 'tasks_nav_item_active' : '']"
                         >{{taskNav.value}}
+                        <span>{{tasks.length}}</span>
                     </li>
                 </ul>
             </div>
@@ -32,13 +34,6 @@
                 <div v-if="isAllTasksZero">
                     Список задач пуст. Добавьте новую задачу!
                 </div>
-
-
-
-                <!-- В процессе!!!!!!! -->
-
-
-
                 <div v-else-if="isActiveTasksZero">
                     Нет активных задач.
                 </div>
@@ -76,17 +71,20 @@
                     {
                         name: 'allTasks',
                         value: 'Все задачи',
-                        isActive: ''
+                        isActive: true,
+                        count: '1'
                     },
                     {
                         name: 'activeTasks',
                         value: 'Активные задачи',
-                        isActive: ''
+                        isActive: '',
+                        count: '2'
                     },
                     {
                         name: 'doneTasks',
                         value: 'Завершенные',
-                        isActive: ''
+                        isActive: '',
+                        count: '3'
                     }
                 ],
                 tasks: [],
@@ -105,31 +103,48 @@
             },
             tasksFilter(nav){
                 this.tasks = this.toDo
+                for(let task in this.tasksNav){
+                    this.tasksNav[task].isActive = false
+                }
                 if(nav.name === 'allTasks'){
                     nav.isActive = true
+                    this.isActiveTasksZero = false
+                    this.isDoneTasksZero = false
+                    this.isAllTasksZero = true
                 }
                 if(nav.name === 'activeTasks'){
+                    nav.isActive = true
                     this.tasks = this.tasks.filter(item => item.checkbox !== true)
-                    // alert(this.tasks.length)
                     if(this.tasks.length === 0){
                         this.isActiveTasksZero = true
-                    }else{
-                        this.isActiveTasksZero = false
+                        this.isDoneTasksZero = false
+                        this.isAllTasksZero = false
                     }
                 }
                 if(nav.name === 'doneTasks'){
+                    nav.isActive = true
                     this.tasks = this.tasks.filter(item => item.checkbox !== false)
                     if(this.tasks.length === 0){
+                        this.isActiveTasksZero = false
                         this.isDoneTasksZero = true
-                    }else{
-                        this.isDoneTasksZero = false
+                        this.isAllTasksZero = false
                     }
                 }
-                // if(this.tasks[checkbox])
+            }
+        },
+        watch: {
+
+            // Работа над счетчиком 
+
+
+            
+            task(){
+                alert('sdfsdfsdf')
             }
         },
         beforeMount(){
             this.tasks = this.toDo
+            // this.taskNav.count = this.tasks.length
         }
     }
 </script>
