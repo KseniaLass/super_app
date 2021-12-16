@@ -10,7 +10,7 @@
                         @click="tasksFilter(taskNav)"
                         :class="[taskNav.isActive ? 'tasks_nav_item_active' : '']"
                         >{{taskNav.value}}
-                        <span>{{tasks.length}}</span>
+                        <span>{{taskNav.count}}</span>
                     </li>
                 </ul>
             </div>
@@ -23,6 +23,7 @@
                         type="checkbox" 
                         v-model="task.checkbox" 
                         :checked="task.checkbox"
+                        @click="count"
                     >
                     <div class="task-item-title" :class="{task_done: task.checkbox}">{{task.taskName}}</div>
                     <div class="task-item-date" :class="{task_done: task.checkbox}">{{task.createDate}}</div>
@@ -78,13 +79,13 @@
                         name: 'activeTasks',
                         value: 'Активные задачи',
                         isActive: '',
-                        count: '2'
+                        count: ''
                     },
                     {
                         name: 'doneTasks',
                         value: 'Завершенные',
                         isActive: '',
-                        count: '3'
+                        count: ''
                     }
                 ],
                 tasks: [],
@@ -94,10 +95,6 @@
             }
         },
         methods: {
-            goFilter(item){
-                alert(item)
-                // alert(this.tasks.length)
-            },
             deleteTask(task){
                 this.tasks = this.tasks.filter(item => item !== task)
             },
@@ -130,6 +127,20 @@
                         this.isAllTasksZero = false
                     }
                 }
+            },
+            count(){
+                for(let taskNav in this.tasksNav){
+                    if(this.tasksNav[taskNav].name === 'activeTasks'){
+                        this.tasksNav[taskNav].count = this.tasks.filter(item => item.checkbox !== true).length
+                    }
+                    if(this.tasksNav[taskNav].name === 'doneTasks'){
+                        this.tasksNav[taskNav].count = this.tasks.filter(item => item.checkbox !== false).length
+                    }
+                    if(this.tasksNav[taskNav].name === 'allTasks'){
+                        this.tasksNav[taskNav].count = this.tasks.length
+                    }
+                }
+                console.log('dfdfdfdf')
             }
         },
         watch: {
@@ -138,13 +149,14 @@
 
 
             
-            task(){
-                alert('sdfsdfsdf')
-            }
+            // tasks(){
+            //     alert('sdfsdfsdf')
+            // }
         },
         beforeMount(){
             this.tasks = this.toDo
             // this.taskNav.count = this.tasks.length
+            this.count()
         }
     }
 </script>
@@ -184,6 +196,7 @@
     }
     .tasks_nav_item_active{
         color: #d6a812;
+        /* background-color: #000000; */
     }
     .tasks-list{
         margin-top: 130px;
