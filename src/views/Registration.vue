@@ -215,7 +215,7 @@
                             email: this.email,
                             name: this.name,
                             password: this.password,
-                            toDo: []
+                            toDo:[]
                         })
                     })
                     // Получаем ответ

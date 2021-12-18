@@ -13,6 +13,7 @@
                         <span>{{taskNav.count}}</span>
                     </li>
                 </ul>
+                <button class="add-task" @click="addTask">Добавить задачу</button>
             </div>
         </div>
         <div class="tasks-list">
@@ -48,6 +49,8 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
         data() {
             return { 
@@ -95,53 +98,97 @@
             }
         },
         methods: {
-            deleteTask(task){
-                this.tasks = this.tasks.filter(item => item !== task)
+            async addTask(){
+                this.$store.state.user = JSON.parse(localStorage.getItem('superApp'))
+                // Запрос на сервер и получение массива с пользователями
+                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
+                const arreyUsers = Object.keys(data).map(key => {
+                    return {
+                        id: key,
+                        ...data[key]
+                    }
+                })
+                arreyUsers.find(user => user.id === this.$store.state.user.id).toDo = this.toDo
+                // user.toDo = this.toDo
+
+                console.log(arreyUsers)
+                // const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
+                //     method: 'PUT',
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify({
+                //         users: arreyUsers
+                //     })
+                // })
+                // // Получаем ответ
+                // await response.json()
+                
+                // // Если ответ получен
+                // if(response){
+                    
+                // }   
+
+                
+
+
+
+
+
+
+
+
+                // console.log(arreyUsers)
             },
-            tasksFilter(nav){
-                this.tasks = this.toDo
-                for(let task in this.tasksNav){
-                    this.tasksNav[task].isActive = false
-                }
-                if(nav.name === 'allTasks'){
-                    nav.isActive = true
-                    this.isActiveTasksZero = false
-                    this.isDoneTasksZero = false
-                    this.isAllTasksZero = true
-                }
-                if(nav.name === 'activeTasks'){
-                    nav.isActive = true
-                    this.tasks = this.tasks.filter(item => item.checkbox !== true)
-                    if(this.tasks.length === 0){
-                        this.isActiveTasksZero = true
-                        this.isDoneTasksZero = false
-                        this.isAllTasksZero = false
-                    }
-                }
-                if(nav.name === 'doneTasks'){
-                    nav.isActive = true
-                    this.tasks = this.tasks.filter(item => item.checkbox !== false)
-                    if(this.tasks.length === 0){
-                        this.isActiveTasksZero = false
-                        this.isDoneTasksZero = true
-                        this.isAllTasksZero = false
-                    }
-                }
-            },
-            count(){
-                for(let taskNav in this.tasksNav){
-                    if(this.tasksNav[taskNav].name === 'activeTasks'){
-                        this.tasksNav[taskNav].count = this.tasks.filter(item => item.checkbox !== true).length
-                    }
-                    if(this.tasksNav[taskNav].name === 'doneTasks'){
-                        this.tasksNav[taskNav].count = this.tasks.filter(item => item.checkbox !== false).length
-                    }
-                    if(this.tasksNav[taskNav].name === 'allTasks'){
-                        this.tasksNav[taskNav].count = this.tasks.length
-                    }
-                }
-                console.log('dfdfdfdf')
-            }
+            // async deleteTask(task){
+            //     this.tasks = this.tasks.filter(item => item !== task)
+            // },
+            // tasksFilter(nav){                
+            //     this.tasks = this.toDo
+            //     for(let task in this.tasksNav){
+            //         this.tasksNav[task].isActive = false
+            //     }
+            //     if(nav.name === 'allTasks'){
+            //         nav.isActive = true
+            //         this.isActiveTasksZero = false
+            //         this.isDoneTasksZero = false
+            //         this.isAllTasksZero = true
+            //     }
+            //     if(nav.name === 'activeTasks'){
+            //         nav.isActive = true
+            //         this.tasks = this.tasks.filter(item => item.checkbox !== true)
+            //         if(this.tasks.length === 0){
+            //             this.isActiveTasksZero = true
+            //             this.isDoneTasksZero = false
+            //             this.isAllTasksZero = false
+            //         }
+            //     }
+            //     if(nav.name === 'doneTasks'){
+            //         nav.isActive = true
+            //         this.tasks = this.tasks.filter(item => item.checkbox !== false)
+            //         if(this.tasks.length === 0){
+            //             this.isActiveTasksZero = false
+            //             this.isDoneTasksZero = true
+            //             this.isAllTasksZero = false
+            //         }
+            //     }
+            // },
+            // count(){
+            //     this.tasks = this.$store.state.user.toDo
+            //     for(let taskNav in this.tasksNav){
+            //         if(this.tasksNav[taskNav].name === 'activeTasks'){
+            //             this.tasksNav[taskNav].count = this.tasks.filter(item => item.checkbox !== true).length
+            //         }
+            //         if(this.tasksNav[taskNav].name === 'doneTasks'){
+            //             this.tasksNav[taskNav].count = this.tasks.filter(item => item.checkbox !== false).length
+            //         }
+            //         if(this.tasksNav[taskNav].name === 'allTasks'){
+            //             this.tasksNav[taskNav].count = this.tasks.length
+            //         }
+            //     }
+            //     this.taskNav.count = this.tasksNav[taskNav].count
+            //     console.log('dfdfdfdf')
+            // }
         },
         watch: {
 
@@ -154,9 +201,11 @@
             // }
         },
         beforeMount(){
-            this.tasks = this.toDo
+            this.$store.state.user = localStorage.getItem('superApp')
+            // this.tasks = this.$store.state.user.toDo
+            // this.tasks = this.$store.state.user
             // this.taskNav.count = this.tasks.length
-            this.count()
+            // this.count()
         }
     }
 </script>

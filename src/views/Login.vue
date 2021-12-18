@@ -103,10 +103,11 @@
                         // Выводим в лейбле сообщение об ошибке
                         this.passwordInputLabel = 'Пароль неверный*'
                     }else{
+                        // Обозначение во vuex данные пользователя
+                        this.$store.state.superApp = this.$store.state.user
                         // Обозначение во vuex, что авторизация произведена
                         this.$store.state.superApp.logInTrue = true
-                        this.$store.state.superApp.name = this.$store.state.user.name
-                        // Обозначение в localstorage, что авторизация произведена
+                        // Обозначение в localstorage данные пользователя, и что авторизация произведена
                         localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
                         // Переход на главную страницу
                         this.$router.push('/')
