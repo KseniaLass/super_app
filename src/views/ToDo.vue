@@ -109,20 +109,21 @@
                     }
                 })
                 arreyUsers.find(user => user.id === this.$store.state.user.id).toDo = this.toDo
-                // user.toDo = this.toDo
+
 
                 console.log(arreyUsers)
-                // const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
-                //     method: 'PUT',
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                //     body: JSON.stringify({
-                //         users: arreyUsers
-                //     })
-                // })
+                // console.log(user)
+                const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
+                    method: 'UPDATE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(
+                        arreyUsers
+                    )
+                })
                 // // Получаем ответ
-                // await response.json()
+                await response.json()
                 
                 // // Если ответ получен
                 // if(response){
