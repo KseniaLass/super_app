@@ -117,7 +117,7 @@
             async setNewUser(){
                 this.loading = true
                 // Загружаем список пользователей с сервера
-                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
+                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json')
                 const arreyUsers = Object.keys(data).map(key => {
                     return {
                         id: key,
@@ -206,20 +206,12 @@
                     this.errors.password === null && 
                     this.errors.passwordСonfirm === null){
                     this.loading = true
-                    const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            email: this.email,
-                            name: this.name,
-                            password: this.password,
-                            toDo:[]
-                        })
+                    const response = await axios.post('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json', {
+                        email: this.email,
+                        name: this.name,
+                        password: this.password,
+                        toDo: ['']
                     })
-                    // Получаем ответ
-                    await response.json()
                     // Очищаем поля
                     this.email = ''
                     this.name = ''

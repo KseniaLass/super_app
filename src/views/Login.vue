@@ -53,7 +53,7 @@
             async logIn(){
                 this.loading = true
                 // Запрос на сервер и получение массива с пользователями
-                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
+                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json')
                 const arreyUsers = Object.keys(data).map(key => {
                     return {
                         id: key,

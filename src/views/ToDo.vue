@@ -16,8 +16,18 @@
                 <button class="add-task" @click="addTask">Добавить задачу</button>
             </div>
         </div>
+        <!-- <div class="addTaskForm tasks-list" v-if="formTask">
+            <label for="title">Текст новой задачи</label>
+            <input type="text" id="title" placeholder="Введите текст новой задачи">
+            <button>вавававав</button>
+        </div> -->
         <div class="tasks-list">
             <div class="task-item-wrapper" v-if="tasks.length">
+                <div class="addTaskForm task-item">
+                    <label for="title">Текст новой задачи</label>
+                    <input type="text" id="title" placeholder="Введите текст новой задачи">
+                    <button>вавававав</button>
+                </div>
                 <div class="task-item" v-for="task of tasks" :key="task" >
                     <input
                         class="task-item-check_box" 
@@ -32,8 +42,9 @@
                     <button class="task-item-delete" @click="deleteTask(task)">&otimes;</button>
                 </div>
             </div>
+
             <div class="task-item-if-null" v-else>
-                <div v-if="isAllTasksZero">
+                <div v-if="!tasks.length">
                     Список задач пуст. Добавьте новую задачу!
                 </div>
                 <div v-else-if="isActiveTasksZero">
@@ -44,7 +55,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 </template>
 
@@ -94,87 +104,77 @@
                 tasks: [],
                 isAllTasksZero: null,
                 isActiveTasksZero: null,
-                isDoneTasksZero: null
+                isDoneTasksZero: null,
+                formTask: false
             }
         },
         methods: {
             async addTask(){
-                this.$store.state.user = JSON.parse(localStorage.getItem('superApp'))
+                // this.$store.state.user = JSON.parse(localStorage.getItem('superApp'))
                 // Запрос на сервер и получение массива с пользователями
-                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json')
+                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json')
                 const arreyUsers = Object.keys(data).map(key => {
                     return {
                         id: key,
                         ...data[key]
                     }
                 })
-                arreyUsers.find(user => user.id === this.$store.state.user.id).toDo = this.toDo
+                const user = arreyUsers.find(user => user.id === this.$store.state.user.id).id
+                data[user].toDo = this.toDo
+                // localStorage.setItem('superApp', JSON.stringify(data[user]))
 
-
-                console.log(arreyUsers)
-                // console.log(user)
-                const response = await fetch('https://superapp-boldinov-default-rtdb.firebaseio.com/users.json', {
-                    method: 'UPDATE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(
-                        // arreyUsers
-                    )
+                console.log(data[user])
+                console.log(this.$store.state.superApp )
+                await axios.put('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr.json', {
+                    users: data
                 })
-                // // Получаем ответ
-                await response.json()
-                
-                // // Если ответ получен
-                // if(response){
-                    
-                // }   
-
-                
-
-
-
-
-
-
-
-
-
-                // console.log(arreyUsers)
             },
-            // async deleteTask(task){
-            //     this.tasks = this.tasks.filter(item => item !== task)
-            // },
-            // tasksFilter(nav){                
-            //     this.tasks = this.toDo
-            //     for(let task in this.tasksNav){
-            //         this.tasksNav[task].isActive = false
-            //     }
-            //     if(nav.name === 'allTasks'){
-            //         nav.isActive = true
-            //         this.isActiveTasksZero = false
-            //         this.isDoneTasksZero = false
-            //         this.isAllTasksZero = true
-            //     }
-            //     if(nav.name === 'activeTasks'){
-            //         nav.isActive = true
-            //         this.tasks = this.tasks.filter(item => item.checkbox !== true)
-            //         if(this.tasks.length === 0){
-            //             this.isActiveTasksZero = true
-            //             this.isDoneTasksZero = false
-            //             this.isAllTasksZero = false
-            //         }
-            //     }
-            //     if(nav.name === 'doneTasks'){
-            //         nav.isActive = true
-            //         this.tasks = this.tasks.filter(item => item.checkbox !== false)
-            //         if(this.tasks.length === 0){
-            //             this.isActiveTasksZero = false
-            //             this.isDoneTasksZero = true
-            //             this.isAllTasksZero = false
-            //         }
-            //     }
-            // },
+
+            async deleteTask(task){
+                this.tasks = this.tasks.filter(item => item !== task)
+
+
+
+
+
+            },
+
+
+
+
+
+            tasksFilter(nav){                
+                // this.tasks = this.toDo
+                this.tasks = this.$store.state.user.toDo
+                console.log(this.tasks)
+                for(let task in this.tasksNav){
+                    this.tasksNav[task].isActive = false
+                }
+                if(nav.name === 'allTasks'){
+                    nav.isActive = true
+                    this.isActiveTasksZero = false
+                    this.isDoneTasksZero = false
+                    this.isAllTasksZero = true
+                }
+                if(nav.name === 'activeTasks'){
+                    nav.isActive = true
+                    this.tasks = this.tasks.filter(item => item.checkbox !== true)
+                    if(this.tasks.length === 0){
+                        this.isActiveTasksZero = true
+                        this.isDoneTasksZero = false
+                        this.isAllTasksZero = false
+                    }
+                }
+                if(nav.name === 'doneTasks'){
+                    nav.isActive = true
+                    this.tasks = this.tasks.filter(item => item.checkbox !== false)
+                    if(this.tasks.length === 0){
+                        this.isActiveTasksZero = false
+                        this.isDoneTasksZero = true
+                        this.isAllTasksZero = false
+                    }
+                }
+            },
             // count(){
             //     this.tasks = this.$store.state.user.toDo
             //     for(let taskNav in this.tasksNav){
@@ -203,9 +203,13 @@
             // }
         },
         beforeMount(){
-            this.$store.state.user = localStorage.getItem('superApp')
-            // this.tasks = this.$store.state.user.toDo
-            // this.tasks = this.$store.state.user
+            // this.$store.state.user = JSON.parse(localStorage.getItem('superApp'))
+            if(!this.$store.state.user.toDo){
+                this.$store.state.user.toDo = []
+            }
+            this.tasks = this.$store.state.user.toDo
+            // console.log(this.tasks)
+            // console.log(this.$store.state.user)
             // this.taskNav.count = this.tasks.length
             // this.count()
         }
