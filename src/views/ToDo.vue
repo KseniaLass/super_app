@@ -55,7 +55,6 @@
 
 <script>
     import axios from 'axios'
-
     export default {
         data() {
             return { 
@@ -89,26 +88,8 @@
             }
         },
         methods: {
-            // async deleteTask(task){
-            //     this.tasks = this.tasks.filter(item => item !== task)
-            // },
-
-            // Обновление LocalStorage
-            updateLocalStorage(){
-                localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
-            },
-            // Добавление задачи
-            async addTask(){
-                // Создаем объект с задачей
-                const task = {
-                    checkbox: false,
-                    taskName: this.NewTaskText,
-                    createDate: new Date().toLocaleString()
-                }
-                // Добавляем задачу в начало массива с задачами
-                this.$store.state.superApp.toDo.unshift(task)
-                // Обновляем LocalStorage
-                this.updateLocalStorage()
+            // Функция обновления DataBase
+            async updateDataBase(){
                 // Запрос на сервер и получение массива с пользователями
                 const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json')
                 const arreyUsers = Object.keys(data).map(key => {
@@ -125,12 +106,40 @@
                 await axios.put('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr.json', {
                     users: data
                 })
+            },
+
+            // Функция обновления LocalStorage
+            updateLocalStorage(){
+                localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
+            },
+
+            // Функция добавления задачи
+            async addTask(){
+                // Создаем объект с задачей
+                const task = {
+                    checkbox: false,
+                    taskName: this.NewTaskText,
+                    createDate: new Date().toLocaleString()
+                }
+                // Добавляем задачу в начало массива с задачами
+                this.$store.state.superApp.toDo.unshift(task)
+                // Обновляем LocalStorage
+                this.updateLocalStorage()
+                // Обновляем данные на сервере
+                this.updateDataBase()
                 // Очищаем инпут
                 this.NewTaskText = ''
                 console.log(this.$store.state.superApp)
                 // console.log(task)
             },
 
+            async deleteTask(task){
+                this.$store.state.superApp.toDo = this.$store.state.superApp.toDo.filter(item => item !== task)
+                // Обновляем LocalStorage
+                this.updateLocalStorage()
+                // Обновляем данные на сервере
+                this.updateDataBase()
+            },
 
 
 
@@ -174,13 +183,10 @@
         beforeMount(){
             if(!this.$store.state.superApp.toDo){
                 this.$store.state.superApp.toDo = []
-                // localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
                 this.updateLocalStorage()
             }else{
-                // localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
                 this.updateLocalStorage()
             }
-                // console.log(this.$store.state.superApp)
         }
     }
 </script>
