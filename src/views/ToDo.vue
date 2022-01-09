@@ -29,7 +29,7 @@
                         type="checkbox" 
                         v-model="task.checkbox" 
                         :checked="task.checkbox"
-                        @click="count"
+                        @click="changeStatusTask(task)"
                     >
                     <div class="task-item-title" :class="{task_done: task.checkbox}">{{task.taskName}}</div>
                     <div class="task-item-date" :class="{task_done: task.checkbox}">{{task.createDate}}</div>
@@ -114,7 +114,7 @@
             },
 
             // Функция добавления задачи
-            async addTask(){
+            addTask(){
                 // Создаем объект с задачей
                 const task = {
                     checkbox: false,
@@ -133,7 +133,8 @@
                 // console.log(task)
             },
 
-            async deleteTask(task){
+            // Функция удаления задачи
+            deleteTask(task){
                 this.$store.state.superApp.toDo = this.$store.state.superApp.toDo.filter(item => item !== task)
                 // Обновляем LocalStorage
                 this.updateLocalStorage()
@@ -141,7 +142,17 @@
                 this.updateDataBase()
             },
 
-
+            // Обновление статуса задачи
+            changeStatusTask(task){
+                // Находим редактируемую задачу
+                const currentTask = this.$store.state.superApp.toDo.find(item => item === task)
+                // Меняем статус на противоположное значение (true/false)
+                currentTask.checkbox = !currentTask.checkbox
+                // Обновляем LocalStorage
+                this.updateLocalStorage()
+                // Обновляем данные на сервере
+                this.updateDataBase()
+            },
 
             tasksFilter(nav){                
                 // this.tasks = this.toDo

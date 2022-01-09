@@ -10,8 +10,7 @@ export default createStore({
             email: '',
             password: '',
             toDo: []
-        },
-        arreyUsers: []
+        }
     },
     mutations: {
     },
