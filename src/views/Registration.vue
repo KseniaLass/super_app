@@ -209,8 +209,7 @@
                     const response = await axios.post('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json', {
                         email: this.email,
                         name: this.name,
-                        password: this.password,
-                        toDo: ['']
+                        password: this.password
                     })
                     // Очищаем поля
                     this.email = ''

@@ -35,7 +35,7 @@
     export default {
         data(){
             return{
-                user: this.$store.state.user.name
+                user: this.$store.state.superApp.name
             }
         },
         methods: {

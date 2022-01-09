@@ -61,7 +61,7 @@
                     }
                 })
                 // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
-                this.$store.state.user = arreyUsers.find(user => user.email === this.loginInput)
+                this.$store.state.superApp = arreyUsers.find(user => user.email === this.loginInput)
                 // console.log(this.$store.state.user)
                 this.loading = false
                 // ================= Валидация EMAIL =====================
@@ -77,7 +77,7 @@
                     // Возвращаем лейбл в исходное состояние
                     this.loginInputLabel = 'Логин*'
                     // Проверка есть ли данный пользователь на сервере
-                    if(this.$store.state.user === undefined){   
+                    if(this.$store.state.superApp === undefined){   
                         // Записываем ошибку     
                         this.errors.login = true            
                         // Выводим в лейбле сообщение об ошибке
@@ -97,14 +97,14 @@
                     this.errors.password = null  
                     // Возвращаем лейбл в исходное состояние
                     this.passwordLabel = 'Пароль*'
-                    if(this.$store.state.user.password !== this.passwordInput){
+                    if(this.$store.state.superApp.password !== this.passwordInput){
                         // Записываем ошибку     
                         this.errors.password = true  
                         // Выводим в лейбле сообщение об ошибке
                         this.passwordInputLabel = 'Пароль неверный*'
                     }else{
                         // Обозначение во vuex данные пользователя
-                        this.$store.state.superApp = this.$store.state.user
+                        // this.$store.state.superApp = this.$store.state.user
                         // Обозначение во vuex, что авторизация произведена
                         this.$store.state.superApp.logInTrue = true
                         // Обозначение в localstorage данные пользователя, и что авторизация произведена

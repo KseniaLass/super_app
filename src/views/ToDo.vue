@@ -13,22 +13,17 @@
                         <span>{{taskNav.count}}</span>
                     </li>
                 </ul>
-                <button class="add-task" @click="addTask">Добавить задачу</button>
             </div>
-        </div>
-        <!-- <div class="addTaskForm tasks-list" v-if="formTask">
-            <label for="title">Текст новой задачи</label>
-            <input type="text" id="title" placeholder="Введите текст новой задачи">
-            <button>вавававав</button>
-        </div> -->
+        </div>       
         <div class="tasks-list">
-            <div class="task-item-wrapper" v-if="tasks.length">
-                <div class="addTaskForm task-item">
-                    <label for="title">Текст новой задачи</label>
-                    <input type="text" id="title" placeholder="Введите текст новой задачи">
-                    <button>вавававав</button>
+            <div class="add-task-form"> 
+                <div class="add-task-form-input">
+                    <input type="text" v-model="NewTaskText" placeholder="Введите текст новой задачи">
                 </div>
-                <div class="task-item" v-for="task of tasks" :key="task" >
+                <button class="btn" @click.prevent="addTask">Добавить задачу</button>
+            </div>
+            <div class="task-item-wrapper" v-if="$store.state.superApp.toDo.length">
+                <div class="task-item" v-for="task of $store.state.superApp.toDo" :key="task">
                     <input
                         class="task-item-check_box" 
                         type="checkbox" 
@@ -64,23 +59,6 @@
     export default {
         data() {
             return { 
-                toDo:[
-                    {
-                        checkbox: true,
-                        taskName: 'Помыть посуду',
-                        createDate: '07.12.2021'
-                    },
-                    {
-                        checkbox: false,
-                        taskName: 'Вынести мусор',
-                        createDate: '08.12.2021'
-                    },
-                    {
-                        checkbox: true,
-                        taskName: 'Покормить кошку',
-                        createDate: '09.12.2021'
-                    }
-                ],
                 tasksNav: [
                     {
                         name: 'allTasks',
@@ -101,16 +79,36 @@
                         count: ''
                     }
                 ],
+                toDo:[],
                 tasks: [],
                 isAllTasksZero: null,
                 isActiveTasksZero: null,
                 isDoneTasksZero: null,
-                formTask: false
+                formTask: false,
+                NewTaskText: ''
             }
         },
         methods: {
+            // async deleteTask(task){
+            //     this.tasks = this.tasks.filter(item => item !== task)
+            // },
+
+            // Обновление LocalStorage
+            updateLocalStorage(){
+                localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
+            },
+            // Добавление задачи
             async addTask(){
-                // this.$store.state.user = JSON.parse(localStorage.getItem('superApp'))
+                // Создаем объект с задачей
+                const task = {
+                    checkbox: false,
+                    taskName: this.NewTaskText,
+                    createDate: new Date().toLocaleString()
+                }
+                // Добавляем задачу в начало массива с задачами
+                this.$store.state.superApp.toDo.unshift(task)
+                // Обновляем LocalStorage
+                this.updateLocalStorage()
                 // Запрос на сервер и получение массива с пользователями
                 const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json')
                 const arreyUsers = Object.keys(data).map(key => {
@@ -119,26 +117,19 @@
                         ...data[key]
                     }
                 })
-                const user = arreyUsers.find(user => user.id === this.$store.state.user.id).id
-                data[user].toDo = this.toDo
-                // localStorage.setItem('superApp', JSON.stringify(data[user]))
-
-                console.log(data[user])
-                console.log(this.$store.state.superApp )
+                // Находим нужного пользователя по ID
+                const user = arreyUsers.find(user => user.id === this.$store.state.superApp.id).id
+                // Записываем/Обновляем наш список задач
+                data[user].toDo = this.$store.state.superApp.toDo
+                // Обновляем данные на сервере
                 await axios.put('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr.json', {
                     users: data
                 })
+                // Очищаем инпут
+                this.NewTaskText = ''
+                console.log(this.$store.state.superApp)
+                // console.log(task)
             },
-
-            async deleteTask(task){
-                this.tasks = this.tasks.filter(item => item !== task)
-
-
-
-
-
-            },
-
 
 
 
@@ -174,44 +165,22 @@
                         this.isAllTasksZero = false
                     }
                 }
-            },
-            // count(){
-            //     this.tasks = this.$store.state.user.toDo
-            //     for(let taskNav in this.tasksNav){
-            //         if(this.tasksNav[taskNav].name === 'activeTasks'){
-            //             this.tasksNav[taskNav].count = this.tasks.filter(item => item.checkbox !== true).length
-            //         }
-            //         if(this.tasksNav[taskNav].name === 'doneTasks'){
-            //             this.tasksNav[taskNav].count = this.tasks.filter(item => item.checkbox !== false).length
-            //         }
-            //         if(this.tasksNav[taskNav].name === 'allTasks'){
-            //             this.tasksNav[taskNav].count = this.tasks.length
-            //         }
-            //     }
-            //     this.taskNav.count = this.tasksNav[taskNav].count
-            //     console.log('dfdfdfdf')
-            // }
+            }
+
         },
         watch: {
 
-            // Работа над счетчиком 
-
-
-            
-            // tasks(){
-            //     alert('sdfsdfsdf')
-            // }
         },
         beforeMount(){
-            // this.$store.state.user = JSON.parse(localStorage.getItem('superApp'))
-            if(!this.$store.state.user.toDo){
-                this.$store.state.user.toDo = []
+            if(!this.$store.state.superApp.toDo){
+                this.$store.state.superApp.toDo = []
+                // localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
+                this.updateLocalStorage()
+            }else{
+                // localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
+                this.updateLocalStorage()
             }
-            this.tasks = this.$store.state.user.toDo
-            // console.log(this.tasks)
-            // console.log(this.$store.state.user)
-            // this.taskNav.count = this.tasks.length
-            // this.count()
+                // console.log(this.$store.state.superApp)
         }
     }
 </script>
@@ -262,6 +231,50 @@
     }
     .task-item-wrapper{
         width: 90%;
+    }
+    .add-task-form{
+        display: grid;
+        grid-template-columns: 5fr 1fr;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+    .add-task-form-input{
+        width: 95%;
+    }
+    .add-task-form-input input{
+        margin-top: 7px;
+        padding: 10px;
+        border: 0;
+        border-radius: 8px;
+        align-self: flex-start;
+        width: 100%;
+        height: 26px;
+        font-family: Arial, Helvetica, sans-serif; 
+        font-size: 18px;
+        box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.67) inset;  
+    }
+    .btn{
+        height: 46px;
+        font-family: Arial, Helvetica, sans-serif; 
+        text-decoration: none;
+        padding: 5px 9px 5px 9px;
+        border: 0;
+        border-radius: 8px;
+        background-color: #d6a812;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #1E1F1C;
+        transition: 0.1s;
+        align-self: flex-end;
+    }
+    .btn:hover{
+        transition: 0.2s;
+        background-color: #f8e003;
+        transform: scale(1.03);
+    }
+    .btn:active{
+        transform: scale(1);
     }
     .task-item{
         padding-left: 20px;

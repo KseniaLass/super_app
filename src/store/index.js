@@ -4,30 +4,12 @@ export default createStore({
     state: {
         superApp: {
             logInTrue: false,
-            name: ''
-        },
-        user: {
+            name: '',
             id: '',
             name: '',
             email: '',
             password: '',
-            toDo:[
-                {
-                    checkbox: true,
-                    taskName: 'Помыть посуду',
-                    createDate: '07.12.2021'
-                },
-                {
-                    checkbox: false,
-                    taskName: 'Вынести мусор',
-                    createDate: '08.12.2021'
-                },
-                {
-                    checkbox: true,
-                    taskName: 'Покормить кошку',
-                    createDate: '09.12.2021'
-                }
-            ]
+            toDo: []
         },
         arreyUsers: []
     },
