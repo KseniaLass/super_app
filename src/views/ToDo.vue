@@ -157,6 +157,7 @@
                 this.updateLocalStorage()
                 // Обновляем данные на сервере
                 this.updateDataBase()
+                // Обновляем фильтры с небольшой задержкой для удобства восприятия
                 setTimeout(() => {  
                     this.tasksFilter(this.activeNav) 
                 }, 300)
