@@ -88,7 +88,7 @@
                 // Проверка введено ли что нибудь в поле password
                 if(this.passwordInput.length === 0){
                     // Записываем ошибку     
-                    this.errors.password = true  
+                    this.errors.password = true     
                     // Выводим в лейбле сообщение об ошибке
                     this.passwordInputLabel = 'Поле не может быть пустым*'
                 }else{
