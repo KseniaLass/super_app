@@ -10,7 +10,7 @@
                         @click="tasksFilter(taskNav)"
                         :class="[taskNav.isActive ? 'tasks_nav_item_active' : '']"
                         >{{taskNav.value}}
-                        <span>{{taskNav.count}}</span>
+                        <div class="count-tasks">{{taskNav.count}}</div>
                     </li>
                 </ul>
             </div>
@@ -283,9 +283,6 @@
         position: fixed;
         top: 130px;
     }
-    /* .tasks-nav{
-
-    } */
     .tasks-nav-item{
         color: blanchedalmond;
         list-style-type: none;
@@ -294,14 +291,25 @@
         font-size: 24px;
         font-weight: 200;
         letter-spacing: 1px;
+        display: flex;
+        align-items: center;
     }
-    .tasks-nav-item:hover{
-        color: #d6a812;
-        transition: 0.2s;
+    .count-tasks{
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: #d6a812;
+        color: #1E1F1C;
+        font-size: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 20px;
+        font-weight: bold;
     }
     .tasks_nav_item_active{
         color: #d6a812;
-        /* background-color: #000000; */
+        transition: 0.2s;
     }
     .tasks-list{
         margin-top: 130px;
@@ -410,6 +418,9 @@
     .task-item-edit:active,
     .task-item-delete:active{
         transform: scale(1);
+    }
+    .task-item-if-null{
+        margin-top: 100px;
     }
 
 </style>
