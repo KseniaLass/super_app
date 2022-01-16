@@ -170,6 +170,7 @@
                 }, 300)
             },
 
+            // Функция фильтрации задач
             tasksFilter(nav){ 
                 // Записываем массив с задачами в песочницу
                 this.tasks = this.$store.state.superApp.toDo
@@ -232,15 +233,23 @@
 
             // Функция подсчета задач
             countTasks(){
+                // Перебираем массив с навигацией по задачам
                 this.tasksNav.forEach(item => {
+                    // Записываем массив с задачами в песочницу
                     let arr = this.$store.state.superApp.toDo
+                    // Если "Все задачи"
                     if(item.name === 'allTasks'){
+                        // Записываем в переменную колличество всех задач
                         item.count = this.$store.state.superApp.toDo.length
                     }
+                    // Если "Активные задачи"
                     if(item.name === 'activeTasks'){
+                        // Записываем в переменную колличество активных задач
                         item.count = arr.filter(item => item.checkbox !== true).length
                     }
+                    // Если "Завершенные задачи"
                     if(item.name === 'doneTasks'){
+                        // Записываем в переменную колличество завершенных задач
                         item.count = arr.filter(item => item.checkbox !== false).length
                     }
                 } )
@@ -252,11 +261,12 @@
         },
         beforeMount(){
             // При загрузке страницы......
-            // Обновляем массив-песочницу с задачами
-            this.tasks = this.$store.state.superApp.toDo
             // Создаем пустой массив с дачами, в случае отсутствия его на сервере
             if(!this.$store.state.superApp.toDo){
                 this.$store.state.superApp.toDo = []
+            }else{
+                // Обновляем массив-песочницу с задачами
+                this.tasks = this.$store.state.superApp.toDo
             }
             // Обновляем счетчик задач
             this.countTasks()

@@ -60,18 +60,17 @@
                         ...data[key]
                     }
                 })
-                // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
-                this.$store.state.superApp = arreyUsers.find(user => user.email === this.loginInput)
-                // console.log(this.$store.state.user)
                 this.loading = false
                 // ================= Валидация EMAIL =====================
                 // Проверка введено ли что нибудь в поле email
                 if(this.loginInput.length === 0){  
-                    // Записываем ошибку     
-                    this.errors.login = true  
+                    // Записываем ошибку
+                    this.errors.login = true
                     // Выводим в лейбле сообщение об ошибке
                     this.loginInputLabel = 'Поле не может быть пустым*'
                 }else{
+                    // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
+                    this.$store.state.superApp = arreyUsers.find(user => user.email === this.loginInput)
                     // Отменяем ошибку     
                     this.errors.login = null  
                     // Возвращаем лейбл в исходное состояние
