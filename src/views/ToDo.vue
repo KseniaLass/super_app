@@ -63,7 +63,7 @@
                         name: 'allTasks',
                         value: 'Все задачи',
                         isActive: true,
-                        count: '1'
+                        count: ''
                     },
                     {
                         name: 'activeTasks',
@@ -123,14 +123,17 @@
                 }
                 // Добавляем задачу в начало массива с задачами
                 this.$store.state.superApp.toDo.unshift(task)
+                // Возвращаем настройки фильтра
+                this.tasksFilter(this.activeNav) 
+                // Обновляем счетчик задач
+                this.countTasks()
                 // Обновляем LocalStorage
                 this.updateLocalStorage()
                 // Обновляем данные на сервере
                 this.updateDataBase()
                 // Очищаем инпут
                 this.NewTaskText = ''
-                // console.log(this.$store.state.superApp)
-                // console.log(task)
+
             },
 
             // Функция удаления задачи
@@ -141,6 +144,8 @@
                 this.tasks = this.$store.state.superApp.toDo
                 // Возвращаем настройки фильтра
                 this.tasksFilter(this.activeNav) 
+                // Обновляем счетчик задач
+                this.countTasks()
                 // Обновляем LocalStorage
                 this.updateLocalStorage()
                 // Обновляем данные на сервере
@@ -160,11 +165,13 @@
                 // Обновляем фильтры с небольшой задержкой для удобства восприятия
                 setTimeout(() => {  
                     this.tasksFilter(this.activeNav) 
+                    // Обновляем счетчик задач
+                    this.countTasks()
                 }, 300)
             },
 
             tasksFilter(nav){ 
-                // Записываем массив с задачами в песочницу               
+                // Записываем массив с задачами в песочницу
                 this.tasks = this.$store.state.superApp.toDo
                 // Записываем в переменную активного фильтра
                 this.activeNav = nav
@@ -221,6 +228,22 @@
                         this.isAllTasksZero = false
                     }
                 }
+            },
+
+            // Функция подсчета задач
+            countTasks(){
+                this.tasksNav.forEach(item => {
+                    let arr = this.$store.state.superApp.toDo
+                    if(item.name === 'allTasks'){
+                        item.count = this.$store.state.superApp.toDo.length
+                    }
+                    if(item.name === 'activeTasks'){
+                        item.count = arr.filter(item => item.checkbox !== true).length
+                    }
+                    if(item.name === 'doneTasks'){
+                        item.count = arr.filter(item => item.checkbox !== false).length
+                    }
+                } )
             }
 
         },
@@ -234,11 +257,11 @@
             // Создаем пустой массив с дачами, в случае отсутствия его на сервере
             if(!this.$store.state.superApp.toDo){
                 this.$store.state.superApp.toDo = []
-                // Обновляем LocalStorage
-                this.updateLocalStorage()
-            }else{
-                this.updateLocalStorage()
             }
+            // Обновляем счетчик задач
+            this.countTasks()
+            // Обновляем LocalStorage
+            this.updateLocalStorage()
         }
     }
 </script>
