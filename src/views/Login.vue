@@ -50,6 +50,8 @@
             }
         },
         methods: {
+
+            // Функция входа в систему
             async logIn(){
                 this.loading = true
                 // Запрос на сервер и получение массива с пользователями
@@ -61,6 +63,7 @@
                     }
                 })
                 this.loading = false
+
                 // ================= Валидация EMAIL =====================
                 // Проверка введено ли что нибудь в поле email
                 if(this.loginInput.length === 0){  
@@ -69,41 +72,41 @@
                     // Выводим в лейбле сообщение об ошибке
                     this.loginInputLabel = 'Поле не может быть пустым*'
                 }else{
-                    // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
-                    this.$store.state.superApp = arreyUsers.find(user => user.email === this.loginInput)
-                    // Отменяем ошибку     
-                    this.errors.login = null  
+                    // Отменяем ошибку
+                    this.errors.login = null
                     // Возвращаем лейбл в исходное состояние
                     this.loginInputLabel = 'Логин*'
                     // Проверка есть ли данный пользователь на сервере
-                    if(this.$store.state.superApp === undefined){   
-                        // Записываем ошибку     
-                        this.errors.login = true            
+                    // Если пользователь отсутствует
+                    if(arreyUsers.find(user => user.email === this.loginInput) === undefined){
+                        // Записываем ошибку
+                        this.errors.login = true
                         // Выводим в лейбле сообщение об ошибке
                         this.loginInputLabel = 'Пользователь не найден. Зарегистрируйтесь*'
+                    }else{
+                        // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
+                        this.$store.state.superApp = arreyUsers.find(user => user.email === this.loginInput)
                     }
                 }
 
                 // ================= Валидация PASSWORD =====================
                 // Проверка введено ли что нибудь в поле password
                 if(this.passwordInput.length === 0){
-                    // Записываем ошибку     
-                    this.errors.password = true     
+                    // Записываем ошибку
+                    this.errors.password = true
                     // Выводим в лейбле сообщение об ошибке
                     this.passwordInputLabel = 'Поле не может быть пустым*'
                 }else{
-                    // Отменяем ошибку     
-                    this.errors.password = null  
+                    // Отменяем ошибку
+                    this.errors.password = null
                     // Возвращаем лейбл в исходное состояние
                     this.passwordLabel = 'Пароль*'
                     if(this.$store.state.superApp.password !== this.passwordInput){
-                        // Записываем ошибку     
-                        this.errors.password = true  
+                        // Записываем ошибку
+                        this.errors.password = true
                         // Выводим в лейбле сообщение об ошибке
                         this.passwordInputLabel = 'Пароль неверный*'
                     }else{
-                        // Обозначение во vuex данные пользователя
-                        // this.$store.state.superApp = this.$store.state.user
                         // Обозначение во vuex, что авторизация произведена
                         this.$store.state.superApp.logInTrue = true
                         // Обозначение в localstorage данные пользователя, и что авторизация произведена
@@ -112,23 +115,22 @@
                         this.$router.push('/')
                     }
                 }
-
-
             },
+            // Функция перехода на страницу регистрации (просто образец, можно сделать в html через "<router-link to=...")
             goToRegistration(){
                 this.$router.push('/registration')
             }
         },
         watch: {
             loginInput(){
-                // Отменяем ошибку     
-                this.errors.login = null  
+                // Отменяем ошибку
+                this.errors.login = null
                 // Возвращаем лейбл в исходное состояние
                 this.loginInputLabel = 'Логин*'
             },
             passwordInput(){
-                // Отменяем ошибку     
-                this.errors.password = null  
+                // Отменяем ошибку
+                this.errors.password = null
                 // Возвращаем лейбл в исходное состояние
                 this.passwordInputLabel = 'Пароль*'
             }

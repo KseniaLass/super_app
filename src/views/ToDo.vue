@@ -22,7 +22,7 @@
                 </div>
                 <button class="btn" @click.prevent="addTask">Добавить задачу</button>
             </div>
-            <div class="task-item-wrapper" v-if="tasks.length">
+            <div class="task-item-wrapper" v-if="tasks">
                 <div class="task-item" v-for="task of tasks" :key="task">
                     <input
                         class="task-item-check_box" 
@@ -252,9 +252,8 @@
                         // Записываем в переменную колличество завершенных задач
                         item.count = arr.filter(item => item.checkbox !== false).length
                     }
-                } )
+                })
             }
-
         },
         watch: {
 

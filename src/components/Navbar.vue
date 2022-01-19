@@ -19,7 +19,7 @@
                         <router-link class="navItem" to="/calculate">Калькулятор</router-link>
                     </li>
                     <li class="header__navItem">
-                        <router-link class="navItem btn" to="/login" @click="logOut">Выйти</router-link>
+                        <router-link class="navItem btn" to="/login" @click.prevent="logOut">Выйти</router-link>
                     </li>
                     <div class="header__navItem">
                         <div class="navItem user">{{this.$store.state.superApp.name}}</div>
@@ -31,40 +31,44 @@
 </template>
 
 <script>
-
     export default {
         data(){
             return{
-                user: this.$store.state.superApp.name
+                user: {}
             }
         },
         methods: {
             logOut(){
-                this.$store.state.superApp.logInTrue = false
+                // Удаляем данные о пользователе из VUEX
+                this.$store.state.superApp = {}
+                // Обновляем Local Storage
                 localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
             }
         },
         // При загрузке страницы
         beforeMount(){
             // Получаем данные из localstorage
-            const logInTrue = localStorage.getItem('superApp')
+            this.user = localStorage.getItem('superApp')
             // если в localstorage пусто создаем запись (первый запуск приложения)
-            if(!logInTrue){
-                const superApp = {
+            if(!this.user){
+                this.user = {
                     logInTrue: false,
                     name: ''
                 }
-                localStorage.setItem('superApp', JSON.stringify(superApp))
-            // если есть, то получаем данные   
+                // Обновляем Local Storage
+                localStorage.setItem('superApp', JSON.stringify(this.user))
+            // если есть
             }else{
-                this.$store.state.superApp = JSON.parse(logInTrue)
+                // Получаем данные из Local Storage и записываем во VUEX
+                this.$store.state.superApp = JSON.parse(this.user)
+                // Если активалия произведена (loginTrue = true)
                 if(this.$store.state.superApp.logInTrue){
-                    // Ничего не делаем
+                    // Ничего не делаем, оставляем все как есть
                 }else{
+                    // Иначе выходим на страницу логина
                     this.$router.push('/login')  
                 }
             }
-
         }
     }
 </script>
