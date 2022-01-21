@@ -1,4 +1,15 @@
 <template>
+    <transition name="fade">
+        <div class="changeTaskText-overlay" v-if="isCorrectionTextTask" name="fade">
+            <div class="changeTaskText-body container">
+                <textarea cols="30" rows="10" v-model="correctionTextTask"></textarea>
+                <div class="btns-changeTaskText">
+                    <button class="btn" @click="saveChangeTextTask">Сохранить</button>
+                    <button class="btn" @click="isCorrectionTextTask = false">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </transition>
     <div class="tasks-wrapper container">
         <div class="tasks-sidebar-wrapper">
             <div class="tasks-sidebar">
@@ -14,7 +25,7 @@
                     </li>
                 </ul>
             </div>
-        </div>       
+        </div>
         <div class="tasks-list">
             <div class="add-task-form"> 
                 <div class="add-task-form-input">
@@ -33,7 +44,7 @@
                     >
                     <div class="task-item-title" :class="{task_done: task.checkbox}">{{task.taskName}}</div>
                     <div class="task-item-date" :class="{task_done: task.checkbox}">{{task.createDate}}</div>
-                    <button class="task-item-edit">&#9998;</button>
+                    <button class="task-item-edit" @click="getChangeTextTask(task)">&#9998;</button>
                     <button class="task-item-delete" @click="deleteTask(task)">&otimes;</button>
                 </div>
             </div>
@@ -58,6 +69,8 @@
     export default {
         data() {
             return { 
+                isCorrectionTextTask: false,
+                correctionTextTask: '',
                 tasksNav: [
                     {
                         name: 'allTasks',
@@ -253,10 +266,32 @@
                         item.count = arr.filter(item => item.checkbox !== false).length
                     }
                 })
+            },
+
+            // Функция редактирования задачи
+            getChangeTextTask(task){
+                this.isCorrectionTextTask = true
+                this.correctionTextTask = task.taskName
+                // this.$store.state.superApp.toDo[task.indexOf].taskName = this.correctionTextTask
+                // this.$store.state.superApp.toDo.find(item => item === task).taskName = this.correctionTextTask
+                // currentTask.taskName = this.correctionTextTask
+                // console.log(this.$store.state.superApp.toDo.find(item => item === task).taskName)
+            },
+
+            saveChangeTextTask(){
+                                // Обновляем LocalStorage
+                // this.updateLocalStorage()
+                //                 // Обновляем данные на сервере
+                // this.updateDataBase()
+                console.log(this.$store.state.superApp.toDo)
+                this.isCorrectionTextTask = false
+
             }
         },
         watch: {
-
+            correctionTextTask(){
+                // this.$store.state.superApp.toDo[this.toDo.indexOf('')].taskName = this.correctionTextTask
+            }
         },
         beforeMount(){
             // При загрузке страницы......
@@ -279,6 +314,58 @@
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap');
     *{
         font-family: 'Montserrat', sans-serif;
+    }
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.4s ease;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
+    }
+    .changeTaskText-overlay{
+        background-color: #1e1f1ce8;
+        z-index: 99;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+    .changeTaskText-body{
+        position: absolute;
+        left: 100px;
+        right: 100px;
+        top: 30%;
+        width: 500px;
+        height: 170px;
+        background-color: #1E1F1C;
+        box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.993);
+        border-radius: 8px;
+        display: grid;
+        justify-content: center;
+        padding: 20px;
+    }
+    .changeTaskText-body textarea{
+        resize: none;
+        padding: 20px;
+        border: 0;
+        border-radius: 8px;
+        align-self: flex-start;
+        width: 450px;
+        height: 55px;
+        font-family: Arial, Helvetica, sans-serif; 
+        font-size: 18px;
+        box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.67) inset;  
+    }
+    .btns-changeTaskText{
+        display: flex;
+        justify-content: space-around;
+    }
+    .btns-changeTaskText button{
+        min-width: 200px;
+        font-size: 20px;
     }
     .tasks-wrapper{
         width: 100%;
