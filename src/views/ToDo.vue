@@ -1,15 +1,4 @@
 <template>
-    <transition name="fade">
-        <div class="changeTaskText-overlay" v-if="isCorrectionTextTask" name="fade">
-            <div class="changeTaskText-body container">
-                <textarea cols="30" rows="10" v-model="correctionTextTask"></textarea>
-                <div class="btns-changeTaskText">
-                    <button class="btn" @click="saveChangeTextTask">Сохранить</button>
-                    <button class="btn" @click="isCorrectionTextTask = false">Отмена</button>
-                </div>
-            </div>
-        </div>
-    </transition>
     <div class="tasks-wrapper container">
         <div class="tasks-sidebar-wrapper">
             <div class="tasks-sidebar">
@@ -44,8 +33,19 @@
                     >
                     <div class="task-item-title" :class="{task_done: task.checkbox}">{{task.taskName}}</div>
                     <div class="task-item-date" :class="{task_done: task.checkbox}">{{task.createDate}}</div>
-                    <button class="task-item-edit" @click="getChangeTextTask(task)">&#9998;</button>
-                    <button class="task-item-delete" @click="deleteTask(task)">&otimes;</button>
+                    <button class="task-item-edit" @click.prevent="getChangeTextTask(task)">&#9998;</button>
+                    <button class="task-item-delete" @click.prevent="deleteTask(task)">&otimes;</button>
+                    <transition name="fade">
+                        <div class="changeTaskText-overlay" v-if="isCorrectionTextTask" name="fade">
+                            <div class="changeTaskText-body container">
+                                <textarea cols="30" rows="10" v-model="correctionTextTask"></textarea>
+                                <div class="btns-changeTaskText">
+                                    <button class="btn" @click.prevent="saveChangeTextTask()">Сохранить</button>
+                                    <button class="btn" @click.prevent="isCorrectionTextTask = false">Отмена</button>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
                 </div>
             </div>
 
@@ -71,6 +71,7 @@
             return { 
                 isCorrectionTextTask: false,
                 correctionTextTask: '',
+                currentTaskId: '',
                 tasksNav: [
                     {
                         name: 'allTasks',
@@ -129,13 +130,13 @@
             // Функция добавления задачи
             addTask(){
                 // Создаем объект с задачей
-                const task = {
+                const newTask = {
                     checkbox: false,
                     taskName: this.NewTaskText,
                     createDate: new Date().toLocaleString()
                 }
                 // Добавляем задачу в начало массива с задачами
-                this.$store.state.superApp.toDo.unshift(task)
+                this.$store.state.superApp.toDo.unshift(newTask)
                 // Возвращаем настройки фильтра
                 this.tasksFilter(this.activeNav) 
                 // Обновляем счетчик задач
@@ -167,15 +168,14 @@
 
             // Обновление статуса задачи
             changeStatusTask(task){
-                // Находим редактируемую задачу
-                const currentTask = this.$store.state.superApp.toDo.find(item => item === task)
                 // Меняем статус на противоположное значение (true/false)
-                currentTask.checkbox = !currentTask.checkbox
+                task.checkbox = !task.checkbox
                 // Обновляем LocalStorage
                 this.updateLocalStorage()
                 // Обновляем данные на сервере
                 this.updateDataBase()
                 // Обновляем фильтры с небольшой задержкой для удобства восприятия
+                // console.log(task.checkbox)
                 setTimeout(() => {  
                     this.tasksFilter(this.activeNav) 
                     // Обновляем счетчик задач
@@ -192,7 +192,7 @@
                 // Обновляем VUEX
                 this.$store.state.superApp.activeNav = this.activeNav
                 // Обновляем LocalStorage
-                this.updateLocalStorage()
+                // this.updateLocalStorage()
                 // Если выбрано 'Все задачи'
                 if(nav.name === 'allTasks'){
                     // Удаляем активный класс у всего массива навигации
@@ -270,28 +270,29 @@
 
             // Функция редактирования задачи
             getChangeTextTask(task){
+                // Открываем форму редактирования текста задачи
                 this.isCorrectionTextTask = true
+                // Вводим d форму редактирования актуальный текст из базы данных
                 this.correctionTextTask = task.taskName
-                // this.$store.state.superApp.toDo[task.indexOf].taskName = this.correctionTextTask
-                // this.$store.state.superApp.toDo.find(item => item === task).taskName = this.correctionTextTask
-                // currentTask.taskName = this.correctionTextTask
-                // console.log(this.$store.state.superApp.toDo.find(item => item === task).taskName)
+                // Находим и записываем в переменную ID выбранной задачи
+                this.currentTaskId = this.$store.state.superApp.toDo.indexOf(task)
             },
 
             saveChangeTextTask(){
-                                // Обновляем LocalStorage
-                // this.updateLocalStorage()
-                //                 // Обновляем данные на сервере
-                // this.updateDataBase()
-                console.log(this.$store.state.superApp.toDo)
+                // Находим по ID редактируемую задачу и записываем обновленный текст
+                this.$store.state.superApp.toDo[this.currentTaskId].taskName = this.correctionTextTask
+                // Находим по ID редактируемую задачу и записываем обновленную дату
+                this.$store.state.superApp.toDo[this.currentTaskId].createDate = new Date().toLocaleString()
+                // Обновляем LocalStorage
+                this.updateLocalStorage()
+                // Обновляем данные на сервере
+                this.updateDataBase()
+                // Закрываем форму
                 this.isCorrectionTextTask = false
 
             }
         },
         watch: {
-            correctionTextTask(){
-                // this.$store.state.superApp.toDo[this.toDo.indexOf('')].taskName = this.correctionTextTask
-            }
         },
         beforeMount(){
             // При загрузке страницы......
@@ -325,7 +326,7 @@
         opacity: 0;
     }
     .changeTaskText-overlay{
-        background-color: #1e1f1ce8;
+        background-color: #1e1f1c8c;
         z-index: 99;
         position: absolute;
         left: 0;
