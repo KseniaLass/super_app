@@ -303,7 +303,6 @@
                 this.updateDataBase()
                 // Закрываем форму
                 this.isCorrectionTextTask = false
-
             }
         },
         watch: {
