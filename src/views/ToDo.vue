@@ -45,9 +45,9 @@
                     <transition name="fade">
                         <div class="changeTaskText-overlay" v-if="isCorrectionTextTask" name="fade">
                             <div class="changeTaskText-body container">
-                                <textarea cols="30" rows="10" v-model="correctionTextTask"></textarea>
+                                <textarea cols="30" rows="10" v-model="correctionTextTask" @keyup.enter="saveChangeTextTask"></textarea>
                                 <div class="btns-changeTaskText">
-                                    <button class="btn" @click.prevent="saveChangeTextTask()">Сохранить</button>
+                                    <button class="btn" @click.prevent="saveChangeTextTask">Сохранить</button>
                                     <button class="btn" @click.prevent="isCorrectionTextTask = false">Отмена</button>
                                 </div>
                             </div>

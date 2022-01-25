@@ -110,7 +110,7 @@
         text-decoration: none;
         color: #BFBFBF;
         margin-left: 30px;
-        font-family: Arial, Helvetica, sans-serif; 
+        font-family: Arial, Helvetica, sans-serif;
         font-size: 18px;
         letter-spacing: 2px;
     }
@@ -120,7 +120,9 @@
     }
 
     .btn{
-        font-family: Arial, Helvetica, sans-serif; 
+        height: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
         text-decoration: none;
         padding: 5px 9px 5px 9px;
         border: 0;
@@ -135,7 +137,7 @@
     .btn:hover{
         transition: 0.2s;
         background-color: #f8e003;
-        transform: scale(1.1);
+        transform: scale(1.05);
     }
     .btn:active{
         transform: scale(1);
