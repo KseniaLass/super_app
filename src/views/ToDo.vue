@@ -10,7 +10,14 @@
                         @click="tasksFilter(taskNav)"
                         :class="[taskNav.isActive ? 'tasks_nav_item_active' : '']"
                         >{{taskNav.value}}
-                        <div class="count-tasks">{{taskNav.count}}</div>
+                        <div 
+                            class="count-tasks"
+                            :class="[taskNav.name == 'allTasks' ? 'all-tasks' : '', 
+                                     taskNav.name == 'activeTasks' ? 'active-tasks' : '', 
+                                     taskNav.name == 'doneTasks' ? 'done-tasks' : ''
+                                    ]"
+                            >{{taskNav.count}}
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -22,7 +29,7 @@
                 </div>
                 <button class="btn" @click.prevent="addTask">Добавить задачу</button>
             </div>
-            <div class="task-item-wrapper" v-if="tasks">
+            <div class="task-item-wrapper" v-if="tasks.length !== 0">
                 <div class="task-item" v-for="task of tasks" :key="task">
                     <input
                         class="task-item-check_box" 
@@ -48,7 +55,6 @@
                     </transition>
                 </div>
             </div>
-
             <div class="task-item-if-null" v-else>
                 <div v-if="!$store.state.superApp.toDo.length">
                     Список задач пуст. Добавьте новую задачу!
@@ -129,25 +135,32 @@
 
             // Функция добавления задачи
             addTask(){
-                // Создаем объект с задачей
-                const newTask = {
-                    checkbox: false,
-                    taskName: this.NewTaskText,
-                    createDate: new Date().toLocaleString()
+                // Делаем проверку введено ли что нибудь в поле ввода
+                if(this.NewTaskText !== ''){
+                    // Если да, то
+                    // Создаем объект с задачей
+                    const newTask = {
+                        checkbox: false,
+                        taskName: this.NewTaskText,
+                        createDate: new Date().toLocaleString()
+                    }
+                    // Добавляем задачу в начало массива с задачами
+                    this.$store.state.superApp.toDo.unshift(newTask)
+                    // Возвращаем настройки фильтра
+                    this.tasksFilter(this.activeNav) 
+                    // Обновляем счетчик задач
+                    this.countTasks()
+                    // Обновляем LocalStorage
+                    this.updateLocalStorage()
+                    // Обновляем данные на сервере
+                    this.updateDataBase()
+                    // Очищаем инпут
+                    this.NewTaskText = ''
+                // Если нет
+                }else{
+                    // Говорим пользователю, что поле не может быть пустым
+                    alert('Поле не может быть пустым, введите текст новой задачи!!!')
                 }
-                // Добавляем задачу в начало массива с задачами
-                this.$store.state.superApp.toDo.unshift(newTask)
-                // Возвращаем настройки фильтра
-                this.tasksFilter(this.activeNav) 
-                // Обновляем счетчик задач
-                this.countTasks()
-                // Обновляем LocalStorage
-                this.updateLocalStorage()
-                // Обновляем данные на сервере
-                this.updateDataBase()
-                // Очищаем инпут
-                this.NewTaskText = ''
-
             },
 
             // Функция удаления задачи
@@ -183,7 +196,7 @@
                 }, 300)
             },
 
-            // Функция фильтрации задач
+            // Функция сортировки задач
             tasksFilter(nav){ 
                 // Записываем массив с задачами в песочницу
                 this.tasks = this.$store.state.superApp.toDo
@@ -268,7 +281,7 @@
                 })
             },
 
-            // Функция редактирования задачи
+            // Функция получения данных редактироваемой задачи
             getChangeTextTask(task){
                 // Открываем форму редактирования текста задачи
                 this.isCorrectionTextTask = true
@@ -278,6 +291,7 @@
                 this.currentTaskId = this.$store.state.superApp.toDo.indexOf(task)
             },
 
+            // Функция редактирования и сохранения текста и даты задачи
             saveChangeTextTask(){
                 // Находим по ID редактируемую задачу и записываем обновленный текст
                 this.$store.state.superApp.toDo[this.currentTaskId].taskName = this.correctionTextTask
@@ -294,8 +308,8 @@
         },
         watch: {
         },
+        // При загрузке/обновлении страницы......
         beforeMount(){
-            // При загрузке страницы......
             // Создаем пустой массив с дачами, в случае отсутствия его на сервере
             if(!this.$store.state.superApp.toDo){
                 this.$store.state.superApp.toDo = []
@@ -385,7 +399,7 @@
         list-style-type: none;
         cursor: pointer;
         margin-bottom: 15px;
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 200;
         letter-spacing: 1px;
         display: flex;
@@ -395,14 +409,23 @@
         width: 25px;
         height: 25px;
         border-radius: 50%;
-        background-color: #d6a812;
-        color: #1E1F1C;
-        font-size: 15px;
+        color: #ffffff;
+        font-size: 14px;
         display: flex;
         justify-content: center;
         align-items: center;
         margin-left: 20px;
-        font-weight: bold;
+        font-weight: 400;
+        text-shadow: 1px 1px 2px black
+    }
+    .all-tasks{
+        background-color: rgb(38, 47, 180);
+    }
+    .active-tasks{
+        background-color: rgb(54, 172, 43);
+    }
+    .done-tasks{
+        background-color: rgb(177, 41, 41);
     }
     .tasks_nav_item_active{
         color: #d6a812;
@@ -423,6 +446,7 @@
         grid-template-columns: 5fr 1fr;
         justify-content: space-between;
         margin-bottom: 30px;
+        width: 90%;
     }
     .add-task-form-input{
         width: 95%;
@@ -465,20 +489,20 @@
     .task-item{
         padding-left: 20px;
         padding-right: 20px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
         background-color: #1E1F1C;
         box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.603);
         border-radius: 8px;
         display: grid;
-        grid-template-columns: 1fr 6fr 2fr 1fr 1fr;
+        grid-template-columns: 1fr 10fr 3fr 1fr 1fr;
         justify-content: center;
         align-items: center;
         margin-bottom: 20px;
     }
     .task-item-title,
     .task-item-date{
-        font-size: 20px;
+        font-size: 14px;
         letter-spacing: 2px;
     }
     .task_done{
