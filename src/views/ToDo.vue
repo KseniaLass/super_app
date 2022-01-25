@@ -329,6 +329,10 @@
     *{
         font-family: 'Montserrat', sans-serif;
     }
+    .loading img{
+        height: 5px;
+        width: 5px;
+    }
     .fade-enter-active,
     .fade-leave-active {
         transition: opacity 0.4s ease;
