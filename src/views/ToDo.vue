@@ -72,10 +72,10 @@
 
 <script>
     import axios from 'axios'
-    import animate from 'animate.css'
+    import Animate from 'animate.css'
     export default {
         components: {
-            animate
+            Animate
         },
         data() {
             return { 
@@ -347,7 +347,7 @@
         opacity: 0;
     }
     .changeTaskText-overlay{
-        background-color: #1e1f1c8c;
+        background-color: #1e1f1ce7;
         z-index: 99;
         position: absolute;
         left: 0;

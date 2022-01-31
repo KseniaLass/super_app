@@ -22,7 +22,7 @@
                         <router-link class="navItem btn" to="/login" @click.prevent="logOut">Выйти</router-link>
                     </li>
                     <div class="header__navItem">
-                        <div class="navItem user">{{this.$store.state.superApp.name}}</div>
+                        <div class="navItem user">{{$store.state.superApp.name}}</div>
                     </div>
                 </ul>
             </div>

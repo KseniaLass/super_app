@@ -5,23 +5,27 @@
             <img class="background-image-horse" src="../img/pngegg-3.png" alt="background-image">
         </div>
         <div class="content animation-two">
-            <div class="ball" v-for="ball of animationTwo.sumBalls" :key="ball"></div>
+            <div class="ball-jump" v-for="ball of animationTwo.sumBalls" :key="ball"></div>
+        </div>
+        <div class="content animation-three">
+            <div class="ball-pendulum" v-for="ball of animationThree.sumBalls" :key="ball"></div>
         </div>
     </div>
-
-
 </template>
 
 <script>
-    import animate from 'animate.css'
+    import Animate from 'animate.css'
     export default {
         components: {
-            animate
+            Animate
         },
         data(){
             return {
                 animationTwo: {
                     sumBalls: 15
+                },
+                animationThree: {
+                    sumBalls: 7
                 }
                 
             }
@@ -31,7 +35,7 @@
 
 <style scoped>
     .content{
-        height: 80vh;
+        height: 90vh;
         display: flex;
         justify-content: center;
         position: relative;
@@ -79,10 +83,11 @@
     .animation-two{
         margin-top: 100px;
         height: 400px;
-        justify-content: space-around;
         align-items: center;
     }
-    .ball{
+    .ball-jump{
+        margin-right: 10px;
+        margin-left: 10px;
         transform: translateY(65px);
         background-color: #fff;
         height: 20px;
@@ -90,46 +95,46 @@
         border-radius: 50%;
         animation: jump 1.5s infinite ease-in-out;
     }
-    .ball:nth-child(2) {
+    .ball-jump:nth-child(2) {
         animation-delay: 100ms;
     }
-    .ball:nth-child(3) {
+    .ball-jump:nth-child(3) {
         animation-delay: 200ms;
     }
-    .ball:nth-child(4) {
+    .ball-jump:nth-child(4) {
         animation-delay: 300ms;
     }
-    .ball:nth-child(5) {
+    .ball-jump:nth-child(5) {
         animation-delay: 400ms;
     }
-    .ball:nth-child(6) {
+    .ball-jump:nth-child(6) {
         animation-delay: 500ms;
     }
-    .ball:nth-child(7) {
+    .ball-jump:nth-child(7) {
         animation-delay: 600ms;
     }
-    .ball:nth-child(8) {
+    .ball-jump:nth-child(8) {
         animation-delay: 700ms;
     }
-    .ball:nth-child(9) {
+    .ball-jump:nth-child(9) {
         animation-delay: 800ms;
     }
-    .ball:nth-child(10) {
+    .ball-jump:nth-child(10) {
         animation-delay: 900ms;
     }
-    .ball:nth-child(11) {
+    .ball-jump:nth-child(11) {
         animation-delay: 1000ms;
     }
-    .ball:nth-child(12) {
+    .ball-jump:nth-child(12) {
         animation-delay: 1100ms;
     }
-    .ball:nth-child(13) {
+    .ball-jump:nth-child(13) {
         animation-delay: 1200ms;
     }
-    .ball:nth-child(14) {
+    .ball-jump:nth-child(14) {
         animation-delay: 1300ms;
     }
-    .ball:nth-child(15) {
+    .ball-jump:nth-child(15) {
         animation-delay: 1400ms;
     }
     @keyframes jump {
@@ -149,10 +154,46 @@
             transform: translateY(65px);
         }
     }
+    .animation-three {
+        height: 500px;
+        border-radius: 50%;
+        align-items: center;
+        margin-left: -350px;
+    }
+    .ball-pendulum {
+        background-color: rgb(236, 0, 0);
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        margin-left: 10px;
+        margin-right: 10px;
 
-
-
-
-
-
+        transform-origin: 500% center;
+        position: absolute;
+        animation: pendulum 3.5s infinite ease-in-out;
+        
+    }
+    .ball-pendulum:nth-child(2) {
+        animation-delay: 250ms;
+    }
+    .ball-pendulum:nth-child(3) {
+        animation-delay: 500ms;
+    }
+    .ball-pendulum:nth-child(4) {
+        animation-delay: 750ms;
+    }
+    .ball-pendulum:nth-child(5) {
+        animation-delay: 1000ms;
+    }
+    .ball-pendulum:nth-child(6) {
+        animation-delay: 1250ms;
+    }
+    .ball-pendulum:nth-child(7) {
+        animation-delay: 1500ms;
+    }
+    @keyframes pendulum {
+        to {
+            transform: rotate(1turn);
+        }
+    }
 </style>

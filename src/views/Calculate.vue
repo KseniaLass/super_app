@@ -18,10 +18,10 @@
 </template>
 
 <script>
-    import animate from 'animate.css'
+    import Animate from 'animate.css'
     export default {
         components: {
-            animate
+            Animate
         },
         data(){
             return{
