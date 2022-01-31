@@ -13,7 +13,7 @@
                         <router-link class="navItem" to="/todo">ToDo</router-link>
                     </li>                    
                     <li class="header__navItem">
-                        <router-link class="navItem" to="/css-animate">CSS Анимация</router-link>
+                        <router-link class="navItem" to="/css-animate">CSS Анимации</router-link>
                     </li>
                     <li class="header__navItem">
                         <router-link class="navItem" to="/calculate">Калькулятор</router-link>
