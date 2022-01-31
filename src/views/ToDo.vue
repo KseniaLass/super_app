@@ -1,6 +1,6 @@
 <template>
     <div class="tasks-wrapper container animate__animated animate__fadeIn">
-        <div class="tasks-sidebar-wrapper">
+        <div class="tasks-sidebar-wrapper animate__animated animate__fadeInLeft">
             <div class="tasks-sidebar">
                 <ul class="tasks-nav">
                     <li 
