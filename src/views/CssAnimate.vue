@@ -1,13 +1,28 @@
 <template>
-    <div class="content container">
+    <div class="container animate__animated animate__fadeIn">
+        <div class="content">
+            <img class="background-image-grass" src="../img/pngegg.png" alt="background-image">
+            <img class="background-image-horse" src="../img/pngegg-3.png" alt="background-image">
+        </div>
+    </div>
+
+    <!-- <div class="content container">
         <img class="background-image-grass" src="../img/pngegg.png" alt="background-image">
         <img class="background-image-horse" src="../img/pngegg-3.png" alt="background-image">
     </div>
+    <div class="content container">
+        <img class="background-image-grass" src="../img/pngegg.png" alt="background-image">
+        <img class="background-image-horse" src="../img/pngegg-3.png" alt="background-image">
+    </div> -->
 </template>
 
 <script>
-    export default {
+    import animate from 'animate.css'
 
+    export default {
+        components: {
+            animate
+        },
     }
 </script>
 

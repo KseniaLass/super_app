@@ -1,10 +1,16 @@
 <template>
-    <h1>Home</h1>
+    <div class="container animate__animated animate__fadeIn">
+        <h1>Привет!!!</h1>
+    </div>
+    
 </template>
 
 <script>
+    import animate from 'animate.css'
     export default {
-
+        components: {
+            animate
+        }
     }
 </script>
 

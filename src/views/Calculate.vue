@@ -1,5 +1,5 @@
 <template>
-    <div class="content container">
+    <div class="content container animate__animated animate__fadeIn">
         <div class="calc__body">
             <input type="text" v-model="result" placeholder="0" class="display" disabled>
             <div class="grid">
@@ -18,7 +18,11 @@
 </template>
 
 <script>
+    import animate from 'animate.css'
     export default {
+        components: {
+            animate
+        },
         data(){
             return{
                 result: '',

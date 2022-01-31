@@ -1,5 +1,5 @@
 <template>
-    <div class="tasks-wrapper container">
+    <div class="tasks-wrapper container animate__animated animate__fadeIn">
         <div class="tasks-sidebar-wrapper">
             <div class="tasks-sidebar">
                 <ul class="tasks-nav">
@@ -72,7 +72,11 @@
 
 <script>
     import axios from 'axios'
+    import animate from 'animate.css'
     export default {
+        components: {
+            animate
+        },
         data() {
             return { 
                 isCorrectionTextTask: false,
