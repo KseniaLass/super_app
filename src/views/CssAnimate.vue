@@ -1,8 +1,11 @@
 <template>
     <div class="container animate__animated animate__fadeIn">
-        <div class="content">
+        <div class="content animation-one">
             <img class="background-image-grass" src="../img/pngegg.png" alt="background-image">
             <img class="background-image-horse" src="../img/pngegg-3.png" alt="background-image">
+        </div>
+        <div class="content animation-two">
+            <div class="ball" v-for="ball of sumBalls" :key="ball"></div>
         </div>
     </div>
 
@@ -23,6 +26,11 @@
         components: {
             animate
         },
+        data(){
+            return {
+                sumBalls: 20
+            }
+        }
     }
 </script>
 
@@ -45,7 +53,18 @@
         height: 60%;
         animation: horseAnimate 2s infinite;
     }
-
+    .animation-two{
+        margin-top: 100px;
+        height: 400px;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .ball{
+        background-color: #fff;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+    }
     @keyframes horseAnimate{
         from{
             transform: translateY(0);
