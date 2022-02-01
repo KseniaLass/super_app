@@ -1,23 +1,23 @@
 <template>
     <div class="container animate__animated animate__fadeIn">
         <div class="content animate-cards">
-            <div class="card animate-card__one">
-                <div v-if="!animateCardOne.isClick">{{animateCardOne.text}}</div>
-                <div v-else>{{animateCardOne.textIfClick}}</div>
+            <div class="card animate-card__one" @click.prevent="flipOverCard(animateCardOne)">
+                <div class="front">{{animateCardOne.text}}</div>
+                <div class="back">{{animateCardOne.textIfClick}}</div>
             </div>
-            <div class="card animate-card__two">
+            <div class="card animate-card__two" @click.prevent="flipOverCard(animateCardTwo)">
                 <div v-if="!animateCardTwo.isClick">{{animateCardTwo.text}}</div>
                 <div v-else>{{animateCardTwo.textIfClick}}</div>
             </div>
-            <div class="card animate-card__three">
+            <div class="card animate-card__three" @click.prevent="flipOverCard(animateCardThree)">
                 <div v-if="!animateCardThree.isClick">{{animateCardThree.text}}</div>
                 <div v-else>{{animateCardThree.textIfClick}}</div>
             </div>
-            <div class="card animate-card__four">
+            <div class="card animate-card__four" @click.prevent="flipOverCard(animateCardFour)">
                 <div v-if="!animateCardFour.isClick">{{animateCardFour.text}}</div>
                 <div v-else>{{animateCardFour.textIfClick}}</div>
             </div>
-            <div class="card animate-card__five">
+            <div class="card animate-card__five" @click.prevent="flipOverCard(animateCardFive)">
                 <div v-if="!animateCardFive.isClick">{{animateCardFive.text}}</div>
                 <div v-else>{{animateCardFive.textIfClick}}</div>
             </div>
@@ -51,22 +51,22 @@
                 animateCardTwo: {
                     isClick: false,
                     text: 'Жамкай меня',
-                    textIfClick: 'Ух ты, давай еще раз'
+                    textIfClick: 'Лихо, продолжай'
                 },
                 animateCardThree: {
                     isClick: false,
                     text: 'Жамкай меня',
-                    textIfClick: 'Ух ты, давай еще раз'
+                    textIfClick: 'Видал, как могу?'
                 },
                 animateCardFour: {
                     isClick: false,
                     text: 'Жамкай меня',
-                    textIfClick: 'Ух ты, давай еще раз'
+                    textIfClick: 'Вжух....жги!'
                 },
                 animateCardFive: {
                     isClick: false,
                     text: 'Жамкай меня',
-                    textIfClick: 'Ух ты, давай еще раз'
+                    textIfClick: 'Чпонькс, вертуха...'
                 },
                 animationTwo: {
                     sumBalls: 15
@@ -74,6 +74,11 @@
                 animationThree: {
                     sumBalls: 7
                 }
+            }
+        },
+        methods: {
+            flipOverCard(card){
+                card.isClick = !card.isClick 
             }
         }
     }
@@ -104,31 +109,62 @@
         border-radius: 14px;
         box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
         cursor: pointer;
+        transition: 0.2s;
+    }
+    .card:hover{
+        transform: scale(1.03);
+        transition: 0.3s;
+        /* transform: rotateY(180deg); */
     }
     .animate-card__one{
         background-color: rgb(224, 106, 59);
         color: white;
-        text-shadow: 1px 1px 2px black
+        text-shadow: 1px 1px 2px black;
+        /* perspective: 1000; */
+    }
+    .animate-card__one.front{
+
+    }
+    .animate-card__one.back{
+        
     }
     .animate-card__two{
         background-color: rgb(4, 150, 218);
         color: white;
-        text-shadow: 1px 1px 2px black
+        text-shadow: 1px 1px 2px black;
     }
     .animate-card__three{
         background-color: rgb(214, 88, 204);
         color: white;
-        text-shadow: 1px 1px 2px black
+        text-shadow: 1px 1px 2px black;
     }
     .animate-card__four{
         background-color: rgb(88, 214, 172);
         color: white;
-        text-shadow: 1px 1px 2px black
+        text-shadow: 1px 1px 2px black;
     }
     .animate-card__five{
         background-color: rgb(223, 222, 138);
         color: white;
-        text-shadow: 1px 1px 2px black
+        text-shadow: 1px 1px 2px black;
+        /* animation: flipOver 2s infinite; */
+    }
+    @keyframes flipOverY{
+        from{
+            transform: translateY(0);
+        }
+        25%{
+            transform: translateY(0);
+        }
+        50%{
+            transform: translateY(20px);
+        }
+        75%{
+            transform: translateY(0);
+        }
+        to{
+            transform: translateY(0);
+        }
     }
     .background-image-grass{
         position: absolute;
