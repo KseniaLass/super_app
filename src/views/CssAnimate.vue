@@ -1,5 +1,27 @@
 <template>
     <div class="container animate__animated animate__fadeIn">
+        <div class="content animate-cards">
+            <div class="card animate-card__one">
+                <div v-if="!animateCardOne.isClick">{{animateCardOne.text}}</div>
+                <div v-else>{{animateCardOne.textIfClick}}</div>
+            </div>
+            <div class="card animate-card__two">
+                <div v-if="!animateCardTwo.isClick">{{animateCardTwo.text}}</div>
+                <div v-else>{{animateCardTwo.textIfClick}}</div>
+            </div>
+            <div class="card animate-card__three">
+                <div v-if="!animateCardThree.isClick">{{animateCardThree.text}}</div>
+                <div v-else>{{animateCardThree.textIfClick}}</div>
+            </div>
+            <div class="card animate-card__four">
+                <div v-if="!animateCardFour.isClick">{{animateCardFour.text}}</div>
+                <div v-else>{{animateCardFour.textIfClick}}</div>
+            </div>
+            <div class="card animate-card__five">
+                <div v-if="!animateCardFive.isClick">{{animateCardFive.text}}</div>
+                <div v-else>{{animateCardFive.textIfClick}}</div>
+            </div>
+        </div>
         <div class="content animation-one">
             <img class="background-image-grass" src="../img/pngegg.png" alt="background-image">
             <img class="background-image-horse" src="../img/pngegg-3.png" alt="background-image">
@@ -21,24 +43,92 @@
         },
         data(){
             return {
+                animateCardOne: {
+                    isClick: false,
+                    text: 'Жамкай меня',
+                    textIfClick: 'Ух ты, давай еще раз'
+                },
+                animateCardTwo: {
+                    isClick: false,
+                    text: 'Жамкай меня',
+                    textIfClick: 'Ух ты, давай еще раз'
+                },
+                animateCardThree: {
+                    isClick: false,
+                    text: 'Жамкай меня',
+                    textIfClick: 'Ух ты, давай еще раз'
+                },
+                animateCardFour: {
+                    isClick: false,
+                    text: 'Жамкай меня',
+                    textIfClick: 'Ух ты, давай еще раз'
+                },
+                animateCardFive: {
+                    isClick: false,
+                    text: 'Жамкай меня',
+                    textIfClick: 'Ух ты, давай еще раз'
+                },
                 animationTwo: {
                     sumBalls: 15
                 },
                 animationThree: {
                     sumBalls: 7
                 }
-                
             }
         }
     }
 </script>
 
 <style scoped>
+    *{
+        font-family: Arial, Helvetica, sans-serif;
+    }
     .content{
         height: 90vh;
         display: flex;
         justify-content: center;
         position: relative;
+    }
+    .animate-cards{
+        margin-top: 150px;
+        height: 500px;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .card{
+        width: 200px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 14px;
+        box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
+        cursor: pointer;
+    }
+    .animate-card__one{
+        background-color: rgb(224, 106, 59);
+        color: white;
+        text-shadow: 1px 1px 2px black
+    }
+    .animate-card__two{
+        background-color: rgb(4, 150, 218);
+        color: white;
+        text-shadow: 1px 1px 2px black
+    }
+    .animate-card__three{
+        background-color: rgb(214, 88, 204);
+        color: white;
+        text-shadow: 1px 1px 2px black
+    }
+    .animate-card__four{
+        background-color: rgb(88, 214, 172);
+        color: white;
+        text-shadow: 1px 1px 2px black
+    }
+    .animate-card__five{
+        background-color: rgb(223, 222, 138);
+        color: white;
+        text-shadow: 1px 1px 2px black
     }
     .background-image-grass{
         position: absolute;
@@ -78,7 +168,7 @@
         }
         to{
             transform: translateX(-10px);
-        }    
+        }
     }
     .animation-two{
         margin-top: 100px;

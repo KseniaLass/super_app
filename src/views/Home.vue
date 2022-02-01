@@ -1,11 +1,11 @@
 <template>
     <div class="container welcome animate__animated animate__fadeIn">
-        <h1 class="welcome-title animate__animated animate__fadeInLeft">Привет!!!</h1>
+        <h1 class="welcome-title animate__animated animate__fadeInLeft">Привет!</h1>
         <p class="welcome-subtitle animate__animated animate__fadeIn animate__delay-1s">
-            Эй, {{$store.state.superApp.name}}, добро пожаловать в мое первое приложение, не имеющее абсолютно никакой смысловой нагрузки, созданное исключительно ради практики и на потеху опытных разработчиков. 
+            Эй, {{$store.state.superApp.name}}, добро пожаловать в мое первое приложение, не имеющее абсолютно никакой смысловой нагрузки, созданное исключительно ради практики, демонстрации навыков и на потеху опытным разработчикам. 
         </p>
-        <p class="welcome-subtitle animate__animated animate__fadeIn animate__delay-1s">
-            Эй, {{$store.state.superApp.name}}, добро пожаловать в мое первое приложение, не имеющее абсолютно никакой смысловой нагрузки, созданное исключительно ради практики и на потеху опытных товарищей. 
+        <p class="welcome-subtitle animate__animated animate__fadeIn animate__delay-2s">
+            Эй, {{$store.state.superApp.name}}, добро пожаловать в мое первое приложение, не имеющее абсолютно никакой смысловой нагрузки, созданное исключительно ради практики, демонстрации навыков и на потеху опытным разработчикам. 
         </p>
     </div>
     
@@ -22,7 +22,6 @@
 
 <style scoped>
     *{
-        /* height: 400px; */
         color: blanchedalmond;
         display: flex;
         justify-content: center;
@@ -38,6 +37,6 @@
         line-height: 1.3;
         letter-spacing: 1.1px;
         color: rgba(163, 159, 151, 0.863);
-        /* margin-bottom: 50px; */
+        --animate-delay: 0.5s;
     }
 </style>
