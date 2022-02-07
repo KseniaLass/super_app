@@ -1,25 +1,35 @@
 <template>
     <div class="container animate__animated animate__fadeIn">
         <div class="content animate-cards">
-            <div class="card animate-card__one" @click.prevent="flipOverCard(animateCardOne)">
-                <div class="front">{{animateCardOne.text}}</div>
-                <div class="back">{{animateCardOne.textIfClick}}</div>
+            <div class="animate-card__wrapper">
+                <div class="animate-card" :class="[animateCardOne.isClick ? 'one' : '']" @click.prevent="flipOverCard(animateCardOne)">
+                    <div class="card animate-card__one-front">{{animateCardOne.text}}</div>
+                    <div class="card animate-card__one-back">{{animateCardOne.textIfClick}}</div>
+                </div>
             </div>
-            <div class="card animate-card__two" @click.prevent="flipOverCard(animateCardTwo)">
-                <div v-if="!animateCardTwo.isClick">{{animateCardTwo.text}}</div>
-                <div v-else>{{animateCardTwo.textIfClick}}</div>
+            <div class="animate-card__wrapper">
+                <div class="animate-card two" @click.prevent="flipOverCard(animateCardTwo)">
+                    <div class="card animate-card__two-front">{{animateCardTwo.text}}</div>
+                    <div class="card animate-card__two-back">{{animateCardTwo.textIfClick}}</div>
+                </div>
             </div>
-            <div class="card animate-card__three" @click.prevent="flipOverCard(animateCardThree)">
-                <div v-if="!animateCardThree.isClick">{{animateCardThree.text}}</div>
-                <div v-else>{{animateCardThree.textIfClick}}</div>
+            <div class="animate-card__wrapper">
+                <div class="animate-card three" @click.prevent="flipOverCard(animateCardThree)">
+                    <div class="card animate-card__three-front">{{animateCardThree.text}}</div>
+                    <div class="card animate-card__three-back">{{animateCardThree.textIfClick}}</div>
+                </div>
             </div>
-            <div class="card animate-card__four" @click.prevent="flipOverCard(animateCardFour)">
-                <div v-if="!animateCardFour.isClick">{{animateCardFour.text}}</div>
-                <div v-else>{{animateCardFour.textIfClick}}</div>
+            <div class="animate-card__wrapper">
+                <div class="animate-card four" @click.prevent="flipOverCard(animateCardFour)">
+                    <div class="card animate-card__four-front">{{animateCardFour.text}}</div>
+                    <div class="card animate-card__four-back">{{animateCardFour.textIfClick}}</div>
+                </div>
             </div>
-            <div class="card animate-card__five" @click.prevent="flipOverCard(animateCardFive)">
-                <div v-if="!animateCardFive.isClick">{{animateCardFive.text}}</div>
-                <div v-else>{{animateCardFive.textIfClick}}</div>
+            <div class="animate-card__wrapper">
+                <div class="animate-card five" @click.prevent="flipOverCard(animateCardFive)">
+                    <div class="card animate-card__five-front">{{animateCardFive.text}}</div>
+                    <div class="card animate-card__five-back">{{animateCardFive.textIfClick}}</div>
+                </div>
             </div>
         </div>
         <div class="content animation-one">
@@ -79,6 +89,7 @@
         methods: {
             flipOverCard(card){
                 card.isClick = !card.isClick 
+                console.log(card.isClick)
             }
         }
     }
@@ -97,75 +108,118 @@
     .animate-cards{
         margin-top: 150px;
         height: 500px;
+        width: 100%;
         justify-content: space-between;
         align-items: center;
     }
-    .card{
+    .animate-card__wrapper {
         width: 200px;
         height: 300px;
+        perspective: 1000px;
+    }
+    .animate-card {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.2s;
+    }
+    .card{
+        position: absolute;
+        color: white;
+        text-shadow: 1px 1px 2px black;
+        width: 100%;
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         border-radius: 14px;
         box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
         cursor: pointer;
-        transition: 0.2s;
     }
-    .card:hover{
-        transform: scale(1.03);
-        transition: 0.3s;
-        /* transform: rotateY(180deg); */
-    }
-    .animate-card__one{
-        background-color: rgb(224, 106, 59);
-        color: white;
-        text-shadow: 1px 1px 2px black;
-        /* perspective: 1000; */
-    }
-    .animate-card__one.front{
 
+
+
+
+    .animate-card__one-front {
+        background-color: rgb(224, 106, 59);
     }
-    .animate-card__one.back{
-        
+    .animate-card__one-back {
+        background-color: rgb(224, 106, 59);
+        transform: rotateY(180deg);
     }
-    .animate-card__two{
+    .animate-card__two-front {
         background-color: rgb(4, 150, 218);
-        color: white;
-        text-shadow: 1px 1px 2px black;
     }
-    .animate-card__three{
+    .animate-card__two-back {
+        background-color: rgb(4, 150, 218);
+        transform: rotateY(180deg);
+    }
+    .animate-card__three-front {
         background-color: rgb(214, 88, 204);
-        color: white;
-        text-shadow: 1px 1px 2px black;
     }
-    .animate-card__four{
+    .animate-card__three-back {
+        background-color: rgb(214, 88, 204);
+        transform: rotateY(180deg);
+    }
+    .animate-card__four-front {
         background-color: rgb(88, 214, 172);
-        color: white;
-        text-shadow: 1px 1px 2px black;
     }
-    .animate-card__five{
+    .animate-card__four-back {
+        background-color: rgb(88, 214, 172);
+        transform: rotateY(180deg);
+    }
+    .animate-card__five-front {
         background-color: rgb(223, 222, 138);
-        color: white;
-        text-shadow: 1px 1px 2px black;
-        /* animation: flipOver 2s infinite; */
     }
+    .animate-card__five-back {
+        background-color: rgb(223, 222, 138);
+        transform: rotateY(180deg);
+    }
+
+    .animate-card:hover {
+        transform: scale(1.02);
+        transition: 0.4s;
+    }
+
+    .one { 
+        animation: flipOverY 4s;
+    }
+
+    /* .one:hover {
+        transform: rotateY(180deg);
+    }
+    .two:hover {
+        transform: rotateY(180deg);
+    }
+    .three:hover {
+        transform: rotateY(180deg);
+    }
+    .four:hover {
+        transform: rotateY(180deg);
+    }
+    .five:hover {
+        transform: rotateY(180deg);
+    } */
+
+
+
     @keyframes flipOverY{
-        from{
-            transform: translateY(0);
-        }
-        25%{
-            transform: translateY(0);
+        0%{
+            transform: rotateY(0deg);
         }
         50%{
-            transform: translateY(20px);
+            transform: rotateY(180deg);
         }
-        75%{
-            transform: translateY(0);
-        }
-        to{
-            transform: translateY(0);
+        100%{
+            transform: rotateY(0deg);
         }
     }
+
+
+
+
+
     .background-image-grass{
         position: absolute;
         bottom: 0;
