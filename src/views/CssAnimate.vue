@@ -1,5 +1,8 @@
 <template>
     <div class="container animate__animated animate__fadeIn">
+        <div class="title">
+            <div>Анимация карточек</div>
+        </div>
         <div class="content animate-cards">
             <div class="animate-card__wrapper">
                 <div class="animate-card" :class="[animateCardOne.isClick ? 'one' : '']" @click.prevent="flipOverCard(animateCardOne)">
@@ -8,36 +11,45 @@
                 </div>
             </div>
             <div class="animate-card__wrapper">
-                <div class="animate-card two" @click.prevent="flipOverCard(animateCardTwo)">
+                <div class="animate-card" :class="[animateCardTwo.isClick ? 'two' : '']" @click.prevent="flipOverCard(animateCardTwo)">
                     <div class="card animate-card__two-front">{{animateCardTwo.text}}</div>
                     <div class="card animate-card__two-back">{{animateCardTwo.textIfClick}}</div>
                 </div>
             </div>
             <div class="animate-card__wrapper">
-                <div class="animate-card three" @click.prevent="flipOverCard(animateCardThree)">
+                <div class="animate-card" :class="[animateCardThree.isClick ? 'three' : '']" @click.prevent="flipOverCard(animateCardThree)">
                     <div class="card animate-card__three-front">{{animateCardThree.text}}</div>
                     <div class="card animate-card__three-back">{{animateCardThree.textIfClick}}</div>
                 </div>
             </div>
             <div class="animate-card__wrapper">
-                <div class="animate-card four" @click.prevent="flipOverCard(animateCardFour)">
+                <div class="animate-card" :class="[animateCardFour.isClick ? 'four' : '']" @click.prevent="flipOverCard(animateCardFour)">
                     <div class="card animate-card__four-front">{{animateCardFour.text}}</div>
                     <div class="card animate-card__four-back">{{animateCardFour.textIfClick}}</div>
                 </div>
             </div>
             <div class="animate-card__wrapper">
-                <div class="animate-card five" @click.prevent="flipOverCard(animateCardFive)">
+                <div class="animate-card" :class="[animateCardFive.isClick ? 'five' : '']" @click.prevent="flipOverCard(animateCardFive)">
                     <div class="card animate-card__five-front">{{animateCardFive.text}}</div>
                     <div class="card animate-card__five-back">{{animateCardFive.textIfClick}}</div>
                 </div>
             </div>
         </div>
+        <div class="title">
+            <div>Анимация картинок</div>
+        </div>
         <div class="content animation-one">
             <img class="background-image-grass" src="../img/pngegg.png" alt="background-image">
             <img class="background-image-horse" src="../img/pngegg-3.png" alt="background-image">
         </div>
+        <div class="title">
+            <div>Анимация Loader 1</div>
+        </div>
         <div class="content animation-two">
             <div class="ball-jump" v-for="ball of animationTwo.sumBalls" :key="ball"></div>
+        </div>
+        <div class="title">
+            <div>Анимация Loader 2</div>
         </div>
         <div class="content animation-three">
             <div class="ball-pendulum" v-for="ball of animationThree.sumBalls" :key="ball"></div>
@@ -88,8 +100,10 @@
         },
         methods: {
             flipOverCard(card){
-                card.isClick = !card.isClick 
-                console.log(card.isClick)
+                card.isClick = !card.isClick
+                setTimeout(() => {
+                    card.isClick = !card.isClick
+                }, 3000)
             }
         }
     }
@@ -98,16 +112,28 @@
 <style scoped>
     *{
         font-family: Arial, Helvetica, sans-serif;
+
+    }
+    .title{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .title div {
+        color: #BFBFBF;
+        margin-top: 150px;
+        font-size: 24px;
+        letter-spacing: 1.5px;
+        font-weight:100;
     }
     .content{
-        height: 90vh;
         display: flex;
         justify-content: center;
         position: relative;
     }
     .animate-cards{
-        margin-top: 150px;
-        height: 500px;
+        margin-top: 50px;
+        height: 400px;
         width: 100%;
         justify-content: space-between;
         align-items: center;
@@ -115,7 +141,7 @@
     .animate-card__wrapper {
         width: 200px;
         height: 300px;
-        perspective: 1000px;
+        perspective: 700px;
     }
     .animate-card {
         width: 100%;
@@ -137,10 +163,6 @@
         box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
         cursor: pointer;
     }
-
-
-
-
     .animate-card__one-front {
         background-color: rgb(224, 106, 59);
     }
@@ -153,7 +175,7 @@
     }
     .animate-card__two-back {
         background-color: rgb(4, 150, 218);
-        transform: rotateY(180deg);
+        transform: rotateX(180deg);
     }
     .animate-card__three-front {
         background-color: rgb(214, 88, 204);
@@ -176,50 +198,119 @@
         background-color: rgb(223, 222, 138);
         transform: rotateY(180deg);
     }
-
     .animate-card:hover {
         transform: scale(1.02);
         transition: 0.4s;
     }
-
     .one { 
-        animation: flipOverY 4s;
+        animation: flipOverY 3s;
     }
-
-    /* .one:hover {
-        transform: rotateY(180deg);
+    .two { 
+        animation: flipOverX 3s;
     }
-    .two:hover {
-        transform: rotateY(180deg);
+    .three { 
+        animation: flipOverYX 3s;
     }
-    .three:hover {
-        transform: rotateY(180deg);
+    .four { 
+        animation: flipOverY2 3s;
     }
-    .four:hover {
-        transform: rotateY(180deg);
+    .five { 
+        animation: scale 3s;
     }
-    .five:hover {
-        transform: rotateY(180deg);
-    } */
-
-
-
     @keyframes flipOverY{
         0%{
             transform: rotateY(0deg);
         }
+        40%{
+            transform: rotateY(180deg);
+        }
         50%{
+            transform: rotateY(180deg);
+        }
+        60%{
             transform: rotateY(180deg);
         }
         100%{
             transform: rotateY(0deg);
         }
     }
-
-
-
-
-
+    @keyframes flipOverX{
+        0%{
+            transform: rotateX(0deg);
+        }
+        40%{
+            transform: rotateX(180deg);
+        }
+        50%{
+            transform: rotateX(180deg);
+        }
+        60%{
+            transform: rotateX(180deg);
+        }
+        100%{
+            transform: rotateX(0deg);
+        }
+    }
+    @keyframes flipOverYX{
+        0%{
+            transform: rotateY(0deg) rotateX(0deg);
+        }
+        40%{
+            transform: rotateY(180deg) rotateX(360deg);
+        }
+        50%{
+            transform: rotateY(180deg) rotateX(360deg);
+        }
+        60%{
+            transform: rotateY(180deg) rotateX(360deg);
+        }
+        100%{
+            transform: rotateY(0deg) rotateX(0deg);
+        }
+    }
+    @keyframes flipOverY2{
+        0%{
+            transform: rotateY(0deg);
+        }
+        40%{
+            transform: rotateY(540deg);
+        }
+        50%{
+            transform: rotateY(540deg);
+        }
+        60%{
+            transform: rotateY(540deg);
+        }
+        100%{
+            transform: rotateY(0deg);
+        }
+    }
+    @keyframes scale{
+        0%{
+            transform: scale(1);
+        }
+        25%{
+            transform: scale(0) rotateY(540deg);
+        }
+        60%{
+            transform: scale(1)  rotateY(180deg);
+        }
+        50%{
+            transform: scale(1)  rotateY(180deg);
+        }
+        60%{
+            transform: scale(1)  rotateY(180deg);
+        }
+        75%{
+            transform: rotateX(540deg);
+        }
+        100%{
+            transform: scale(1);
+        }
+    }
+    .animation-one{
+        height: 600px;
+    }
     .background-image-grass{
         position: absolute;
         bottom: 0;
@@ -335,6 +426,8 @@
         }
     }
     .animation-three {
+        margin-top: 100px;
+        margin-bottom: 100px;
         height: 500px;
         border-radius: 50%;
         align-items: center;
