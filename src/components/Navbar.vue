@@ -11,7 +11,7 @@
                     </li>
                     <li class="header__navItem">
                         <router-link class="navItem" to="/todo">ToDo</router-link>
-                    </li>                    
+                    </li>
                     <li class="header__navItem">
                         <router-link class="navItem" to="/css-animate">CSS Анимации</router-link>
                     </li>
@@ -66,7 +66,7 @@
                     // Ничего не делаем, оставляем все как есть
                 }else{
                     // Иначе выходим на страницу логина
-                    this.$router.push('/login')  
+                    this.$router.push('/login')
                 }
             }
         }

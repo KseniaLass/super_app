@@ -61,10 +61,10 @@
                 >{{passwordСonfirmLabel}}
             </label>
             <input 
-                v-model="passwordСonfirm" 
-                type="password" 
-                id="passwordСonfirm" 
-                class="input" 
+                v-model="passwordСonfirm"
+                type="password"
+                id="passwordСonfirm"
+                class="input"
                 placeholder="Введите пароль ещё раз"
                 :class="{input_error: errors.passwordСonfirm}"
             >
@@ -125,20 +125,20 @@
 
                 // ================= Валидация EMAIL =====================
                 // Проверка введено ли что нибудь в поле email
-                if(this.email.length === 0){  
-                    // Записываем ошибку     
-                    this.errors.email = true  
+                if(this.email.length === 0){
+                    // Записываем ошибку
+                    this.errors.email = true
                     // Выводим в лейбле сообщение об ошибке
                     this.emailLabel = 'Поле не может быть пустым*'
                 }else{
-                    // Отменяем ошибку     
-                    this.errors.email = null  
+                    // Отменяем ошибку
+                    this.errors.email = null
                     // Возвращаем лейбл в исходное состояние
                     this.emailLabel = 'Логин*'
                     // Проверка есть ли данный пользователь на сервере
-                    if(arreyUsers.find(user => user.email === this.email)){   
-                        // Записываем ошибку     
-                        this.errors.email = true            
+                    if(arreyUsers.find(user => user.email === this.email)){
+                        // Записываем ошибку
+                        this.errors.email = true
                         // Выводим в лейбле сообщение об ошибке
                         this.emailLabel = 'Пользователь с таким именем уже существует*'
                         // Очищаем поле email
@@ -149,13 +149,13 @@
                 // ================= Валидация NAME =====================
                 // Проверка введено ли что нибудь в поле name
                 if(this.name.length === 0){
-                    // Записываем ошибку     
-                    this.errors.name = true  
+                    // Записываем ошибку
+                    this.errors.name = true
                     // Выводим в лейбле сообщение об ошибке
                     this.nameLabel = 'Поле не может быть пустым*'
                 }else{
-                    // Отменяем ошибку     
-                    this.errors.name = null  
+                    // Отменяем ошибку
+                    this.errors.name = null
                     // Возвращаем лейбл в исходное состояние
                     this.nameLabel = 'Имя*'
                 }
@@ -163,13 +163,13 @@
                 // ================= Валидация PASSWORD =====================
                 // Проверка введено ли что нибудь в поле password
                 if(this.password.length === 0){
-                    // Записываем ошибку     
-                    this.errors.password = true  
+                    // Записываем ошибку
+                    this.errors.password = true
                     // Выводим в лейбле сообщение об ошибке
                     this.passwordLabel = 'Поле не может быть пустым*'
                 }else{
-                    // Отменяем ошибку     
-                    this.errors.password = null  
+                    // Отменяем ошибку
+                    this.errors.password = null
                     // Возвращаем лейбл в исходное состояние
                     this.passwordLabel = 'Пароль*'
                 }
@@ -177,21 +177,21 @@
                 // ================= Валидация PASSWORDCONFIRM =====================
                 // Проверка введено ли что нибудь в поле passwordConfirm
                 if(this.passwordСonfirm.length === 0){
-                    // Записываем ошибку     
-                    this.errors.passwordСonfirm = true  
+                    // Записываем ошибку
+                    this.errors.passwordСonfirm = true
                     // Выводим в лейбле сообщение об ошибке
                     this.passwordСonfirmLabel = 'Поле не может быть пустым*'
                 }else{
                     // Проверка подтверждения пароля. Пароль должен совпадать
                     if(this.password !== this.passwordСonfirm){
-                        // Записываем ошибку     
-                        this.errors.passwordСonfirm = true  
+                        // Записываем ошибку
+                        this.errors.passwordСonfirm = true
                         // Выводим в лейбле сообщение об ошибке
                         this.passwordСonfirmLabel = 'Пароли не совпадают'
                     }
                     else{
-                        // Отменяем ошибку     
-                        this.errors.passwordСonfirm = null  
+                        // Отменяем ошибку
+                        this.errors.passwordСonfirm = null
                         // Возвращаем лейбл в исходное состояние
                         this.passwordСonfirmLabel = 'Пароли совпадают*'
                     }
@@ -224,26 +224,26 @@
         },
         watch:{
             email(){
-                // Отменяем ошибку     
-                this.errors.email = null  
+                // Отменяем ошибку
+                this.errors.email = null
                 // Возвращаем лейбл в исходное состояние
                 this.emailLabel = 'Логин*'
             },
             name(){
-                // Отменяем ошибку     
-                this.errors.name = null  
+                // Отменяем ошибку
+                this.errors.name = null
                 // Возвращаем лейбл в исходное состояние
                 this.nameLabel = 'Имя*'
             },
             password(){
-                // Отменяем ошибку     
-                this.errors.password = null  
+                // Отменяем ошибку
+                this.errors.password = null
                 // Возвращаем лейбл в исходное состояние
-                this.passwordLabel = 'Пароль*'                
+                this.passwordLabel = 'Пароль*'
             },
             passwordСonfirm(){
-                // Отменяем ошибку     
-                this.errors.passwordСonfirm = null  
+                // Отменяем ошибку
+                this.errors.passwordСonfirm = null
                 // Возвращаем лейбл в исходное состояние
                 this.passwordСonfirmLabel = 'Подтверждение пароля*'
             }

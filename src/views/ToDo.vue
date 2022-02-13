@@ -12,8 +12,8 @@
                         >{{taskNav.value}}
                         <div 
                             class="count-tasks"
-                            :class="[taskNav.name == 'allTasks' ? 'all-tasks' : '', 
-                                     taskNav.name == 'activeTasks' ? 'active-tasks' : '', 
+                            :class="[taskNav.name == 'allTasks' ? 'all-tasks' : '',
+                                     taskNav.name == 'activeTasks' ? 'active-tasks' : '',
                                      taskNav.name == 'doneTasks' ? 'done-tasks' : ''
                                     ]"
                             >{{taskNav.count}}
