@@ -5,8 +5,12 @@
             Эй, {{$store.state.superApp.name}}, добро пожаловать в мое первое приложение, не имеющее абсолютно никакой смысловой нагрузки, созданное исключительно ради практики, демонстрации навыков и на потеху опытным разработчикам. 
         </p>
         <p class="welcome-subtitle animate__animated animate__fadeIn animate__delay-2s">
-            Работа написана на VUEJS с помощью VUE CLI. Применены инструменты: VUEX, VUE-ROUTER, AXIOS, Animate.css и GOOGLE само собой разумеется, куда же без него &#128521;
+            Работа написана на VUEJS с помощью VUE CLI. Применены инструменты: VUEX, VUE-Router, Firebase, Axios, Animate.css и Google естественно, куда же без него &#128521;
         </p>
+        <div class="travolta_and_google-img-wrapper animate__animated animate__fadeIn animate__delay-3s">
+            <img src="../img/Google-logo.png" alt="picture" class="google-logo">
+            <img src="../img/travolta.gif" alt="picture" class="travolta">
+        </div>
     </div>
     
 </template>
@@ -38,5 +42,12 @@
         letter-spacing: 1.1px;
         color: rgba(163, 159, 151, 0.863);
         --animate-delay: 0.5s;
+    }
+    .travolta_and_google-img-wrapper{
+        margin-top: 70px;
+        --animate-delay: 0.5s;
+    }
+    .google-logo{
+        width: 400px;
     }
 </style>

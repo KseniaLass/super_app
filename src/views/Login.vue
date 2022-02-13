@@ -2,11 +2,10 @@
     <section class="content container">
         <div class="content__text">
             <div class="text-title">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Welcome to my test application and make yourself at home. 
             </div>
             <div class="text-subtitle">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore dolores iste odio a enim quisquam ipsa nesciunt sint numquam. Consequatur, magnam suscipit illo tempore provident placeat porro pariatur, repellat voluptate aut saepe et quis, accusamus error odio? Voluptate, dolorem voluptatum sint placeat ducimus pariatur illum, voluptatem, tenetur sequi quod iusto!<br>
-                <br>
+                Войдите под своей учетной записью, если таковая отсутствует - зарегистрируйтесь. При регистрации используйте любой выдуманный электронный адрес. Данный функционал создан для ознакомления и демонстрации навыка и не нацелен на безопасность. В качестве базы данных задействован Firebase.
             </div>
         </div>
         <div class="content__form-wrapper">
@@ -31,7 +30,7 @@
 
 <script>
     import axios from 'axios'
-    import Loading from './Loading.vue'
+    import Loading from '../components/Loading.vue'
     export default {
         components: {
             Loading
@@ -50,7 +49,6 @@
             }
         },
         methods: {
-
             // Функция входа в систему
             async logIn(){
                 this.loading = true
@@ -143,12 +141,11 @@
     .content{
         margin: 0 auto;
     }
-
     .content{
         position: absolute;
         width: 100%;
         left: 0;
-        right: 0;   
+        right: 0;
         bottom: 0;
         top: 0;
         margin-top: 50px;
@@ -172,7 +169,7 @@
         font-family: Arial, Helvetica, sans-serif;
         letter-spacing: 1px;
         font-size: 18px;
-        line-height: 22px;
+        line-height: 24px;
         padding-right: 50px;
     }
     .login-info{

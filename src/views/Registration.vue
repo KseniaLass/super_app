@@ -74,7 +74,7 @@
             </div>
         </form>
         <div class="response" v-else>
-            <h1>Регистрация успешно выполнена. Перейти на страницу авторизации.</h1>
+            <h1>Регистрация успешно выполнена. <br/>Перейти на страницу авторизации.</h1>
             <button class="btn" @click.prevent="goToLogin">ПЕРЕЙТИ</button>
         </div>
     </div>
@@ -82,8 +82,7 @@
 
 <script>
     import axios from 'axios'
-    import Loading from './Loading.vue'
-
+    import Loading from '../components/Loading.vue'
     export default {
         components: {
             Loading
@@ -108,12 +107,10 @@
                 loading: false
             }
         },
-
         methods: {
             goToLogin(){
                 this.$router.push('/login')
             },
-
             async setNewUser(){
                 this.loading = true
                 // Загружаем список пользователей с сервера
@@ -329,6 +326,17 @@
     }
     .btn:active{
         transform: scale(1);
+    }
+    .response{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .response h1 {
+        color: #BFBFBF;
+        font-family: Arial, Helvetica, sans-serif; 
+        line-height: 1.6;
     }
 </style>>
 
