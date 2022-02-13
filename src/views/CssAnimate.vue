@@ -124,7 +124,7 @@
         margin-top: 150px;
         font-size: 24px;
         letter-spacing: 1.5px;
-        font-weight:100;
+        font-weight: 100;
     }
     .content{
         display: flex;
@@ -141,7 +141,7 @@
     .animate-card__wrapper {
         width: 200px;
         height: 300px;
-        perspective: 700px;
+        perspective: 900px;
     }
     .animate-card {
         width: 100%;
