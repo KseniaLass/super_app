@@ -8,8 +8,8 @@
             Работа написана на VUEJS с помощью VUE CLI. Применены инструменты: VUEX, VUE-Router, Firebase, Axios, Animate.css и Google естественно, куда же без него &#128521;
         </p>
         <div class="travolta_and_google-img-wrapper animate__animated animate__fadeIn animate__delay-3s">
-            <img src="../img/Google-logo.png" alt="picture" class="google-logo">
-            <img src="../img/travolta.gif" alt="picture" class="travolta">
+            <img src="@/img/Google-logo.png" alt="picture" class="google-logo">
+            <img src="@/img/travolta.gif" alt="picture" class="travolta">
         </div>
     </div>
     

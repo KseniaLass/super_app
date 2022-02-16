@@ -5,7 +5,7 @@
         </div>
         <div class="content animate-cards">
             <div class="animate-card__wrapper">
-                <div class="animate-card one" :class="[animateCardOne.isClick ? 'one' : '']" @click.prevent="flipOverCard(animateCardOne)">
+                <div class="animate-card" :class="[animateCardOne.isClick ? 'one' : '']" @click.prevent="flipOverCard(animateCardOne)">
                     <div class="card animate-card__one-front">{{animateCardOne.text}}</div>
                     <div class="card animate-card__one-back">{{animateCardOne.textIfClick}}</div>
                 </div>
@@ -202,7 +202,7 @@
         transition: 0.4s;
     }
     .one { 
-        animation: flipOverY 3s infinite;
+        animation: flipOverY 3s;
     }
     .two { 
         animation: flipOverX 3s;
