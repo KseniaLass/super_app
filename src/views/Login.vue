@@ -15,10 +15,11 @@
                 <div class="form-title">
                     Авторизация
                 </div>
-                <label for="login" class="input-label" :class="{label_error: errors.login == true}">{{loginInputLabel}}</label>
-                <input v-model="loginInput" type="email" id="login" class="input" :class="{input_error: errors.login == true}" placeholder="Введите Ваш Email">
-                <label for="password" class="input-label" :class="{label_error: errors.password == true}">{{passwordInputLabel}}</label>
-                <input v-model="passwordInput" type="password" id="password" class="input" :class="{input_error: errors.password == true}" placeholder="Введите Ваш пароль">
+                <!--Для сравнения всегда лучше использвоать строгое сравнение === -->
+                <label for="login" class="input-label" :class="{label_error: errors.login === true}">{{loginInputLabel}}</label>
+                <input v-model="loginInput" type="email" id="login" class="input" :class="{input_error: errors.login === true}" placeholder="Введите Ваш Email">
+                <label for="password" class="input-label" :class="{label_error: errors.password === true}">{{passwordInputLabel}}</label>
+                <input v-model="passwordInput" type="password" id="password" class="input" :class="{input_error: errors.password === true}" placeholder="Введите Ваш пароль">
                 <div class="btns">
                     <button class="btn">ВОЙТИ</button>
                     <button class="btn" @click.prevent="goToRegistration">РЕГИСТРАЦИЯ</button>
@@ -31,6 +32,7 @@
 <script>
     import axios from 'axios'
     import Loading from '../components/Loading.vue'
+    import { mapMutations } from 'vuex'
     export default {
         components: {
             Loading
@@ -49,6 +51,10 @@
             }
         },
         methods: {
+            ...mapMutations([
+                'setSuperApp',
+                'setLogin'
+            ]),
             // Функция входа в систему
             async logIn(){
                 this.loading = true
@@ -83,7 +89,8 @@
                         this.loginInputLabel = 'Пользователь не найден. Зарегистрируйтесь*'
                     }else{
                         // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
-                        this.$store.state.superApp = arreyUsers.find(user => user.email === this.loginInput)
+                        // Запись в стор только через мутации
+                        this.setSuperApp(arreyUsers.find(user => user.email === this.loginInput))
                     }
                 }
 
@@ -106,8 +113,11 @@
                         this.passwordInputLabel = 'Пароль неверный*'
                     }else{
                         // Обозначение во vuex, что авторизация произведена
-                        this.$store.state.superApp.logInTrue = true
+                        // Тоже через мутации
+                        this.setLogin(true)
                         // Обозначение в localstorage данные пользователя, и что авторизация произведена
+
+                        // Не очень понимаю зачем записывать всю информацию в локал сторадж. Лучше там хранить только логин и флаг что она залогинен. Вся остальная информацию по идее должна получаться с сервера.
                         localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
                         // Переход на главную страницу
                         this.$router.push('/')

@@ -48,6 +48,7 @@
         // При загрузке страницы
         beforeMount(){
             // Получаем данные из localstorage
+            // Все таки такое должно получаться с сервера. Возможно ты так сделал потому что бэкэнда не было, но вообще в сторадже минимум данных обычно хранится.
             this.user = localStorage.getItem('superApp')
             // если в localstorage пусто создаем запись (первый запуск приложения)
             if(!this.user){
@@ -60,6 +61,7 @@
             // если есть
             }else{
                 // Получаем данные из Local Storage и записываем во VUEX
+                //
                 this.$store.state.superApp = JSON.parse(this.user)
                 // Если активалия произведена (loginTrue = true)
                 if(this.$store.state.superApp.logInTrue){

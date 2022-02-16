@@ -211,53 +211,27 @@
                 // Обновляем LocalStorage
                 // this.updateLocalStorage()
                 // Если выбрано 'Все задачи'
-                if(nav.name === 'allTasks'){
-                    // Удаляем активный класс у всего массива навигации
-                    for(let task in this.tasksNav){
-                        this.tasksNav[task].isActive = false
-                    }
-                    // Присваиваем активный класс актуальной категории
-                    nav.isActive = true
-                    // Присваеваем логические значения переменным для отображения сообщений в случае отсутсвия задач
-                    this.isActiveTasksZero = false
-                    this.isDoneTasksZero = false
-                    this.isAllTasksZero = true
+
+                // Вот здесь код дублируется, лучше такого не делать. Если разобратьсято то можнол было написать как то так
+
+                // Удаляем активный класс у всего массива навигации
+                for(let task in this.tasksNav){
+                    this.tasksNav[task].isActive = false
                 }
-                // Если выбрано 'Активные задачи'
-                if(nav.name === 'activeTasks'){
-                    // Удаляем активный класс у всего массива навигации
-                    for(let task in this.tasksNav){
-                        this.tasksNav[task].isActive = false
-                    }
-                    // Присваиваем активный класс актуальной категории
-                    nav.isActive = true
+                // Присваиваем активный класс актуальной категории
+                nav.isActive = true
+
+                if (nav.name === 'activeTasks' || nav.name === 'doneTasks') {
                     // Удаляем из песочницы все кроме активных задач
                     this.tasks = this.tasks.filter(item => item.checkbox !== true)
-                    // Если массив-песочница пуста
-                    if(this.tasks.length === 0){
-                        // Присваеваем логические значения переменным для отображения сообщений в случае отсутсвия задач
-                        this.isActiveTasksZero = true
-                        this.isDoneTasksZero = false
-                        this.isAllTasksZero = false
-                    }
                 }
-                // Если выбрано 'Завершенные задачи'
-                if(nav.name === 'doneTasks'){
-                    // Удаляем активный класс у всего массива навигации
-                    for(let task in this.tasksNav){
-                        this.tasksNav[task].isActive = false
-                    }
-                    // Присваиваем активный класс актуальной категории
-                    nav.isActive = true
-                    // Удаляем из песочницы все кроме завершенных задач
-                    this.tasks = this.tasks.filter(item => item.checkbox !== false)
-                    // Если массив-песочница пуста
-                    if(this.tasks.length === 0){
-                        // Присваеваем логические значения переменным для отображения сообщений в случае отсутсвия задач
-                        this.isActiveTasksZero = false
-                        this.isDoneTasksZero = true
-                        this.isAllTasksZero = false
-                    }
+
+                // Если массив-песочница пуста
+                if(this.tasks.length === 0){
+                    // Присваеваем логические значения переменным для отображения сообщений в случае отсутсвия задач
+                    this.isActiveTasksZero = true
+                    this.isDoneTasksZero = false
+                    this.isAllTasksZero = false
                 }
             },
 

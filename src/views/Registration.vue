@@ -54,6 +54,7 @@
                 :class="{input_error: errors.password}"
             >
             <!-- ============== PassswordConfirm ================= -->
+            <!-- В словах с Confirm используется русская буква С :) Не критично но может навести смуту) Причем так во всем файле. У меня редактор ругается ))) -->
             <label 
                 for="passwordСonfirm" 
                 class="input-label" 

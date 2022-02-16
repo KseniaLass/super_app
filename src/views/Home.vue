@@ -16,6 +16,7 @@
 </template>
 
 <script>
+    // $store.state.superApp.name лучше заменить на геттерс
     import Animate from 'animate.css'
     export default {
         components: {
