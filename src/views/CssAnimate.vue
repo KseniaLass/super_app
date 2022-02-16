@@ -5,7 +5,7 @@
         </div>
         <div class="content animate-cards">
             <div class="animate-card__wrapper">
-                <div class="animate-card" :class="[animateCardOne.isClick ? 'one' : '']" @click.prevent="flipOverCard(animateCardOne)">
+                <div class="animate-card one" :class="[animateCardOne.isClick ? 'one' : '']" @click.prevent="flipOverCard(animateCardOne)">
                     <div class="card animate-card__one-front">{{animateCardOne.text}}</div>
                     <div class="card animate-card__one-back">{{animateCardOne.textIfClick}}</div>
                 </div>
@@ -112,7 +112,6 @@
 <style scoped>
     *{
         font-family: Arial, Helvetica, sans-serif;
-
     }
     .title{
         width: 100%;
@@ -203,7 +202,7 @@
         transition: 0.4s;
     }
     .one { 
-        animation: flipOverY 3s;
+        animation: flipOverY 3s infinite;
     }
     .two { 
         animation: flipOverX 3s;
@@ -217,7 +216,7 @@
     .five { 
         animation: scale 3s;
     }
-    @keyframes flipOverY{
+    @keyframes flipOverY {
         0%{
             transform: rotateY(0deg);
         }
@@ -234,7 +233,7 @@
             transform: rotateY(0deg);
         }
     }
-    @keyframes flipOverX{
+    @keyframes flipOverX {
         0%{
             transform: rotateX(0deg);
         }

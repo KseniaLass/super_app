@@ -33,7 +33,7 @@
         font-family: Arial, Helvetica, sans-serif;
     }
     .welcome{
-        margin-top: 200px;
+        margin-top: 120px;
         flex-direction: column;
     }
     .welcome-subtitle{

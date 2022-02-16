@@ -21,24 +21,24 @@
 </script>
 
 <style>
-    *{
+    /* *{ */
         /**
         * Для эксплорера
         */
-        -ms-user-select: none;
+        /* -ms-user-select: none; */
         /**
         * Для мозилы
         */
-        -moz-user-select: none;
+        /* -moz-user-select: none; */
         /**
         * Для конкверора
         */
-        -khtml-user-select: none; 
+        /* -khtml-user-select: none;  */
         /**
         * Для Сафари и Хрома
         */
-        user-select: none;
-    }
+        /* user-select: none; */
+    /* } */
 
     .navbar{
         position: fixed;
